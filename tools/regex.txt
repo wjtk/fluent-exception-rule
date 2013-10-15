@@ -1,0 +1,29 @@
+1) final for method parameter
+
+(public S \w+\()(\w+)
+\1final \2
+
+2) final for 2. parameter
+(public S \w+\()(.*,)
+\1\2 final
+
+3) body
+super\.(\w+)\((.*)\);
+addCommand\n\(new AssertCommand<A, T>\(\) {\n @Override \n  public void doCheck\(\) { \n  getAssert\(\).\1\(\2\); \n } \n }\); \n return myself;
+
+
+4) AbstractThrowableAssertMock
+super\.(\w+)\((.*)\);
+register\("\1", \2\);
+
+
+5) Test methods with my mock (from overriding AbstractThrowableAssert)
+@Override
+@Test
+
+public \w+ (\w+)\((.*)\).*
+public void should_call_\1\(\) { \n \2 = ;
+	
+.*super\.(\w+)\((.*)\);
+expectedAssert.\1\(\2\);\n startChecking\(\); \n\n  normalAssertMock.verifyMethods\("\1"\);  \n normalAssertMock.verifyMethodArg\(0, \2\);
+		
