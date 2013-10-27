@@ -6,7 +6,7 @@ import java.util.List;
 public class AbstractCheckExpectedException<S extends AbstractCheckExpectedException<S>>
         extends AbstractHandleExceptionRule<S> {
 
-    protected List<Check<?>> checks = new ArrayList<Check<?>>();
+    protected List<Check> checks = new ArrayList<Check>();
 
     public boolean isExceptionExpected() {
         return checks.size() > 0;
@@ -14,7 +14,7 @@ public class AbstractCheckExpectedException<S extends AbstractCheckExpectedExcep
 
     protected void handleException(Throwable e) {
         for(Check c : checks) {
-            c.doCheck(e);
+            c.check(e);
         }
     }
 

@@ -3,10 +3,16 @@ package pl.wkr.fluentrule.util;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
-public abstract class ClassUtil {
+public  class ClassFinder {
 
-    public static <T> Class<T> getConcreteClassOfTypeArg(Class<?> cls, int typeArgIndex) {
-        Object prev = cls;
+    private int typeArgIndex;
+
+    public ClassFinder(int typeArgIndex) {
+        this.typeArgIndex = typeArgIndex;
+    }
+
+    public <T> Class<T> findConcreteClass(Class<?> forClass) {
+        Object prev = forClass;
         Type genericSuperclass;
         do {
             genericSuperclass = ((Class<?>) prev).getGenericSuperclass();

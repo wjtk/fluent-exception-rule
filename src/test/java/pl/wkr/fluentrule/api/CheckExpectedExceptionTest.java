@@ -25,15 +25,26 @@ public class CheckExpectedExceptionTest extends AbstractExceptionsTest{
         return Arrays.<TestRule>asList(thrown);
     }
 
+    @Test
+    public void should_catch_simple_exception_with_message() throws Exception {
+        thrown.check( new Check() {
+            @Override
+            public void check(Throwable exception) {
+               assertThat(exception).hasMessage("xyz");
+            }
+        });
+        throw new Exception("xyz");
+    }
+
 
     @Test
     public void should_catch_exception_check_state_of_object() throws Exception {
         final StateChanger obj = new StateChanger();
         final int state = obj.status();
 
-        thrown.check( new Check<SQLException>(){
+        thrown.check( new SafeCheck<SQLException>(){
             @Override
-            protected void check(SQLException exception) {
+            protected void safeCheck(SQLException exception) {
                 assertThat(exception.getErrorCode()).isEqualTo(10);
                 assertThat(state).isEqualTo(obj.status());
             }
@@ -51,9 +62,9 @@ public class CheckExpectedExceptionTest extends AbstractExceptionsTest{
         thrownOuter.expectMessage(Exception.class.getName());
         thrownOuter.expectMessage("but was instance of");
 
-        thrown.check(new Check<SQLException>(){
+        thrown.check(new SafeCheck<SQLException>(){
             @Override
-            protected void check(SQLException exception) {
+            protected void safeCheck(SQLException exception) {
                 assertThat(exception.getErrorCode()).isEqualTo(10);
             }
         });
@@ -65,8 +76,8 @@ public class CheckExpectedExceptionTest extends AbstractExceptionsTest{
     @Test
     public void should_run_all_checks_in_order() throws Throwable {
         CheckExpectedException checker = CheckExpectedException.none();
-        Check ch1 = mock(CheckThrowable.class);
-        Check ch2 = mock(CheckThrowable.class);
+        Check ch1 = mock(Check.class);
+        Check ch2 = mock(Check.class);
         MyException exception = new MyException();
         Statement statement = mock(Statement.class);
         doThrow(exception).when(statement).evaluate();
@@ -76,19 +87,19 @@ public class CheckExpectedExceptionTest extends AbstractExceptionsTest{
         evaluateGetException(checker.apply(statement,null));
 
         InOrder io = inOrder(ch1,ch2);
-        io.verify(ch1).doCheck(exception);
-        io.verify(ch2).doCheck(exception);
+        io.verify(ch1).check(exception);
+        io.verify(ch2).check(exception);
     }
 
     @Test
-    public void should_check_return_this() {
+    public void should_check_method_return_this() {
         CheckExpectedException checker = CheckExpectedException.none();
+        Check notNullCheck = mock(Check.class);
 
-        assertThat(checker.check(mock(CheckThrowable.class))).isEqualTo(checker);
+        assertThat(checker.check(notNullCheck)).isEqualTo(checker);
     }
 
-
-    abstract static class CheckThrowable extends Check<Throwable> {};
+    //--------------------------------------------------------------------------
 
     static class StateChanger {
         public int status() { return 1; }

@@ -2,7 +2,7 @@ package pl.wkr.fluentrule.api;
 
 import org.assertj.core.api.*;
 import org.assertj.core.description.Description;
-import pl.wkr.fluentrule.util.ClassUtil;
+import pl.wkr.fluentrule.util.ClassFinder;
 
 import java.util.Comparator;
 
@@ -14,6 +14,8 @@ abstract public class AbstractExpectedThrowableAssert<
         extends AbstractThrowableAssert<S,T>{
 
     private final static int T_TYPE_PARAMETER_INDEX = 1;
+    private final static ClassFinder CLASS_FINDER = new ClassFinder(T_TYPE_PARAMETER_INDEX);
+
 
     private final AssertCommandList<A, T> commands;
 
@@ -39,7 +41,7 @@ abstract public class AbstractExpectedThrowableAssert<
     }
 
     private Class<T> getClassOfT() {
-        return ClassUtil.getConcreteClassOfTypeArg(getClass(), T_TYPE_PARAMETER_INDEX);
+        return CLASS_FINDER.findConcreteClass(getClass());
     }
 
     final protected void addCommand(AssertCommand<A,T> command) {

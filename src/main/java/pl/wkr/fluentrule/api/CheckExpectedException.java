@@ -1,7 +1,5 @@
 package pl.wkr.fluentrule.api;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class CheckExpectedException extends AbstractCheckExpectedException<CheckExpectedException> {
 
@@ -10,6 +8,7 @@ public class CheckExpectedException extends AbstractCheckExpectedException<Check
     }
 
     public CheckExpectedException check(Check check) {
+        //TODO not null
         checks.add(check);
         return this;
     }

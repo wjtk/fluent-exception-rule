@@ -5,13 +5,14 @@ import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
 import org.assertj.core.api.AbstractThrowableAssert;
 import pl.wkr.fluentrule.api.Check;
+import pl.wkr.fluentrule.api.SafeCheck;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CheckWithProxy<A extends AbstractThrowableAssert<A,T> ,T extends Throwable> extends Check<T> {
+public class CheckWithProxy<A extends AbstractThrowableAssert<A,T> ,T extends Throwable> extends SafeCheck<T> {
 
     private AssertFactory<A,T> assertFactory;
     private MethodCollector methodCollector = new MethodCollector();
@@ -27,9 +28,8 @@ public class CheckWithProxy<A extends AbstractThrowableAssert<A,T> ,T extends Th
         return assertProxy;
     }
 
-
     @Override
-    protected void check(T exception) {
+    protected void safeCheck(T exception) {
         A anAssert = assertFactory.getAssert(exception);
         for( MethodCall call : methodCollector.methodCalls()) {
             invoke(anAssert, call);
