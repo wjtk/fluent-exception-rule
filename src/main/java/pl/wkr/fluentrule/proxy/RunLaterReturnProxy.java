@@ -9,6 +9,6 @@ class RunLaterReturnProxy extends RunLaterCallback {
     @Override
     public Object intercept(Object object, Method method, Object[] args, MethodProxy methodProxy) throws Throwable {
         runLater(method, args);
-        return object; //isNull() is ok with this
+        return object;
     }
 }

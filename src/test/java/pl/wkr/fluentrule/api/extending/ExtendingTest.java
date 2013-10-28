@@ -3,6 +3,7 @@ package pl.wkr.fluentrule.api.extending;
 import org.junit.Test;
 import org.junit.rules.TestRule;
 import pl.wkr.fluentrule.api.testutils.AbstractExceptionsTest;
+import pl.wkr.fluentrule.api.extending.MyExtendedFluentExpectedException;
 
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -31,14 +32,30 @@ public class ExtendingTest extends AbstractExceptionsTest {
     }
 
     @Test
-    public void should_throw_assertion() throws Exception {
+    public void should_not_catch_unexpected_sql_error_code() throws SQLException {
 
         thrownOuter.expect(AssertionError.class);
-        thrownOuter.expectMessage("xxx");
-        thrownOuter.expectMessage("zzz");
+        thrownOuter.expectMessage("<10>");
+        thrownOuter.expectMessage("<11>");
 
-        thrown.expect().hasMessage("xxx");
-        throw new Exception("zzz");
+        thrown.expectSQLException().hasErrorCode(11);
+        throw new SQLException("reason", "state",10);
     }
+
+    @Test
+    public void should_not_catch_because_of_unexpected_type() throws Exception {
+
+        thrownOuter.expect(AssertionError.class);
+        thrownOuter.expectMessage("to be an instance");
+        thrownOuter.expectMessage(SQLException.class.getName());
+        thrownOuter.expectMessage(Exception.class.getName());
+
+        thrown.expectSQLException().hasMessageContaining("xyz");
+        throw new Exception("xyz");
+    }
+
+
+
+
 
 }

@@ -14,7 +14,8 @@ public class SQLExceptionAssert extends AbstractThrowableAssert<SQLExceptionAsse
 
     public SQLExceptionAssert hasErrorCode(int expected) {
         int actualCode = actual.getErrorCode();
-        assertThat(actualCode).overridingErrorMessage("expected SQLException.errorCode <%d> but was <%s>.", expected, actualCode).isEqualTo(expected);
+        assertThat(actualCode).overridingErrorMessage(
+                "\nExpected SQLException.errorCode : <%d> but was: <%d>", expected, actualCode).isEqualTo(expected);
         return myself;
     }
 }
