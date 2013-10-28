@@ -17,17 +17,23 @@ mockito api questions methods(e.g. verify).
 
 ThrowableAssertMock - mock delgating all calls to ThrowableAssertMockRegister(interface mocked by mockito)
 */
-public class AbstractThrowableAssertMock<S extends AbstractThrowableAssertMock<S,A>, A extends Throwable>
+public class AbstractThrowableAssertMock<
+        S extends AbstractThrowableAssertMock<S,A,R>,
+        A extends Throwable, R extends AbstractThrowableAssertMockRegister<A>>
         extends AbstractThrowableAssert<S,A> {
 
-    protected  AbstractThrowableAssertMockRegister<A> register;
+    protected R register;
 
 
     protected AbstractThrowableAssertMock(A actual, Class<?> selfType,
-                                          AbstractThrowableAssertMockRegister<A> register) {
+                                          R register) {
 
         super(actual, selfType);
         this.register = register;
+    }
+
+    public R getMockRegister() {
+        return register;
     }
 
     // ------------------- methods ---------------------------------------

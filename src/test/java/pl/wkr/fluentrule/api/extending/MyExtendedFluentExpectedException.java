@@ -1,7 +1,6 @@
-package pl.wkr.fluentrule.api.cglib.extending;
+package pl.wkr.fluentrule.api.extending;
 
-import pl.wkr.fluentrule.api.cglib.FluentExpectedException;
-import pl.wkr.fluentrule.api.extending.SQLExceptionAssert;
+import pl.wkr.fluentrule.api.FluentExpectedException;
 
 import java.sql.SQLException;
 

@@ -12,15 +12,20 @@ public  class ClassFinder {
     }
 
     public <T> Class<T> findConcreteClass(Class<?> forClass) {
-        Object prev = forClass;
-        Type genericSuperclass;
-        do {
-            genericSuperclass = ((Class<?>) prev).getGenericSuperclass();
-            prev = genericSuperclass;
-        } while(!(genericSuperclass instanceof ParameterizedType));
+        try {
+            Object prev = forClass;
+            Type genericSuperclass;
+            do {
+                genericSuperclass = ((Class<?>) prev).getGenericSuperclass();
+                prev = genericSuperclass;
+            } while(!(genericSuperclass instanceof ParameterizedType));
 
-        Type typeArg = ((ParameterizedType) genericSuperclass).getActualTypeArguments()[typeArgIndex];
-        return castToClass(typeArg);
+            Type typeArg = ((ParameterizedType) genericSuperclass).getActualTypeArguments()[typeArgIndex];
+            return castToClass(typeArg);
+        }
+        catch(Exception e) {
+            throw new RuntimeException("Cannot find concrete class. Class 'forClass' cannot be generic!", e);
+        }
     }
 
 

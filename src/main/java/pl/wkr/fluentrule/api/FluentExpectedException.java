@@ -1,70 +1,52 @@
 package pl.wkr.fluentrule.api;
 
+import org.assertj.core.api.AbstractThrowableAssert;
+import org.assertj.core.api.ThrowableAssert;
+import pl.wkr.fluentrule.proxy.CheckWithProxy;
+import pl.wkr.fluentrule.proxy.ProxyFactory;
 
-import java.util.ArrayList;
-import java.util.List;
+public class FluentExpectedException extends AbstractCheckExpectedException<FluentExpectedException>{
 
-//Doesn't need SELF-behavior
-public class FluentExpectedException extends AbstractHandleExceptionRule<FluentExpectedException>  {
+    private static final CauseAssertFactory causeAssertFactory = new CauseAssertFactory();
+    private static final ThrowableAssertFactory throwableAssertFactory = new ThrowableAssertFactory();
+    private static final ProxyFactory proxyFactory = new ProxyFactory();
+    private static final ReflectionAssertFactoryFactory reflectionAssertFactoryFactory = new ReflectionAssertFactoryFactory();
 
-    private List<AssertCommandList<?,?>> asserts = new ArrayList<AssertCommandList<?, ?>>();
+    public FluentExpectedException(){}
 
-    private AssertCommandListCollector assertCommandListCollector = new AssertCommandListCollector() {
-        @Override
-        public void add(AssertCommandList<?, ?> acl) {
-            asserts.add(acl);
-        }
-    };
+    //TODO constructor for testing?
 
-    // ExpectedException.none() pattern is not suitable, because this class should be easy to inherit
-    // and subclasses would have to deliver their version of none()
-    public FluentExpectedException() {}
-
-    public ExpectedThrowableAssert expect() {
-        return newThrowableAssert();
+    public ThrowableAssert expect() {
+        return newProxy( ThrowableAssert.class, Throwable.class, throwableAssertFactory);
     }
 
-    public ExpectedThrowableAssert expect(Class<? extends Throwable> type) {
-        return newThrowableAssert().isInstanceOf(type);
+    public ThrowableAssert expect(Class<? extends Throwable> type) {
+        return newProxy(ThrowableAssert.class, Throwable.class, throwableAssertFactory).isInstanceOf(type);
     }
 
-    public ExpectedThrowableAssert expectAny(Class<?>... types) {
-        return newThrowableAssert().isInstanceOfAny(types);
+    public ThrowableAssert expectAny(Class<?> ... types) {
+        return newProxy(ThrowableAssert.class, Throwable.class, throwableAssertFactory).isInstanceOfAny(types);
     }
 
-    public ExpectedThrowableAssert expectCause() {
-        return new ExpectedThrowableCauseAssert(getAssertCommandListCollector());
+    public ThrowableAssert expectCause(){
+        return newProxy(ThrowableAssert.class, Throwable.class, causeAssertFactory);
     }
 
-    //-----------  protected ----------------
 
+    //--------------------------------------------------------------------------------
 
-    @Override
-    protected final boolean isExceptionExpected() {
-        return asserts.size() > 0;
+    protected final <A extends AbstractThrowableAssert<A,T>, T extends Throwable>
+        A newProxy(Class<A> assertClass, Class<T> throwableClass, AssertFactory<A,T> factory) {
+
+        CheckWithProxy<A,T> check = proxyFactory.newCheckWithProxy(assertClass, throwableClass, factory);
+        checks.add(check);
+        return check.getAssertProxy();
     }
 
-    @Override
-    protected final void failBecauseExceptionWasNotThrown() {
-        throw new AssertionError("Exception was expected but was not thrown");
-    }
+    protected final <A extends AbstractThrowableAssert<A,T>, T extends Throwable>
+        A newProxy(Class<A> assertClass, Class<T> throwableClass) {
 
-    @Override
-    protected final void handleException(Throwable e) {
-        for( AssertCommandList<?,?> acl : asserts) {
-            acl.check(e);
-        }
-    }
-
-    protected final AssertCommandListCollector getAssertCommandListCollector() {
-        return  assertCommandListCollector;
-    }
-
-    //---------- private -------------
-
-    private ExpectedThrowableAssert newThrowableAssert() {
-        return new ExpectedThrowableAssert(getAssertCommandListCollector());
+        //TODO  - tworzenie reflectionAssertFactory wynieść do proxyFactory??
+        return newProxy(assertClass, throwableClass, reflectionAssertFactoryFactory.newFactory(assertClass, throwableClass));
     }
 }
-
-

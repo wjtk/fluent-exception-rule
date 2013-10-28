@@ -1,8 +1,12 @@
 package pl.wkr.fluentrule.api.testutils;
 
-public class ThrowableAssertMock extends AbstractThrowableAssertMock<ThrowableAssertMock, Throwable> {
+import static org.mockito.Mockito.mock;
 
-    public ThrowableAssertMock(Throwable actual, ThrowableAssertMockRegister register ) {
-        super(actual, ThrowableAssertMock.class, register);
+public class ThrowableAssertMock extends AbstractThrowableAssertMock<
+        ThrowableAssertMock, Throwable, ThrowableAssertMockRegister> {
+
+    public ThrowableAssertMock(Throwable actual) {
+        super(actual, ThrowableAssertMock.class, mock(ThrowableAssertMockRegister.class));
     }
+
 }

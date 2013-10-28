@@ -1,12 +1,12 @@
-package pl.wkr.fluentrule.api.cglib;
+package pl.wkr.fluentrule.api;
 
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.NoOp;
 import org.assertj.core.api.AbstractThrowableAssert;
 
 
-public class ReflectionAssertFactory<A extends AbstractThrowableAssert<A,T>, T extends Throwable>
-        extends AssertFactory<A,T> {
+class ReflectionAssertFactory<A extends AbstractThrowableAssert<A,T>, T extends Throwable>
+        implements AssertFactory<A,T> {
 
     private Class<A> assertClass;
     private Class<T> throwableClass;
@@ -16,12 +16,10 @@ public class ReflectionAssertFactory<A extends AbstractThrowableAssert<A,T>, T e
         this.throwableClass = throwableClass;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    A getAssert(T throwable) {
+    public A getAssert(T throwable) {
         return proxy(assertClass, throwableClass, throwable);
     }
-
 
     @SuppressWarnings("unchecked")
     protected <T, V> V proxy(Class<V> assertClass, Class<T> actualClass, T actual) {

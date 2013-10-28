@@ -42,7 +42,7 @@ public interface AbstractThrowableAssertMockRegister<A extends Throwable> {
     public void isNotExactlyInstanceOf(Class<?> type);
     public void isOfAnyClassIn(Class<?>... types);
     public void isNotOfAnyClassIn(Class<?>... types);
-    public String descriptionText();
+    public void descriptionText();
     public void overridingErrorMessage(String newErrorMessage, Object... args);
     public void usingComparator(Comparator<? super A> customComparator);
     public void usingDefaultComparator();

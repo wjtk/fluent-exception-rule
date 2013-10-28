@@ -1,19 +1,15 @@
 package pl.wkr.fluentrule.api;
 
-import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 import org.junit.internal.AssumptionViolatedException;
 import org.junit.rules.TestRule;
-import org.junit.runners.model.Statement;
-import org.mockito.InOrder;
 import pl.wkr.fluentrule.api.testutils.AbstractExceptionsTest;
 import pl.wkr.fluentrule.api.testutils.MyException;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static org.mockito.Mockito.*;
-import static pl.wkr.fluentrule.api.testutils.StatementHelper.evaluateGetException;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class FluentExpectedExceptionTest extends AbstractExceptionsTest {
 
@@ -107,6 +103,8 @@ public class FluentExpectedExceptionTest extends AbstractExceptionsTest {
     @Test
     public void should_throw_because_second_requirement_is_not_fulfilled() throws Exception {
         thrownOuter.expect(AssertionError.class);
+        thrownOuter.expectMessage("yo");
+        thrownOuter.expectMessage("bug");
 
         thrown.expect(Exception.class).hasMessage("x");
         thrown.expectCause().hasMessageContaining("bug");
@@ -116,34 +114,16 @@ public class FluentExpectedExceptionTest extends AbstractExceptionsTest {
     //---------------------------------------------------------------
 
     @Test
-    public void should_all_except_methods_return_not_null() {
+    public void should_all_exceptXXX_methods_return_not_null() {
         FluentExpectedException fluentRule = new FluentExpectedException();
-        SoftAssertions soft = new SoftAssertions();
-        soft.assertThat(fluentRule.expect()).as("expect()").isNotNull();
-        soft.assertThat(fluentRule.expect(MyException.class)).as("expect(Class)").isNotNull();
-        soft.assertThat(fluentRule.expectAny(MyException.class)).as("expectAny(Class...)").isNotNull();
-        soft.assertThat(fluentRule.expectCause()).as("expectCause()").isNotNull();
-        soft.assertAll();
+        assertThat(fluentRule.expect()).as("expect()").isNotNull();
+        assertThat(fluentRule.expect(MyException.class)).as("expect(Class)").isNotNull();
+        assertThat(fluentRule.expectAny(MyException.class)).as("expectAny(Class...)").isNotNull();
+        assertThat(fluentRule.expectCause()).as("expectCause()").isNotNull();
     }
 
-    @Test
-    public void should_push_exception_to_all_AssertCommandLists_in_order() throws Throwable {
-        FluentExpectedException fluentExpectedException = new FluentExpectedException();
-        Exception exception = new Exception();
-        AssertCommandList<?,?> acl1 = mock(AssertCommandList.class);
-        AssertCommandList<?,?> acl2 = mock(AssertCommandList.class);
-        Statement statement = mock(Statement.class);
-        doThrow(exception).when(statement).evaluate();
 
-        fluentExpectedException.getAssertCommandListCollector().add(acl1);
-        fluentExpectedException.getAssertCommandListCollector().add(acl2);
-
-        evaluateGetException(fluentExpectedException.apply(statement, null));
-
-        InOrder io = inOrder(acl1, acl2);
-        io.verify(acl1).check(exception);
-        io.verify(acl2).check(exception);
-    }
+    //----------------------------
 }
 
 
