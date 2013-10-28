@@ -9,7 +9,7 @@ import pl.wkr.fluentrule.api.testutils.MyException;
 import pl.wkr.fluentrule.proxy.CheckWithProxy;
 import pl.wkr.fluentrule.proxy.ProxyFactory;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.isA;
 
 public class CheckWithProxy_InvocationsExceptionsTest {
 

@@ -2,11 +2,8 @@ package pl.wkr.fluentrule.proxy;
 
 import net.sf.cglib.proxy.CallbackFilter;
 import org.assertj.core.api.AbstractAssert;
-import org.assertj.core.api.AbstractThrowableAssert;
-import org.assertj.core.api.Assert;
 
 import java.lang.reflect.Method;
-import java.util.Arrays;
 
 public class AssertCallbackFilter implements CallbackFilter {
 

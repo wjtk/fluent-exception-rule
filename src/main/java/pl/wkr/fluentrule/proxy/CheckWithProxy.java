@@ -1,6 +1,9 @@
 package pl.wkr.fluentrule.proxy;
 
-import net.sf.cglib.proxy.*;
+import net.sf.cglib.proxy.Callback;
+import net.sf.cglib.proxy.CallbackFilter;
+import net.sf.cglib.proxy.Enhancer;
+import net.sf.cglib.proxy.NoOp;
 import org.assertj.core.api.AbstractThrowableAssert;
 import pl.wkr.fluentrule.api.AssertFactory;
 import pl.wkr.fluentrule.api.SafeCheck;

@@ -3,7 +3,6 @@ package pl.wkr.fluentrule.api.extending;
 import org.junit.Test;
 import org.junit.rules.TestRule;
 import pl.wkr.fluentrule.api.testutils.AbstractExceptionsTest;
-import pl.wkr.fluentrule.api.extending.MyExtendedFluentExpectedException;
 
 import java.sql.SQLException;
 import java.util.Arrays;
