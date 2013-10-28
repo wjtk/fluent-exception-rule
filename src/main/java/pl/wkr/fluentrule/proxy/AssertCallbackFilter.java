@@ -21,13 +21,7 @@ public class AssertCallbackFilter implements CallbackFilter {
     }
 
     private boolean isReturningSelf(Method method) {
-        Class<?> returnType = method.getReturnType();
-        try {
-            returnType.asSubclass(AbstractAssert.class);
-            //getReturnType returned AbstractAssert for isInstanceOf()!
-            return true;
-        } catch(ClassCastException e) {
-            return false;
-        }
+        Class<?> returnType = method.getReturnType();  //TODO, maybe getGenericType() - study!
+        return AbstractAssert.class.isAssignableFrom(returnType);
     }
 }
