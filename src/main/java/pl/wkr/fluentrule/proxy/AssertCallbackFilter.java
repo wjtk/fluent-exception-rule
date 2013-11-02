@@ -7,7 +7,6 @@ import java.lang.reflect.Method;
 
 public class AssertCallbackFilter implements CallbackFilter {
 
-    public static final int NOOP = 0;
     public static final int RUN_LATER_RETURN_PROXY = 1;  //hasMessage, isNull
     public static final int RUN_LATER_RETURN_DEFAULT_VALUE = 2; //
 
@@ -17,7 +16,6 @@ public class AssertCallbackFilter implements CallbackFilter {
             return RUN_LATER_RETURN_PROXY;
         }
         return RUN_LATER_RETURN_DEFAULT_VALUE;
-        //return NOOP;
     }
 
     private boolean isReturningSelf(Method method) {

@@ -1,29 +1,26 @@
 package pl.wkr.fluentrule.api;
 
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.TestRule;
+import org.junit.rules.RuleChain;
 import org.junit.runners.model.Statement;
 import org.mockito.InOrder;
-import pl.wkr.fluentrule.api.testutils.AbstractExceptionsTest;
 import pl.wkr.fluentrule.api.testutils.MyException;
 
 import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 import static pl.wkr.fluentrule.api.testutils.StatementHelper.evaluateGetException;
 
-public class CheckExpectedExceptionTest extends AbstractExceptionsTest{
+public class CheckExpectedExceptionTest {
 
-    private CheckExpectedException thrown;
+    private FluentExpectedException thrownOuter = FluentExpectedException.none().handleAssertionErrors();
+    private CheckExpectedException thrown = CheckExpectedException.none();
 
-    @Override
-    protected List<TestRule> getRulesToWrap() {
-        thrown = CheckExpectedException.none();
-        return Arrays.<TestRule>asList(thrown);
-    }
+    @Rule
+    public RuleChain rule = RuleChain.outerRule(thrownOuter).around(thrown);
+
 
     @Test
     public void should_catch_simple_exception_with_message() throws Exception {
@@ -57,10 +54,8 @@ public class CheckExpectedExceptionTest extends AbstractExceptionsTest{
     public void should_not_catch_because_exception_has_unexpected_type() throws Exception {
         final StateChanger obj = new StateChanger();
 
-        thrownOuter.expect(AssertionError.class);
-        thrownOuter.expectMessage(SQLException.class.getName());
-        thrownOuter.expectMessage(Exception.class.getName());
-        thrownOuter.expectMessage("but was instance of");
+        thrownOuter.expect(AssertionError.class).hasMessageContaining(SQLException.class.getName())
+                .hasMessageContaining(Exception.class.getName());
 
         thrown.check(new SafeCheck<SQLException>(){
             @Override

@@ -1,25 +1,27 @@
 package pl.wkr.fluentrule.api;
 
+import org.assertj.core.api.SoftAssertions;
+import org.assertj.core.api.ThrowableAssert;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.internal.AssumptionViolatedException;
-import org.junit.rules.TestRule;
-import pl.wkr.fluentrule.api.testutils.AbstractExceptionsTest;
+import org.junit.rules.RuleChain;
+import pl.wkr.fluentrule.api.extending.SQLExceptionAssert;
 import pl.wkr.fluentrule.api.testutils.MyException;
 
-import java.util.Arrays;
-import java.util.List;
+import java.sql.SQLException;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static pl.wkr.fluentrule.api.testutils.FluentExpectedExceptionTestConstants.WAS_NOT_THROWN_MESSAGE;
 
-public class FluentExpectedExceptionTest extends AbstractExceptionsTest {
+public class FluentExpectedExceptionTest  {
 
-    public FluentExpectedException thrown;
+    public CheckExpectedException thrownOuter = CheckExpectedException.none().handleAssertionErrors().handleAssumptionViolatedExceptions();
+    public FluentExpectedException thrown = FluentExpectedException.none();
 
-    @Override
-    protected List<TestRule> getRulesToWrap() {
-        thrown = new FluentExpectedException();
-        return Arrays.<TestRule>asList(thrown);
-    }
+    @Rule
+    public RuleChain chain = RuleChain.outerRule(thrownOuter).around(thrown);
+
 
     @Test
     public void should_do_nothing_because_nothing_is_expected() {
@@ -41,20 +43,20 @@ public class FluentExpectedExceptionTest extends AbstractExceptionsTest {
 
     @Test
     public void should_not_catch_exception_because_nothing_is_expected() throws Exception {
-        thrownOuter.expectMessage("a6b7");
+        outerExpectMessageContaining("a6b7");
         //thrown - nothing
         throw new Exception("a6b7");
     }
 
     @Test
     public void should_throw_assertion_that_exception_was_expected_but_not_thrown() {
-        thrownOuter.expectMessage("Exception was expected but was not thrown");
+        outerExpectMessageContaining("Exception was expected but was not thrown");
         thrown.expect();
     }
 
     @Test
     public void should_not_catch_assertion_when_not_handle_assertions() {
-        thrownOuter.expect(AssertionError.class);
+        outerExpect(AssertionError.class);
         thrown.expect();
         throw new AssertionError();
     }
@@ -67,7 +69,7 @@ public class FluentExpectedExceptionTest extends AbstractExceptionsTest {
 
     @Test
     public void should_not_catch_assumption_when_not_handle_assumptions() {
-        thrownOuter.expect(AssumptionViolatedException.class);
+        outerExpect(AssumptionViolatedException.class);
         thrown.expect();
         throw new AssumptionViolatedException("a");
     }
@@ -81,12 +83,33 @@ public class FluentExpectedExceptionTest extends AbstractExceptionsTest {
     // methods -------------------------------------------------
 
     @Test
-    public void should_throw_unexpected_type() throws Exception {
-        thrownOuter.expect(AssertionError.class);
+    public void should_throw_unexpected_type_for_expectAny_method() throws Exception {
+        outerExpect(AssertionError.class);
+        outerExpectMessageContaining(Long.class.getName(), Number.class.getName(), Exception.class.getName());
 
         thrown.expectAny(Long.class, Number.class);
         throw new Exception();
     }
+
+    @Test
+    public void should_throw_unexpected_type_for_expect_method() throws Exception {
+        outerExpect(AssertionError.class);
+        outerExpectMessageContaining(SQLException.class.getName(), Exception.class.getName());
+
+        thrown.expect(SQLException.class);
+        throw new Exception();
+    }
+
+
+    @Test
+    public void should_throw_unexpected_type_for_assertWith_method() throws Exception {
+        outerExpect(AssertionError.class);
+        outerExpectMessageContaining(SQLException.class.getName(), Exception.class.getName());
+
+        thrown.assertWith(SQLExceptionAssert.class);
+        throw new Exception();
+    }
+
 
     @Test
     public void should_catch_exception_by_message() throws Exception {
@@ -102,28 +125,67 @@ public class FluentExpectedExceptionTest extends AbstractExceptionsTest {
 
     @Test
     public void should_throw_because_second_requirement_is_not_fulfilled() throws Exception {
-        thrownOuter.expect(AssertionError.class);
-        thrownOuter.expectMessage("yo");
-        thrownOuter.expectMessage("bug");
+        outerExpect(AssertionError.class);
+        outerExpectMessageContaining("yo", "bug");
 
         thrown.expect(Exception.class).hasMessage("x");
         thrown.expectCause().hasMessageContaining("bug");
         throw new Exception("x", new Exception("yo"));
     }
 
-    //---------------------------------------------------------------
+    @Test
+    public void should_throw_that_exception_was_not_thrown_only_for_lone_call_of_assertWith() {
+        outerExpect(AssertionError.class);
+        outerExpectMessageContaining(WAS_NOT_THROWN_MESSAGE);
+
+        thrown.assertWith(SQLExceptionAssert.class);
+    }
 
     @Test
-    public void should_all_exceptXXX_methods_return_not_null() {
-        FluentExpectedException fluentRule = new FluentExpectedException();
-        assertThat(fluentRule.expect()).as("expect()").isNotNull();
-        assertThat(fluentRule.expect(MyException.class)).as("expect(Class)").isNotNull();
-        assertThat(fluentRule.expectAny(MyException.class)).as("expectAny(Class...)").isNotNull();
-        assertThat(fluentRule.expectCause()).as("expectCause()").isNotNull();
+    public void should_catch_sql_exception() throws SQLException {
+        thrown.assertWith(SQLExceptionAssert.class).hasMessageContaining("zzz").hasNoCause().hasErrorCode(10);
+        throw new SQLException("zzz", "open", 10);
     }
 
 
     //----------------------------
+
+    @Test
+    public void should_expectXXX_and_withAssert_methods_return_not_null() {
+        FluentExpectedException rule = FluentExpectedException.none();
+        SoftAssertions soft = new SoftAssertions();
+        soft.assertThat(rule.expect()).as("expect()").isNotNull();
+        soft.assertThat(rule.expect(MyException.class)).as("expect(Class)").isNotNull();
+        soft.assertThat(rule.expectAny(MyException.class)).as("expectAny(Class...)").isNotNull();
+        soft.assertThat(rule.expectCause()).as("expectCause()").isNotNull();
+        soft.assertAll();
+    }
+
+
+    //----------------------------------------------------------------------------
+
+    private void outerExpect(final Class<?> type) {
+        thrownOuter.check(new Check() {
+            @Override
+            public void check(Throwable exception) {
+                assertThat(exception).isInstanceOf(type);
+            }
+        });
+    }
+
+    private  void outerExpectMessageContaining(final String ... messages) {
+        thrownOuter.check(new Check(){
+            @Override
+            public void check(Throwable exception) {
+                ThrowableAssert throwableAssert = assertThat(exception);
+                for(String message : messages) {
+                    throwableAssert.hasMessageContaining(message);
+                }
+            }
+        });
+    }
+
+
 }
 
 
