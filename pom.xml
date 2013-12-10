@@ -52,7 +52,7 @@
         <dependency>
             <groupId>org.pitest</groupId>
             <artifactId>pitest</artifactId>
-            <version>0.30</version>
+            <version>${pitest.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -70,6 +70,33 @@
                     </includes>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.pitest</groupId>
+                <artifactId>pitest-maven</artifactId>
+                <version>${pitest.version}</version>
+                <executions>
+                    <execution>
+                        <phase>verify</phase>
+                        <goals><goal>mutationCoverage</goal></goals>
+                    </execution>
+                </executions>
+
+                <configuration>
+                    <targetClasses>
+                        <param>pl.wkr.fluentrule.*</param>
+                    </targetClasses>
+                    <targetTests>
+                        <param>pl.wkr.fluentrule.*</param>
+                    </targetTests>
+                    <outputFormats>
+                        <param>XML</param>
+                        <param>HTML</param>
+                    </outputFormats>
+                    <verbose>false</verbose>
+                    <mutationThreshold>100</mutationThreshold>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
@@ -80,6 +107,8 @@
         <guava.version>15.0</guava.version>
         <assertj-guava.version>1.0.0</assertj-guava.version>
 
+
+        <pitest.version>0.31</pitest.version>
         <surefire-plugin.version>2.14.1</surefire-plugin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.6</maven.compiler.source>
