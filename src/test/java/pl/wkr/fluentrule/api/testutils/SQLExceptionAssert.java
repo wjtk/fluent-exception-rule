@@ -1,4 +1,4 @@
-package pl.wkr.fluentrule.api.extending;
+package pl.wkr.fluentrule.api.testutils;
 
 import org.assertj.core.api.AbstractThrowableAssert;
 

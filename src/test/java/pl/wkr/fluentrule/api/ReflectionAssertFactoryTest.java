@@ -1,7 +1,7 @@
 package pl.wkr.fluentrule.api;
 
 import org.junit.Test;
-import pl.wkr.fluentrule.api.extending.SQLExceptionAssert;
+import pl.wkr.fluentrule.api.testutils.SQLExceptionAssert;
 
 import java.sql.SQLException;
 

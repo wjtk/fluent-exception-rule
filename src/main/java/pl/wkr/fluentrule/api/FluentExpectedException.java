@@ -57,7 +57,6 @@ public class FluentExpectedException extends AbstractCheckExpectedException<Flue
     }
 
     public <A extends AbstractThrowableAssert<A,T>,T extends Throwable> A assertWith(Class<A> assertClass) {
-
         Class<T> throwableClass = throwableClassFinder.findConcreteClass(assertClass);
         return newProxy(assertClass, throwableClass);
     }

@@ -63,6 +63,11 @@
                 <version>${surefire-plugin.version}</version>
                 <configuration>
                     <testNGArtifactName>none:none</testNGArtifactName>
+                    <includes>
+                        <include>**/*Test.java</include>
+                        <include>**/*IT.java</include>
+                        <!-- Our integration test are not so complicated to use failsafe -->
+                    </includes>
                 </configuration>
             </plugin>
         </plugins>
@@ -70,7 +75,7 @@
 
     <properties>
         <junit.version>4.11</junit.version>
-        <assertj.version>1.4.0</assertj.version>
+        <assertj.version>1.5.0</assertj.version>
         <mockito.version>1.9.5</mockito.version>
         <guava.version>15.0</guava.version>
         <assertj-guava.version>1.0.0</assertj-guava.version>

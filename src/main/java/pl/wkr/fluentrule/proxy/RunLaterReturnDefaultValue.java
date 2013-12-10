@@ -11,6 +11,6 @@ public class RunLaterReturnDefaultValue extends RunLaterCallback {
     @Override
     public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
         runLater(method, objects);
-        return TypeDefaults.getDefaultValue(method.getReturnType());
+        return TypeDefaults.instance.getDefaultValue(method.getReturnType());
     }
 }
