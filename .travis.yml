@@ -1,0 +1,8 @@
+language: java
+script:
+    - mvn verify -P withPitest
+
+# travis before "script" runs:
+#     mvn install -DskipTests=true -B
+# and this invokes pitest, because it doesn't follow 'skipTests', like surefire and filesafe.
+# So we have to put pitest in custom profile, and that works.

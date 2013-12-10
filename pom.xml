@@ -70,35 +70,43 @@
                     </includes>
                 </configuration>
             </plugin>
-
-            <plugin>
-                <groupId>org.pitest</groupId>
-                <artifactId>pitest-maven</artifactId>
-                <version>${pitest.version}</version>
-                <executions>
-                    <execution>
-                        <phase>verify</phase>
-                        <goals><goal>mutationCoverage</goal></goals>
-                    </execution>
-                </executions>
-
-                <configuration>
-                    <targetClasses>
-                        <param>pl.wkr.fluentrule.*</param>
-                    </targetClasses>
-                    <targetTests>
-                        <param>pl.wkr.fluentrule.*</param>
-                    </targetTests>
-                    <outputFormats>
-                        <param>XML</param>
-                        <param>HTML</param>
-                    </outputFormats>
-                    <verbose>false</verbose>
-                    <mutationThreshold>100</mutationThreshold>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
+    <profiles>
+        <profile>
+            <id>withPitest</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.pitest</groupId>
+                        <artifactId>pitest-maven</artifactId>
+                        <version>${pitest.version}</version>
+                        <executions>
+                            <execution>
+                                <phase>verify</phase>
+                                <goals><goal>mutationCoverage</goal></goals>
+                            </execution>
+                        </executions>
+
+                        <configuration>
+                            <targetClasses>
+                                <param>pl.wkr.fluentrule.*</param>
+                            </targetClasses>
+                            <targetTests>
+                                <param>pl.wkr.fluentrule.*</param>
+                            </targetTests>
+                            <outputFormats>
+                                <param>XML</param>
+                                <param>HTML</param>
+                            </outputFormats>
+                            <verbose>false</verbose>
+                            <mutationThreshold>100</mutationThreshold>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
     <properties>
         <junit.version>4.11</junit.version>
