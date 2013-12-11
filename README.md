@@ -2,3 +2,4 @@ fluent-exception-rule [![Build Status](https://travis-ci.org/wjtk/fluent-excepti
 =====================
 
 Expected exception rule for junit with assertj assertions.
+Hej ho.
