@@ -73,7 +73,7 @@ public class FluentExpectedException extends AbstractCheckExpectedException<Flue
 
     protected final <A extends AbstractThrowableAssert<A,T>, T extends Throwable>
         A newProxy(Class<A> assertClass, Class<T> throwableClass) {
-        //TODO  - tworzenie reflectionAssertFactory wynieść do proxyFactory??
-        return newProxy(assertClass, throwableClass, reflectionAssertFactoryFactory.newFactory(assertClass, throwableClass));
+
+        return newProxy(assertClass, throwableClass, reflectionAssertFactoryFactory.newAssertFactory(assertClass, throwableClass));
     }
 }
