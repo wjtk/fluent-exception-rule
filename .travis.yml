@@ -1,11 +1,8 @@
 language: java
 script:
-    - mvn verify -P withPitest
+    - mvn verify
 
-
-# travis before "script" runs:
-#     mvn install -DskipTests=true -B
-# and this invokes pitest, because it doesn't follow 'skipTests', like surefire and filesafe.
-# So we have to put pitest in custom profile, because we don't want to execute pitest before standard tests.
-# After that we have to call 'verify' with profile that contain pitest execution.
-# Pitest in our pom is attached to 'verify' phase.
+# travis before "script" runs:    mvn install -DskipTests=true -B
+# and default runs:   mvn test
+# but we have pitest attached to 'verify' phase, and it is in profile activated when there is no 'skipTests'.
+# So everything works ok, pitest is executed after normal tests.
