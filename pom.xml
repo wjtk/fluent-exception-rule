@@ -92,9 +92,7 @@
                             <targetClasses>
                                 <param>pl.wkr.fluentrule.*</param>
                             </targetClasses>
-                            <targetTests>
-                                <param>pl.wkr.fluentrule.*</param>
-                            </targetTests>
+                            <!-- <targetTests></targetTests> Jeżeli brak, to bierze wszystkie testy -->
                             <outputFormats>
                                 <param>XML</param>
                                 <param>HTML</param>
