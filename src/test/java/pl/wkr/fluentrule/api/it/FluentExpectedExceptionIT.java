@@ -1,4 +1,4 @@
-package pl.wkr.fluentrule.ittest.api;
+package pl.wkr.fluentrule.api.it;
 
 import org.assertj.core.api.ThrowableAssert;
 import org.junit.Rule;
