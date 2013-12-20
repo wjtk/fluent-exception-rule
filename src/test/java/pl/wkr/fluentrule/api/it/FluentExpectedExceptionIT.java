@@ -109,6 +109,8 @@ public class FluentExpectedExceptionIT {
         throw new Exception("z");
     }
 
+    // expectCause ------------------------------------------
+
     @Test
     public void should_catch_exception_by_cause_message() throws Exception {
         thrown.expectCause().hasMessage("z");
@@ -124,6 +126,39 @@ public class FluentExpectedExceptionIT {
         thrown.expectCause().hasMessageContaining("bug");
         throw new Exception("x", new Exception("yo"));
     }
+
+    @Test
+    public void should_throw_because_exception_has_no_cause() throws Exception {
+        outerExpectMessageContaining("but current throwable has no cause");
+
+        thrown.expectCause().isInstanceOf(IllegalArgumentException.class);
+        throw new Exception("xx");
+    }
+
+    //----------- expectRootCause -----------------------------------------------
+
+    @Test
+    public void should_catch_root_cause() throws Exception {
+        thrown.expectRootCause().isInstanceOf(IllegalStateException.class);
+        throw new Exception(new IllegalArgumentException(new IllegalStateException()));
+    }
+
+    @Test
+    public void should_throw_because_unexpected_class_of_root_cause__but_present_on_cause_chain() throws Exception {
+        outerExpectMessageContaining(IllegalArgumentException.class.getName(), IllegalStateException.class.getName());
+
+        thrown.expectRootCause().isInstanceOf(IllegalArgumentException.class);
+        throw new Exception(new IllegalArgumentException(new IllegalStateException()));
+    }
+
+    @Test
+    public void should_throw_because_because_has_no_cause_rootCause() throws Exception {
+        outerExpectMessageContaining("but current throwable has no cause");
+
+        thrown.expectRootCause().isInstanceOf(IllegalArgumentException.class);
+        throw new Exception();
+    }
+
 
     //----- extending/assertWith ------------------------------------------
 
@@ -172,6 +207,7 @@ public class FluentExpectedExceptionIT {
             }
         });
     }
+
 
 
 }

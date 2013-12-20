@@ -9,15 +9,18 @@ import pl.wkr.fluentrule.util.ClassFinder;
 public class FluentExpectedException extends AbstractCheckExpectedException<FluentExpectedException>{
 
     private static final ProxyFactory PROXY_FACTORY = new ProxyFactory();
-    private static final ThrowableAssertFactory THROWABLE_ASSERT_FACTORY = new ThrowableAssertFactory();
-    private static final CauseAssertFactory CAUSE_ASSERT_FACTORY = new CauseAssertFactory();
+    private static final AssertFactory<ThrowableAssert,Throwable> THROWABLE_ASSERT_FACTORY = new ThrowableAssertFactory();
+    private static final AssertFactory<ThrowableAssert,Throwable> CAUSE_ASSERT_FACTORY = new CauseAssertFactory();
+    private static final AssertFactory<ThrowableAssert,Throwable> ROOT_CAUSE_ASSERT_FACTORY = new RootCauseAssertFactory();
     private static final ReflectionAssertFactoryFactory REFLECTION_ASSERT_FACTORY_FACTORY = new ReflectionAssertFactoryFactory();
     private static final int THROWABLE_TYPE_INDEX_IN_AbstractThrowableAssert = 1;
     private static final ClassFinder throwableClassFinder = new ClassFinder(THROWABLE_TYPE_INDEX_IN_AbstractThrowableAssert);
 
     private final ProxyFactory proxyFactory;
-    private final ThrowableAssertFactory throwableAssertFactory;
-    private final CauseAssertFactory causeAssertFactory;
+    private final AssertFactory<ThrowableAssert,Throwable> throwableAssertFactory;
+    private final AssertFactory<ThrowableAssert,Throwable> causeAssertFactory;
+    private final AssertFactory<ThrowableAssert,Throwable> rootCauseAssertFactory;
+
     private final ReflectionAssertFactoryFactory reflectionAssertFactoryFactory;
 
 
@@ -26,17 +29,20 @@ public class FluentExpectedException extends AbstractCheckExpectedException<Flue
     }
 
     protected FluentExpectedException(){
-        this(PROXY_FACTORY, THROWABLE_ASSERT_FACTORY, CAUSE_ASSERT_FACTORY, REFLECTION_ASSERT_FACTORY_FACTORY);
+        this(PROXY_FACTORY, THROWABLE_ASSERT_FACTORY, CAUSE_ASSERT_FACTORY, ROOT_CAUSE_ASSERT_FACTORY,
+                REFLECTION_ASSERT_FACTORY_FACTORY);
     }
 
     FluentExpectedException(ProxyFactory proxyFactory,
-                            ThrowableAssertFactory throwableAssertFactory,
-                            CauseAssertFactory causeAssertFactory,
+                            AssertFactory<ThrowableAssert,Throwable> throwableAssertFactory,
+                            AssertFactory<ThrowableAssert,Throwable> causeAssertFactory,
+                            AssertFactory<ThrowableAssert,Throwable> rootCauseAssertFactory,
                             ReflectionAssertFactoryFactory reflectionAssertFactoryFactory
                             ) {
         this.proxyFactory = proxyFactory;
         this.throwableAssertFactory = throwableAssertFactory;
         this.causeAssertFactory = causeAssertFactory;
+        this.rootCauseAssertFactory = rootCauseAssertFactory;
         this.reflectionAssertFactoryFactory = reflectionAssertFactoryFactory;
     }
 
@@ -56,9 +62,13 @@ public class FluentExpectedException extends AbstractCheckExpectedException<Flue
         return newProxy(ThrowableAssert.class, Throwable.class, causeAssertFactory);
     }
 
+    public ThrowableAssert expectRootCause() {
+        return newProxy(ThrowableAssert.class, Throwable.class, rootCauseAssertFactory);
+    }
+
     public <A extends AbstractThrowableAssert<A,T>,T extends Throwable> A assertWith(Class<A> assertClass) {
         Class<T> throwableClass = throwableClassFinder.findConcreteClass(assertClass);
-        return newProxy(assertClass, throwableClass);
+        return newProxyWithReflectionAssertFactory(assertClass, throwableClass);
     }
 
     //--------------------------------------------------------------------------------
@@ -72,7 +82,7 @@ public class FluentExpectedException extends AbstractCheckExpectedException<Flue
     }
 
     protected final <A extends AbstractThrowableAssert<A,T>, T extends Throwable>
-        A newProxy(Class<A> assertClass, Class<T> throwableClass) {
+        A newProxyWithReflectionAssertFactory(Class<A> assertClass, Class<T> throwableClass) {
 
         return newProxy(assertClass, throwableClass, reflectionAssertFactoryFactory.newAssertFactory(assertClass, throwableClass));
     }

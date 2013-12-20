@@ -14,6 +14,7 @@ public class FluentExpectedExceptionTest {
         soft.assertThat(rule.expect(MyException.class)).as("expect(Class)").isNotNull();
         soft.assertThat(rule.expectAny(MyException.class)).as("expectAny(Class...)").isNotNull();
         soft.assertThat(rule.expectCause()).as("expectCause()").isNotNull();
+        soft.assertThat(rule.expectRootCause()).as("expectRootCause()").isNotNull();
         soft.assertAll();
     }
 }
