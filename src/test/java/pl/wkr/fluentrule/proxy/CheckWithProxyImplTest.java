@@ -13,12 +13,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
 
-public class CheckWithProxyTest {
+public class CheckWithProxyImplTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    private CheckWithProxy<ThrowableAssertMock, Throwable> checkWithProxy;
+    private CheckWithProxyImpl<ThrowableAssertMock, Throwable> checkWithProxy;
     private ThrowableAssertMock assertProxy;
     private ThrowableAssertMockRegister proxyRegister = null;
     private ThrowableAssertMockRegister register = null;

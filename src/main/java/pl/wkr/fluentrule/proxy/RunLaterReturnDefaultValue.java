@@ -5,7 +5,7 @@ import pl.wkr.fluentrule.util.TypeDefaults;
 
 import java.lang.reflect.Method;
 
-public class RunLaterReturnDefaultValue extends RunLaterCallback {
+class RunLaterReturnDefaultValue extends RunLaterCallback {
 
 
     @Override

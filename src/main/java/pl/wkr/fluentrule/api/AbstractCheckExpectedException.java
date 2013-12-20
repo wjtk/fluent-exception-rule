@@ -3,7 +3,7 @@ package pl.wkr.fluentrule.api;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractCheckExpectedException<S extends AbstractCheckExpectedException<S>>
+abstract class AbstractCheckExpectedException<S extends AbstractCheckExpectedException<S>>
         extends AbstractHandleExceptionRule<S> {
 
     protected List<Check> checks = new ArrayList<Check>();

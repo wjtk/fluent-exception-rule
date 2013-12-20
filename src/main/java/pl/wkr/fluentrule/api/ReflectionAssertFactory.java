@@ -4,7 +4,15 @@ import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.NoOp;
 import org.assertj.core.api.AbstractThrowableAssert;
 
-
+/**
+ * Factory producing real assert.
+ * Calls constructor:
+ *      new SomeThrowableAssert(throwable);
+ * Uses cglib because it is more convenient than calling constructor with JDK refelection api.
+ *
+ * @param <A>
+ * @param <T>
+ */
 class ReflectionAssertFactory<A extends AbstractThrowableAssert<A,T>, T extends Throwable>
         implements AssertFactory<A,T> {
 
@@ -28,6 +36,4 @@ class ReflectionAssertFactory<A extends AbstractThrowableAssert<A,T>, T extends 
         enhancer.setCallback(NoOp.INSTANCE);
         return (V) enhancer.create(new Class[] { actualClass }, new Object[] { actual });
     }
-
-
 }

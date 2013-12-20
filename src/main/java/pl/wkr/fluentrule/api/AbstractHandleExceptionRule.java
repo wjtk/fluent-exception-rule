@@ -6,7 +6,7 @@ import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
 
 
-public abstract class AbstractHandleExceptionRule<S extends AbstractHandleExceptionRule<S>> implements TestRule {
+abstract class AbstractHandleExceptionRule<S extends AbstractHandleExceptionRule<S>> implements TestRule {
 
     private boolean handleAssumptionViolatedExceptions = false;
     private boolean handleAssertionErrors = false;
