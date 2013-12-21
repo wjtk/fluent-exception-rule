@@ -176,7 +176,7 @@ Maven coordinates:
 <dependency>
     <groupId>pl.wkr.test</groupId>
     <artifactId>fluent-exception-rule</artifactId>
-    <version>0.1</version>
+    <version>0.1.0</version>
     <scope>test</scope>
 </dependency>
 ```        
@@ -186,7 +186,7 @@ The project is not in maven central repository, so you can grab it, by cloning t
 ```bash
 $ git clone https://github.com/wjtk/fluent-exception-rule.git
 $ cd fluent-exception-rule
-$ git checkout 0.1
+$ git checkout 0.1.0
 $ mvn javadoc:jar source:jar install
 ```
 
