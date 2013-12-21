@@ -60,9 +60,14 @@ Expecting exception without specifying its type:
 thrown.expect().hasMessage("exc").hasNoCause();
 ```
 
+Specify expected exception type:
+```java
+thrown.expect(IllegalArgumentException.class);
+```
+
 Expecting exception to be any type of:
 ```java
-thrown.expect().isInstanceOfAny(IllegalStateException.class, IllegalArgumentException.class);
+thrown.expectAny(IllegalStateException.class, IllegalArgumentException.class);
 ```
 
 Expecting cause:
