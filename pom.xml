@@ -6,7 +6,7 @@
 	
     <groupId>pl.wkr.test</groupId>
     <artifactId>fluent-exception-rule</artifactId>
-    <version>0.1.0</version>
+    <version>0.2.0-SNAPSHOT</version>
 	<name>Fluent exception rule for junit</name>
 
     <dependencies>
