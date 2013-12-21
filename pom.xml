@@ -6,7 +6,7 @@
 	
     <groupId>pl.wkr.test</groupId>
     <artifactId>fluent-exception-rule</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <version>0.1.0-SNAPSHOT</version>
 	<name>Fluent exception rule for junit</name>
 
     <dependencies>
@@ -35,18 +35,6 @@
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
             <version>${mockito.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>${guava.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-guava</artifactId>
-            <version>${assertj-guava.version}</version>
             <scope>test</scope>
         </dependency>
         <!-- pitest depends on testng, and when testng is present surefire runs testng tests.
@@ -147,7 +135,7 @@
                             <targetClasses>
                                 <param>pl.wkr.fluentrule.*</param>
                             </targetClasses>
-                            <!-- <targetTests></targetTests> Jeżeli brak, to bierze wszystkie testy -->
+                            <!-- <targetTests></targetTests> If omitted it takes all tests  -->
                             <outputFormats>
                                 <param>XML</param>
                                 <param>HTML</param>
@@ -165,13 +153,11 @@
         <junit.version>4.11</junit.version>
         <assertj.version>1.5.0</assertj.version>
         <mockito.version>1.9.5</mockito.version>
-        <guava.version>15.0</guava.version>
-        <assertj-guava.version>1.0.0</assertj-guava.version>
-
 
         <pitest.version>0.31</pitest.version>
         <surefire-plugin.version>2.14.1</surefire-plugin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.compiler.source>1.6</maven.compiler.source>
         <maven.compiler.target>1.6</maven.compiler.target>
     </properties>
