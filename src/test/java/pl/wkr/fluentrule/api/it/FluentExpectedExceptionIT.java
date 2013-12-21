@@ -172,8 +172,8 @@ public class FluentExpectedExceptionIT {
 
     @Test
     public void should_catch_sql_exception() throws SQLException {
-        thrown.assertWith(SQLExceptionAssert.class).hasMessageContaining("zzz").hasNoCause().hasErrorCode(10);
-        throw new SQLException("zzz", "open", 10);
+        thrown.assertWith(SQLExceptionAssert.class).hasMessageContaining("constraint").hasErrorCode(10).hasNoCause();
+        throw new SQLException("constraint violation", "open", 10);
     }
 
     @Test
