@@ -1,13 +1,9 @@
 package pl.wkr.fluentrule.api;
 
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.RuleChain;
 import org.junit.runners.model.Statement;
 import org.mockito.InOrder;
 import pl.wkr.fluentrule.api.testutils.MyException;
-
-import java.sql.SQLException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;

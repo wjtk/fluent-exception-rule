@@ -1,7 +1,7 @@
 package pl.wkr.fluentrule.api;
 
-import org.assertj.core.api.ThrowableAssert;
 import org.assertj.core.api.Assertions;
+import org.assertj.core.api.ThrowableAssert;
 
 class RootCauseAssertFactory implements AssertFactory<ThrowableAssert,Throwable> {
 

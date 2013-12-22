@@ -114,7 +114,7 @@ public class FluentExpectedExceptionIT {
     @Test
     public void should_catch_exception_by_cause_message() throws Exception {
         thrown.expectCause().hasMessage("z");
-        throw new Exception(new Exception("z"));
+        throw new Exception(new Exception("z", new Exception("b")));
     }
 
     @Test
@@ -152,7 +152,7 @@ public class FluentExpectedExceptionIT {
     }
 
     @Test
-    public void should_throw_because_because_has_no_cause_rootCause() throws Exception {
+    public void should_throw_because_has_no_cause_rootCause() throws Exception {
         outerExpectMessageContaining("but current throwable has no cause");
 
         thrown.expectRootCause().isInstanceOf(IllegalArgumentException.class);

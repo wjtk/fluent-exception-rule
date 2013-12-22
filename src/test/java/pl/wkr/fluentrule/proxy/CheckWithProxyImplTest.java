@@ -20,7 +20,6 @@ public class CheckWithProxyImplTest {
 
     private CheckWithProxyImpl<ThrowableAssertMock, Throwable> checkWithProxy;
     private ThrowableAssertMock assertProxy;
-    private ThrowableAssertMockRegister proxyRegister = null;
     private ThrowableAssertMockRegister register = null;
 
 
@@ -38,8 +37,6 @@ public class CheckWithProxyImplTest {
         });
 
         assertProxy = checkWithProxy.getAssertProxy();
-        proxyRegister = assertProxy.getMockRegister();
-
     }
 
     @Test
