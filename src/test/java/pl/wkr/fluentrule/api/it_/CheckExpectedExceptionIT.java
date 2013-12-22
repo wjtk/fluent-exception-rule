@@ -1,4 +1,4 @@
-package pl.wkr.fluentrule.api.it;
+package pl.wkr.fluentrule.api.it_;
 
 import org.junit.Rule;
 import org.junit.Test;

@@ -8,7 +8,7 @@ import org.assertj.core.api.AbstractThrowableAssert;
  * Factory producing real assert.
  * Calls constructor:
  *      new SomeThrowableAssert(throwable);
- * Uses cglib because it is more convenient than calling constructor with JDK refelection api.
+ * Uses cglib because it is more convenient than calling constructor with JDK reflection api.
  *
  * @param <A>
  * @param <T>

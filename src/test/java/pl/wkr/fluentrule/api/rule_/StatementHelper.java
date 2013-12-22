@@ -1,4 +1,4 @@
-package pl.wkr.fluentrule.api.testutils;
+package pl.wkr.fluentrule.api.rule_;
 
 import org.junit.runners.model.Statement;
 

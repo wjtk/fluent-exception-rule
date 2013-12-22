@@ -1,4 +1,4 @@
-package pl.wkr.fluentrule.api.testutils;
+package pl.wkr.fluentrule.proxy.throwableassert_;
 
 import org.assertj.core.api.Condition;
 import org.assertj.core.description.Description;

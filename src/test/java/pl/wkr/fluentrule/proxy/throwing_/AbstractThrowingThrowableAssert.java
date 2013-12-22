@@ -1,4 +1,4 @@
-package pl.wkr.fluentrule.proxy.throwing;
+package pl.wkr.fluentrule.proxy.throwing_;
 
 import org.assertj.core.api.AbstractThrowableAssert;
 

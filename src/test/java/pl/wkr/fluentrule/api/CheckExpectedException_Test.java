@@ -3,13 +3,13 @@ package pl.wkr.fluentrule.api;
 import org.junit.Test;
 import org.junit.runners.model.Statement;
 import org.mockito.InOrder;
-import pl.wkr.fluentrule.api.testutils.ExpectedExc;
+import pl.wkr.fluentrule.api.exception_.ExpectedExc;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
-import static pl.wkr.fluentrule.api.testutils.StatementHelper.evaluateGetException;
+import static pl.wkr.fluentrule.api.rule_.StatementHelper.evaluateGetException;
 
-public class CheckExpectedExceptionTest {
+public class CheckExpectedException_Test {
 
     @Test
     public void should_run_all_checks_in_order() throws Throwable {

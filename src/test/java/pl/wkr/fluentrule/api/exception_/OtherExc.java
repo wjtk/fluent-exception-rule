@@ -1,4 +1,4 @@
-package pl.wkr.fluentrule.api.testutils;
+package pl.wkr.fluentrule.api.exception_;
 
 public class OtherExc extends Exception{
     public OtherExc() {}

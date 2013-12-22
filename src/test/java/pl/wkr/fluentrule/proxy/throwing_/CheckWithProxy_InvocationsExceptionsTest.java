@@ -1,11 +1,11 @@
-package pl.wkr.fluentrule.proxy.throwing;
+package pl.wkr.fluentrule.proxy.throwing_;
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import pl.wkr.fluentrule.api.AssertFactory;
-import pl.wkr.fluentrule.api.testutils.ExpectedExc;
+import pl.wkr.fluentrule.api.exception_.ExpectedExc;
 import pl.wkr.fluentrule.proxy.CheckWithProxy;
 import pl.wkr.fluentrule.proxy.ProxyFactory;
 

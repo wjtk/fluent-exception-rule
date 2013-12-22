@@ -10,9 +10,10 @@ import org.mockito.Matchers;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
-import static pl.wkr.fluentrule.api.testutils.StatementHelper.evaluateGetException;
+import static pl.wkr.fluentrule.api.rule_.StatementHelper.evaluateGetException;
 
-public class AbstractHandleExceptionRuleTest {
+@SuppressWarnings("ThrowableResultOfMethodCallIgnored")
+public class AbstractHandleExceptionRule_Test {
 
     private RuleRegister mockRuleRegister = mock(RuleRegister.class);
     private Statement statement = mock(Statement.class);

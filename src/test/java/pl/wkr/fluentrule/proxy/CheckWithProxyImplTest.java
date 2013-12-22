@@ -6,8 +6,8 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.mockito.InOrder;
 import pl.wkr.fluentrule.api.AssertFactory;
-import pl.wkr.fluentrule.api.testutils.ThrowableAssertMock;
-import pl.wkr.fluentrule.api.testutils.ThrowableAssertMockRegister;
+import pl.wkr.fluentrule.proxy.throwableassert_.ThrowableAssertMock;
+import pl.wkr.fluentrule.proxy.throwableassert_.ThrowableAssertMockRegister;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.inOrder;

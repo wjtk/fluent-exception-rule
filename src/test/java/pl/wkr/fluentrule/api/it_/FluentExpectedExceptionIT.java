@@ -1,4 +1,4 @@
-package pl.wkr.fluentrule.api.it;
+package pl.wkr.fluentrule.api.it_;
 
 
 import org.assertj.core.api.ThrowableAssert;
@@ -9,15 +9,15 @@ import org.junit.rules.RuleChain;
 import pl.wkr.fluentrule.api.Check;
 import pl.wkr.fluentrule.api.CheckExpectedException;
 import pl.wkr.fluentrule.api.FluentExpectedException;
-import pl.wkr.fluentrule.api.testutils.ExpectedExc;
-import pl.wkr.fluentrule.api.testutils.OtherExc;
-import pl.wkr.fluentrule.api.testutils.SQLExceptionAssert;
-import pl.wkr.fluentrule.api.testutils.UnexpectedExc;
+import pl.wkr.fluentrule.api.exception_.ExpectedExc;
+import pl.wkr.fluentrule.api.exception_.OtherExc;
+import pl.wkr.fluentrule.api.test_.SQLExceptionAssert;
+import pl.wkr.fluentrule.api.exception_.UnexpectedExc;
 
 import java.sql.SQLException;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static pl.wkr.fluentrule.api.testutils.FluentExpectedExceptionTestConstants.WAS_NOT_THROWN_MESSAGE;
+import static pl.wkr.fluentrule.api.test_.FluentExpectedExceptionTestConstants.WAS_NOT_THROWN_MESSAGE;
 
 public class FluentExpectedExceptionIT {
 
