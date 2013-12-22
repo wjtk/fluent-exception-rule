@@ -22,7 +22,7 @@ public class FluentExpectedException_Test {
         soft.assertThat(rule.expectCause(tc)        ).as("expectCause(Class)").isInstanceOf(tac);
         soft.assertThat(rule.expectRootCause()      ).as("expectRootCause()").isInstanceOf(tac);
         soft.assertThat(rule.expectRootCause(tc)    ).as("expectRootCause(Class)").isInstanceOf(tac);
-        soft.assertThat(rule.assertWith(SQLExceptionAssert.class)).as("assertWith(AssertClass)").isInstanceOf(SQLExceptionAssert.class);
+        soft.assertThat(rule.assertWith(tsql)       ).as("assertWith(AssertClass)").isInstanceOf(tsql);
         soft.assertAll();
     }
 }

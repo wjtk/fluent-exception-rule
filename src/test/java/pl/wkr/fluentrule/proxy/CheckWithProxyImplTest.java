@@ -26,7 +26,8 @@ public class CheckWithProxyImplTest {
     @Before
     public void before(){
         register = mock(ThrowableAssertMockRegister.class);
-        checkWithProxy = new ProxyFactory().newCheckWithProxy(
+
+        checkWithProxy = new CheckWithProxyImpl(
                 ThrowableAssertMock.class, Throwable.class, new AssertFactory<ThrowableAssertMock, Throwable>() {
             @Override
             public ThrowableAssertMock getAssert(Throwable throwable) {
