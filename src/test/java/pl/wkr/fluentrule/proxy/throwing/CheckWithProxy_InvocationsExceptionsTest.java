@@ -5,7 +5,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import pl.wkr.fluentrule.api.AssertFactory;
-import pl.wkr.fluentrule.api.testutils.MyException;
+import pl.wkr.fluentrule.api.testutils.ExpectedExc;
 import pl.wkr.fluentrule.proxy.CheckWithProxy;
 import pl.wkr.fluentrule.proxy.ProxyFactory;
 
@@ -34,7 +34,7 @@ public class CheckWithProxy_InvocationsExceptionsTest {
 
     @Test
     public void should_throw_runtime_exception_because_not_assertion_error() throws Exception {
-        assertProxy.throwException(new MyException());
+        assertProxy.throwException(new ExpectedExc());
 
         thrown.expect(RuntimeException.class);
         thrown.expectMessage("Exception, not AssertionError when invoking method");

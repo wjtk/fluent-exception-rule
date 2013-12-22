@@ -3,7 +3,7 @@ package pl.wkr.fluentrule.api;
 import org.junit.Test;
 import org.junit.runners.model.Statement;
 import org.mockito.InOrder;
-import pl.wkr.fluentrule.api.testutils.MyException;
+import pl.wkr.fluentrule.api.testutils.ExpectedExc;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
@@ -16,7 +16,7 @@ public class CheckExpectedExceptionTest {
         CheckExpectedException checker = CheckExpectedException.none();
         Check ch1 = mock(Check.class);
         Check ch2 = mock(Check.class);
-        MyException exception = new MyException();
+        ExpectedExc exception = new ExpectedExc();
         Statement statement = mock(Statement.class);
         doThrow(exception).when(statement).evaluate();
 

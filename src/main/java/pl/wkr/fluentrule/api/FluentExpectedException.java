@@ -47,23 +47,31 @@ public class FluentExpectedException extends AbstractCheckExpectedException<Flue
     }
 
     public ThrowableAssert expect() {
-        return newProxy( ThrowableAssert.class, Throwable.class, throwableAssertFactory);
+        return newThrowableAssertProxy();
     }
 
     public ThrowableAssert expect(Class<? extends Throwable> type) {
-        return newProxy(ThrowableAssert.class, Throwable.class, throwableAssertFactory).isInstanceOf(type);
+        return newThrowableAssertProxy().isInstanceOf(type);
     }
 
     public ThrowableAssert expectAny(Class<?> ... types) {
-        return newProxy(ThrowableAssert.class, Throwable.class, throwableAssertFactory).isInstanceOfAny(types);
+        return newThrowableAssertProxy().isInstanceOfAny(types);
     }
 
     public ThrowableAssert expectCause(){
-        return newProxy(ThrowableAssert.class, Throwable.class, causeAssertFactory);
+        return newThrowableCauseAssertProxy();
+    }
+
+    public ThrowableAssert expectCause(Class<? extends Throwable> type){
+        return newThrowableCauseAssertProxy().isInstanceOf(type);
     }
 
     public ThrowableAssert expectRootCause() {
-        return newProxy(ThrowableAssert.class, Throwable.class, rootCauseAssertFactory);
+        return newThrowableRootCauseAssertProxy();
+    }
+
+    public ThrowableAssert expectRootCause(Class<? extends Throwable> type) {
+        return newThrowableRootCauseAssertProxy().isInstanceOf(type);
     }
 
     public <A extends AbstractThrowableAssert<A,T>,T extends Throwable> A assertWith(Class<A> assertClass) {
@@ -73,6 +81,24 @@ public class FluentExpectedException extends AbstractCheckExpectedException<Flue
 
     //--------------------------------------------------------------------------------
 
+    protected final ThrowableAssert newThrowableAssertProxy() {
+        return newProxy( ThrowableAssert.class, Throwable.class, throwableAssertFactory);
+    }
+
+    protected final ThrowableAssert newThrowableCauseAssertProxy() {
+        return newProxy(ThrowableAssert.class, Throwable.class, causeAssertFactory);
+    }
+
+    protected final ThrowableAssert newThrowableRootCauseAssertProxy() {
+        return newProxy(ThrowableAssert.class, Throwable.class, rootCauseAssertFactory);
+    }
+
+    protected final <A extends AbstractThrowableAssert<A,T>, T extends Throwable>
+    A newProxyWithReflectionAssertFactory(Class<A> assertClass, Class<T> throwableClass) {
+
+        return newProxy(assertClass, throwableClass, reflectionAssertFactoryFactory.newAssertFactory(assertClass, throwableClass));
+    }
+
     protected final <A extends AbstractThrowableAssert<A,T>, T extends Throwable>
         A newProxy(Class<A> assertClass, Class<T> throwableClass, AssertFactory<A,T> factory) {
 
@@ -81,9 +107,4 @@ public class FluentExpectedException extends AbstractCheckExpectedException<Flue
         return check.getAssertProxy();
     }
 
-    protected final <A extends AbstractThrowableAssert<A,T>, T extends Throwable>
-        A newProxyWithReflectionAssertFactory(Class<A> assertClass, Class<T> throwableClass) {
-
-        return newProxy(assertClass, throwableClass, reflectionAssertFactoryFactory.newAssertFactory(assertClass, throwableClass));
-    }
 }

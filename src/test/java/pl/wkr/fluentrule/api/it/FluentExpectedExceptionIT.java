@@ -1,5 +1,6 @@
 package pl.wkr.fluentrule.api.it;
 
+
 import org.assertj.core.api.ThrowableAssert;
 import org.junit.Rule;
 import org.junit.Test;
@@ -8,8 +9,10 @@ import org.junit.rules.RuleChain;
 import pl.wkr.fluentrule.api.Check;
 import pl.wkr.fluentrule.api.CheckExpectedException;
 import pl.wkr.fluentrule.api.FluentExpectedException;
+import pl.wkr.fluentrule.api.testutils.ExpectedExc;
+import pl.wkr.fluentrule.api.testutils.OtherExc;
 import pl.wkr.fluentrule.api.testutils.SQLExceptionAssert;
-import pl.wkr.fluentrule.api.testutils.MyException;
+import pl.wkr.fluentrule.api.testutils.UnexpectedExc;
 
 import java.sql.SQLException;
 
@@ -33,26 +36,27 @@ public class FluentExpectedExceptionIT {
     @Test
     public void should_catch_any_exception() throws Exception {
         thrown.expect();
-        throw new Exception();
+        throw new ExpectedExc();
     }
 
     @Test
     public void should_catch_exception_of_expected_type() throws Exception {
-        thrown.expect(MyException.class);
-        throw new MyException();
+        thrown.expect(ExpectedExc.class);
+        throw new ExpectedExc();
     }
-
 
     @Test
     public void should_not_catch_exception_because_nothing_is_expected() throws Exception {
-        outerExpectMessageContaining("a6b7");
-        //thrown - nothing
-        throw new Exception("a6b7");
+        Exception e = new UnexpectedExc();
+        outerExpectIsSame(e);
+
+        throw e;
     }
 
     @Test
     public void should_throw_assertion_that_exception_was_expected_but_not_thrown() {
         outerExpectMessageContaining("Exception was expected but was not thrown");
+
         thrown.expect();
     }
 
@@ -96,69 +100,106 @@ public class FluentExpectedExceptionIT {
     @Test
     public void should_throw_unexpected_type_for_expect_method() throws Exception {
         outerExpect(AssertionError.class);
-        outerExpectMessageContaining(SQLException.class.getName(), Exception.class.getName());
+        outerExpectMessageContaining(UnexpectedExc.class.getName(), ExpectedExc.class.getName());
 
-        thrown.expect(SQLException.class);
-        throw new Exception();
+        thrown.expect(ExpectedExc.class);
+        throw new UnexpectedExc();
     }
-
 
     @Test
     public void should_catch_exception_by_message() throws Exception {
         thrown.expect().hasMessage("z");
-        throw new Exception("z");
+        throw new ExpectedExc("z");
     }
 
     // expectCause ------------------------------------------
 
     @Test
-    public void should_catch_exception_by_cause_message() throws Exception {
-        thrown.expectCause().hasMessage("z");
-        throw new Exception(new Exception("z", new Exception("b")));
+    public void should_catch_exception__expectCause() throws Exception {
+        Exception expected;
+        Exception toThrow = new OtherExc(expected = new ExpectedExc(new UnexpectedExc()));
+
+        thrown.expectCause().isSameAs(expected);
+        throw toThrow;
     }
 
     @Test
-    public void should_throw_because_second_requirement_is_not_fulfilled() throws Exception {
-        outerExpect(AssertionError.class);
-        outerExpectMessageContaining("yo", "bug");
-
-        thrown.expect(Exception.class).hasMessage("x");
-        thrown.expectCause().hasMessageContaining("bug");
-        throw new Exception("x", new Exception("yo"));
-    }
-
-    @Test
-    public void should_throw_because_exception_has_no_cause() throws Exception {
+    public void should_throw_because_exception_has_no_cause__expectCause() throws Exception {
         outerExpectMessageContaining("but current throwable has no cause");
 
-        thrown.expectCause().isInstanceOf(IllegalArgumentException.class);
-        throw new Exception("xx");
+        thrown.expectCause();
+        throw new UnexpectedExc();
     }
+
+    @Test
+    public void should_catch_exception__expectCause_Class() throws Exception {
+        Exception toCompare;
+        Exception toThrow = new OtherExc(toCompare = new ExpectedExc(new UnexpectedExc()));
+
+        thrown.expectCause(ExpectedExc.class).isSameAs(toCompare);
+        throw toThrow;
+    }
+
+    @Test
+    public void should_throw_because_exception_has_no_cause__expectCause_Class() throws Exception {
+        outerExpectMessageContaining("but current throwable has no cause");
+
+        thrown.expectCause(ExpectedExc.class);
+        throw new UnexpectedExc();
+    }
+
+    @Test
+    public void should_throw_because_unexpected_cause_type__expectCause_Class() throws Exception {
+        outerExpectMessageContaining(ExpectedExc.class.getName(), UnexpectedExc.class.getName());
+
+        thrown.expectCause(ExpectedExc.class);
+        throw new OtherExc(new UnexpectedExc(new OtherExc()));
+    }
+
 
     //----------- expectRootCause -----------------------------------------------
 
     @Test
-    public void should_catch_root_cause() throws Exception {
-        thrown.expectRootCause().isInstanceOf(IllegalStateException.class);
-        throw new Exception(new IllegalArgumentException(new IllegalStateException()));
-    }
+    public void should_catch_rootCause() throws Exception {
+        Exception expected;
+        Exception toThrow = new UnexpectedExc(new UnexpectedExc(expected = new ExpectedExc()));
 
-    @Test
-    public void should_throw_because_unexpected_class_of_root_cause__but_present_on_cause_chain() throws Exception {
-        outerExpectMessageContaining(IllegalArgumentException.class.getName(), IllegalStateException.class.getName());
-
-        thrown.expectRootCause().isInstanceOf(IllegalArgumentException.class);
-        throw new Exception(new IllegalArgumentException(new IllegalStateException()));
+        thrown.expectRootCause().isSameAs(expected);
+        throw toThrow;
     }
 
     @Test
     public void should_throw_because_has_no_cause_rootCause() throws Exception {
         outerExpectMessageContaining("but current throwable has no cause");
 
-        thrown.expectRootCause().isInstanceOf(IllegalArgumentException.class);
-        throw new Exception();
+        thrown.expectRootCause();
+        throw new UnexpectedExc();
     }
 
+    @Test
+    public void should_catch_rootCause_Class() throws Exception {
+        Exception expected;
+        Exception toThrow = new UnexpectedExc(new UnexpectedExc(expected = new ExpectedExc()));
+
+        thrown.expectRootCause(ExpectedExc.class).isSameAs(expected);
+        throw toThrow;
+    }
+
+    @Test
+    public void should_throw_because_has_no_cause_rootCause_Class() throws UnexpectedExc {
+        outerExpectMessageContaining("but current throwable has no cause");
+
+        thrown.expectRootCause(ExpectedExc.class);
+        throw new UnexpectedExc();
+    }
+
+    @Test
+    public void should_throw_because_unexpected_rootCause_type__rootCause_Class() throws Exception {
+        outerExpectMessageContaining(ExpectedExc.class.getName(), UnexpectedExc.class.getName());
+
+        thrown.expectRootCause(ExpectedExc.class);
+        throw new ExpectedExc(new ExpectedExc(new UnexpectedExc()));
+    }
 
     //----- extending/assertWith ------------------------------------------
 
@@ -179,10 +220,10 @@ public class FluentExpectedExceptionIT {
     @Test
     public void should_throw_unexpected_type_for_assertWith_method() throws Exception {
         outerExpect(AssertionError.class);
-        outerExpectMessageContaining(SQLException.class.getName(), Exception.class.getName());
+        outerExpectMessageContaining(SQLException.class.getName(), UnexpectedExc.class.getName());
 
         thrown.assertWith(SQLExceptionAssert.class);
-        throw new Exception();
+        throw new UnexpectedExc();
     }
 
     //----------------------------------------------------------------------------
@@ -208,8 +249,14 @@ public class FluentExpectedExceptionIT {
         });
     }
 
-
-
+    private void outerExpectIsSame(final Throwable expected) {
+        thrownOuter.check(new Check() {
+            @Override
+            public void check(Throwable exception) {
+                assertThat(exception).isSameAs(expected);
+            }
+        });
+    }
 }
 
 
