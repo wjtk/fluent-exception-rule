@@ -6,6 +6,8 @@ import pl.wkr.fluentrule.proxy.CheckWithProxy;
 import pl.wkr.fluentrule.proxy.ProxyFactory;
 import pl.wkr.fluentrule.util.ClassFinder;
 
+import static org.assertj.core.util.Preconditions.checkNotNull;
+
 public class FluentExpectedException extends AbstractCheckExpectedException<FluentExpectedException>{
 
     private static final ProxyFactory PROXY_FACTORY = new ProxyFactory();
@@ -75,6 +77,7 @@ public class FluentExpectedException extends AbstractCheckExpectedException<Flue
     }
 
     public <A extends AbstractThrowableAssert<A,T>,T extends Throwable> A assertWith(Class<A> assertClass) {
+        checkNotNull(assertClass);
         Class<T> throwableClass = throwableClassFinder.findConcreteClass(assertClass);
         return newProxyWithReflectionAssertFactory(assertClass, throwableClass);
     }
@@ -103,7 +106,7 @@ public class FluentExpectedException extends AbstractCheckExpectedException<Flue
         A newProxy(Class<A> assertClass, Class<T> throwableClass, AssertFactory<A,T> factory) {
 
         CheckWithProxy<A,T> check = proxyFactory.newCheckWithProxy(assertClass, throwableClass, factory);
-        checks.add(check);
+        addCheck(check);
         return check.getAssertProxy();
     }
 

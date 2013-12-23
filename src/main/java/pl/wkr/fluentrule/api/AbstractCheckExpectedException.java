@@ -3,10 +3,16 @@ package pl.wkr.fluentrule.api;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.assertj.core.util.Preconditions.checkNotNull;
+
 abstract class AbstractCheckExpectedException<S extends AbstractCheckExpectedException<S>>
         extends AbstractHandleExceptionRule<S> {
 
-    protected List<Check> checks = new ArrayList<Check>();
+    private List<Check> checks = new ArrayList<Check>();
+
+    protected void addCheck(Check check) {
+        checks.add(checkNotNull(check,"check"));
+    }
 
     public boolean isExceptionExpected() {
         return checks.size() > 0;

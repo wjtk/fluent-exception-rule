@@ -135,7 +135,10 @@
                             <targetClasses>
                                 <param>pl.wkr.fluentrule.*</param>
                             </targetClasses>
-                            <!-- <targetTests></targetTests> If omitted it takes all tests  -->
+                            <excludedClasses>
+                                <!-- ITests are excluded from mutation coverage -->
+                                <param>*IT</param>
+                            </excludedClasses>
                             <outputFormats>
                                 <param>XML</param>
                                 <param>HTML</param>

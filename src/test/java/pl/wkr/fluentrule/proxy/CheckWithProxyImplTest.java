@@ -1,5 +1,6 @@
 package pl.wkr.fluentrule.proxy;
 
+import org.assertj.core.api.ThrowableAssert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -11,24 +12,22 @@ import pl.wkr.fluentrule.proxy.throwableassert_.ThrowableAssertMockRegister;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.inOrder;
-import static org.mockito.Mockito.mock;
 
 public class CheckWithProxyImplTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    private CheckWithProxyImpl<ThrowableAssertMock, Throwable> checkWithProxy;
+    private CheckWithProxyImpl<ThrowableAssert, Throwable> checkWithProxy;
     private ThrowableAssertMock assertProxy;
     private ThrowableAssertMockRegister register = null;
 
 
     @Before
     public void before(){
-        register = mock(ThrowableAssertMockRegister.class);
-
+        //noinspection unchecked
         checkWithProxy = new CheckWithProxyImpl(
-                ThrowableAssertMock.class, Throwable.class, new AssertFactory<ThrowableAssertMock, Throwable>() {
+                ThrowableAssertMock.class, Throwable.class, new AssertFactory<ThrowableAssert, Throwable>() {
             @Override
             public ThrowableAssertMock getAssert(Throwable throwable) {
                 ThrowableAssertMock tam = new ThrowableAssertMock(throwable);
@@ -37,7 +36,7 @@ public class CheckWithProxyImplTest {
             }
         });
 
-        assertProxy = checkWithProxy.getAssertProxy();
+        assertProxy = (ThrowableAssertMock) checkWithProxy.getAssertProxy();
     }
 
     @Test

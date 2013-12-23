@@ -4,6 +4,8 @@ import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.NoOp;
 import org.assertj.core.api.AbstractThrowableAssert;
 
+import static org.assertj.core.util.Preconditions.checkNotNull;
+
 /**
  * Factory producing real assert.
  * Calls constructor:
@@ -20,8 +22,8 @@ class ReflectionAssertFactory<A extends AbstractThrowableAssert<A,T>, T extends 
     private Class<T> throwableClass;
 
     public ReflectionAssertFactory(Class<A> assertClass, Class<T> throwableClass) {
-        this.assertClass = assertClass;
-        this.throwableClass = throwableClass;
+        this.assertClass = checkNotNull(assertClass, "assertClass");
+        this.throwableClass = checkNotNull(throwableClass, "throwableClass");
     }
 
     @Override

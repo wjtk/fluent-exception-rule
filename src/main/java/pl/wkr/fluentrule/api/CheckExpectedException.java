@@ -8,8 +8,7 @@ public class CheckExpectedException extends AbstractCheckExpectedException<Check
     }
 
     public CheckExpectedException check(Check check) {
-        //TODO not null
-        checks.add(check);
+        addCheck(check);
         return this;
     }
 

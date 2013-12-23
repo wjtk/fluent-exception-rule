@@ -5,6 +5,8 @@ import org.assertj.core.api.ThrowableAssert;
 import org.junit.Test;
 import pl.wkr.fluentrule.api.test_.SQLExceptionAssert;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 public class FluentExpectedException_Test {
 
     @Test
@@ -24,5 +26,14 @@ public class FluentExpectedException_Test {
         soft.assertThat(rule.expectRootCause(tc)    ).as("expectRootCause(Class)").isInstanceOf(tac);
         soft.assertThat(rule.assertWith(tsql)       ).as("assertWith(AssertClass)").isInstanceOf(tsql);
         soft.assertAll();
+    }
+
+    @Test
+    public void should_return_when_expecting_exception() {
+        FluentExpectedException rule = FluentExpectedException.none();
+
+        assertThat(rule.isExceptionExpected()).isFalse();
+        rule.expect();
+        assertThat(rule.isExceptionExpected()).isTrue();
     }
 }

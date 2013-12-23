@@ -9,7 +9,7 @@ public class AbstractThrowingThrowableAssert<S extends AbstractThrowableAssert<S
         super(actual, selfType);
     }
 
-    public S throwException(Exception e) throws Exception {
+    public S throwThis(Throwable e) throws Throwable {
         throw e;
     }
 
