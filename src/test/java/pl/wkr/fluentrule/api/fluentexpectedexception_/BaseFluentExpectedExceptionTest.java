@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.runners.model.Statement;
 import pl.wkr.fluentrule.api.AssertFactory;
 import pl.wkr.fluentrule.api.FluentExpectedException;
+import pl.wkr.fluentrule.api.FluentExpectedExceptionBuilder;
 import pl.wkr.fluentrule.api.exception_.ExpectedExc;
 import pl.wkr.fluentrule.proxy.CheckWithProxy;
 import pl.wkr.fluentrule.proxy.ProxyFactory;
@@ -18,12 +19,11 @@ import static pl.wkr.fluentrule.api.rule_.StatementHelper.evaluateGetException;
 
 public abstract class BaseFluentExpectedExceptionTest {
 
-    protected FluentExpectedException fluentRule;
     protected ThrowableAssertMockRegister register;
     protected AssertFactory<ThrowableAssert,Throwable> throwableAssertFactoryMock;
-    protected ProxyFactory proxyFactory;
-    protected ThrowableAssert returnedProxy = null;
 
+    private ThrowableAssert returnedProxy = null;
+    private FluentExpectedException fluentRule;
     private ThrowableAssertMock throwableAssertMock;
     private CheckWithProxy<ThrowableAssert, Throwable> checkWithProxyMock;
     private ExpectedExc exceptionFromStatement = new ExpectedExc();
@@ -37,7 +37,7 @@ public abstract class BaseFluentExpectedExceptionTest {
     @Before
     @SuppressWarnings("unchecked")
     public final void before_BaseFluentExpectedExceptionTest() {
-        proxyFactory = mock(ProxyFactory.class);
+        ProxyFactory proxyFactory = mock(ProxyFactory.class);
         throwableAssertFactoryMock = mock(AssertFactory.class);
         checkWithProxyMock = mock(CheckWithProxy.class);
         throwableAssertMock = new ThrowableAssertMock();
@@ -45,17 +45,38 @@ public abstract class BaseFluentExpectedExceptionTest {
 
         when(proxyFactory.newCheckWithProxy(ThrowableAssert.class, Throwable.class, throwableAssertFactoryMock)).thenReturn(checkWithProxyMock);
         when(checkWithProxyMock.getAssertProxy()).thenReturn(throwableAssertMock);
+
+        fluentRule = before_createRule(new FluentExpectedExceptionBuilder().withProxyFactory(proxyFactory));
     }
 
     @After
-    public void should_return_throwableAssertMock_as_proxy_AND_executing_statement_should_call__CheckWithProxy_check() {
-        assertThat(returnedProxy).as("returnedProxy").isSameAs(throwableAssertMock);
+    public void after_BaseFluentExpectedExceptionTest() {
+        after_assertThatReturnedThrowableAssertIsSameAsThrowableAssertMock();
+        after_assertThatStatementExecutionShoulCall_CheckWithProxy_Check();
+    }
 
+    //---------------------------------------
+
+    protected void after_assertThatReturnedThrowableAssertIsSameAsThrowableAssertMock() {
+        assertThat(returnedProxy).as("returnedProxy").isSameAs(throwableAssertMock);
+    }
+
+    protected void after_assertThatStatementExecutionShoulCall_CheckWithProxy_Check() {
         //noinspection ThrowableResultOfMethodCallIgnored
         evaluateGetException(fluentRule.apply(statement, null));
 
         verify(checkWithProxyMock).check(exceptionFromStatement);
     }
 
+    //----------------------------------
 
+    protected void setReturnedThrowableAssert(ThrowableAssert returnedProxy) {
+        this.returnedProxy = returnedProxy;
+    }
+
+    protected FluentExpectedException getFluentRule() {
+        return fluentRule;
+    }
+
+    protected abstract FluentExpectedException before_createRule(FluentExpectedExceptionBuilder builder);
 }
