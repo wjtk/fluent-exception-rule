@@ -3,7 +3,6 @@ package pl.wkr.fluentrule.api;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.api.ThrowableAssert;
 import org.junit.Test;
-import pl.wkr.fluentrule.api.test_.SQLExceptionAssert;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -11,9 +10,8 @@ public class FluentExpectedException_Test {
 
     @Test
     public void should_expectXXX_and_withAssert_methods_return_assert_proxy_not_null() {
-        Class<?> tac = ThrowableAssert.class;
+        Class<ThrowableAssert> tac = ThrowableAssert.class;
         Class<Throwable> tc = Throwable.class;
-        Class<SQLExceptionAssert> tsql = SQLExceptionAssert.class;
         FluentExpectedException rule = FluentExpectedException.none();
 
         SoftAssertions soft = new SoftAssertions();
@@ -24,7 +22,7 @@ public class FluentExpectedException_Test {
         soft.assertThat(rule.expectCause(tc)        ).as("expectCause(Class)").isInstanceOf(tac);
         soft.assertThat(rule.expectRootCause()      ).as("expectRootCause()").isInstanceOf(tac);
         soft.assertThat(rule.expectRootCause(tc)    ).as("expectRootCause(Class)").isInstanceOf(tac);
-        soft.assertThat(rule.assertWith(tsql)       ).as("assertWith(AssertClass)").isInstanceOf(tsql);
+        soft.assertThat(rule.assertWith(tac)        ).as("assertWith(AssertClass)").isInstanceOf(tac);
         soft.assertAll();
     }
 
