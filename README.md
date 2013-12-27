@@ -72,12 +72,14 @@ thrown.expectAny(IllegalStateException.class, IllegalArgumentException.class);
 
 Expecting cause:
 ```java
-thrown.expectCause().isInstanceOf(IllegalAccessException.class).hasMessageContaining("to low");
+thrown.expectCause().hasMessageContaining("to low");
+thrown.expectCause(IllegalAccessException.class).hasMessageContaining("memory");
 ```
 
 Expecting rootCause(exception on tail of exceptions chain):
 ```java
-thrown.expectRootCause().isInstanceOf(IllegalArgumentException.class);
+thrown.expectRootCause().hasMessageContaining("is null");
+thrown.expectRootCause(IllegalArgumentException.class).hasMessageContaining("argument");
 ```
 
 More AssertJ assertions:
@@ -206,7 +208,6 @@ From 2013-11 [Catch-Exception] has support for AssertJ, so there are already no 
 Other resources
 ---------------
 - [Project](https://github.com/wjtk/fluent-exception-rule-examples) with more examples of fluent-expected-exception usage.
-
 
 [Junit]: https://github.com/junit-team/junit "Junit"
 [AssertJ]: https://github.com/joel-costigliola/assertj-core "AssertJ"
