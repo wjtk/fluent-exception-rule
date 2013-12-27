@@ -18,18 +18,31 @@ abstract class AbstractHandleExceptionRule<S extends AbstractHandleExceptionRule
         myself = (S) this;
     }
 
-
+    /**
+     * Starts handling of assertion errors.
+     *
+     * @return {@code this} to allow chaining
+     */
     public final S handleAssertionErrors() {
         handleAssertionErrors = true;
         return myself;
     }
 
+    /**
+     * Starts handling of AssumptionViolatedException.
+     *
+     * @return {@code this} to allow chaining
+     */
     public final S handleAssumptionViolatedExceptions() {
         handleAssumptionViolatedExceptions = true;
         return myself;
     }
 
-
+    /**
+     * Implementation of {@link TestRule#apply(org.junit.runners.model.Statement, org.junit.runner.Description)}  }
+     * required by junit.
+     *
+     */
     @Override
     public final Statement apply(final Statement base, Description description) {
         return new Statement() {
