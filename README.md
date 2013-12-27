@@ -199,11 +199,25 @@ $ mvn javadoc:jar source:jar install
 
 Alternatively you can [download source code as ZIP](https://github.com/wjtk/fluent-exception-rule/releases).
 
-
 Catch-Exception
 ---------------
 From 2013-11 [Catch-Exception] has support for AssertJ, so there are already no reasons not to use it. It's small but great library, but also has some limitations. It can't catch exceptions from static methods and constructors, also final methods and final classes are pain. So proposition is: use catch-exception where it works, and for other cases use `FluentExpectedException`.
 
+Changelog
+---------
+
+#### 0.2.0
+
+- new methods: `expectCause(Class)`, `expectRootCause(Class)`
+- project information improvements
+
+#### 0.1.0 
+
+- initial version
+
+License
+-------
+This project is released under version 2.0 of the [Apache License](http://www.apache.org/licenses/LICENSE-2.0).
 
 Other resources
 ---------------
