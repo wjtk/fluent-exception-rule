@@ -97,9 +97,8 @@
                         <goals><goal>run</goal></goals>
                         <configuration>
                             <tasks>
-                                <delete>
-                                    <fileset dir="target" includes="*.jar"/>
-                                </delete>
+                                <delete file="target/original-${project.build.finalName}.jar"/>
+                                <delete file="target/${project.build.finalName}.jar"/>
                             </tasks>
                         </configuration>
                     </execution>
@@ -134,8 +133,30 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <!--
+            1) Not in reporting branch because: 'mvn javadoc:javadoc' starts 'default-cli' execution which using
+                configuration from 'build', not 'reporting'.
+            2) 'mvn site:site' - uses configuration in 'reporting', but doesn't generate javadocs without javadoc plugin,
+                so to generate javadoc use 'mvn javadoc:javadoc'
+            -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9</version>
+                <configuration>
+                    <header>${project.build.finalName}</header>
+                    <links>
+                        <link>http://junit-team.github.io/junit/javadoc/latest/</link>
+                        <link>http://joel-costigliola.github.io/assertj/core/api/</link>
+                    </links>
+                    <!-- <show>public</show> some classes need protected members to be explained -->
+                </configuration>
+            </plugin>
+
         </plugins>
     </build>
+
     <profiles>
         <profile>
             <id>withPitest</id>
