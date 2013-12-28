@@ -10,20 +10,38 @@ abstract class AbstractCheckExpectedException<S extends AbstractCheckExpectedExc
 
     private List<Check> checks = new ArrayList<Check>();
 
+    /**
+     * Internal: adds assert callback to list.
+     *
+     * @param check callback to assert thrown exception
+     */
     protected void addCheck(Check check) {
         checks.add(checkNotNull(check,"check"));
     }
 
+    /**
+     * Returns if rule is expecting any exception.
+     *
+     * @return {@code true} if any exception is expected
+     */
     public boolean isExceptionExpected() {
         return checks.size() > 0;
     }
 
+    /**
+     * Handles thrown exception.
+     *
+     * @param e thrown exception
+     */
     protected void handleException(Throwable e) {
         for(Check c : checks) {
             c.check(e);
         }
     }
 
+    /**
+     * Throws AssertionError with info that exception was expected but not thrown.
+     */
     protected void failBecauseExceptionWasNotThrown() {
         throw new AssertionError("Exception was expected but was not thrown");
     }

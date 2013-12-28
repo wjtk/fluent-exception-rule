@@ -1,12 +1,13 @@
-package pl.wkr.fluentrule.api;
+package pl.wkr.fluentrule.assertfactory;
 
 import org.assertj.core.api.ThrowableAssert;
 import org.junit.Test;
 import pl.wkr.fluentrule.api.assertfactory_.BaseCauseAssertFactoryTest;
 import pl.wkr.fluentrule.api.exception_.ExpectedExc;
 import pl.wkr.fluentrule.api.exception_.UnexpectedExc;
+import pl.wkr.fluentrule.assertfactory.AssertFactory;
 
-public class CauseAssertFactory_Test extends BaseCauseAssertFactoryTest {
+public class CauseExtractor_Test extends BaseCauseAssertFactoryTest {
 
     @Override
     protected AssertFactory<ThrowableAssert,Throwable> getFactory() {

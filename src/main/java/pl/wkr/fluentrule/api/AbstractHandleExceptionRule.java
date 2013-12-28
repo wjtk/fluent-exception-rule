@@ -39,9 +39,7 @@ abstract class AbstractHandleExceptionRule<S extends AbstractHandleExceptionRule
     }
 
     /**
-     * Implementation of {@link TestRule#apply(org.junit.runners.model.Statement, org.junit.runner.Description)}  }
-     * required by junit.
-     *
+     * Method required by junit from <b>rules</b> implementations.
      */
     @Override
     public final Statement apply(final Statement base, Description description) {

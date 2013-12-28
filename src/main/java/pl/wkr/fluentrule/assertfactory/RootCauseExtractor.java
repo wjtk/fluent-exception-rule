@@ -1,15 +1,11 @@
-package pl.wkr.fluentrule.api;
-
-import org.assertj.core.api.Assertions;
-import org.assertj.core.api.ThrowableAssert;
+package pl.wkr.fluentrule.assertfactory;
 
 import static org.assertj.core.util.Preconditions.checkNotNull;
 
-class RootCauseAssertFactory implements AssertFactory<ThrowableAssert,Throwable> {
-
+class RootCauseExtractor implements ThrowableExtractor {
 
     @Override
-    public ThrowableAssert getAssert(Throwable throwable) {
+    public Throwable extract(Throwable throwable) {
         checkNotNull(throwable, "throwable");
         Throwable rootCause = throwable.getCause();
         if( rootCause != null) {
@@ -21,6 +17,6 @@ class RootCauseAssertFactory implements AssertFactory<ThrowableAssert,Throwable>
         if( rootCause == null){
             throw new AssertionError("Expecting a throwable with root cause, but current throwable has no cause");
         }
-        return Assertions.assertThat(rootCause);
+        return rootCause;
     }
 }

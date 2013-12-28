@@ -3,7 +3,7 @@ package pl.wkr.fluentrule.util;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
-public  class ClassFinder {
+public class ClassFinder {
 
     private int typeArgIndex;
 

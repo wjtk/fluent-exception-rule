@@ -1,8 +1,10 @@
-package pl.wkr.fluentrule.api;
+package pl.wkr.fluentrule.assertfactory;
 
 import org.junit.Test;
 import pl.wkr.fluentrule.api.assertfactory_.BaseAssertFactoryTest;
 import pl.wkr.fluentrule.api.test_.SQLExceptionAssert;
+import pl.wkr.fluentrule.assertfactory.AssertFactory;
+import pl.wkr.fluentrule.assertfactory.ReflectionAssertFactory;
 
 import java.sql.SQLException;
 

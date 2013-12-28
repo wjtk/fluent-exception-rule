@@ -11,9 +11,9 @@ import static org.assertj.core.util.Preconditions.checkNotNull;
 /**
  *
  * Implements junit's expected exception rule in fluent way, returning AssertJ {@link ThrowableAssert}.
- *
- * <p>Usage in tests:</p>
- *
+ * <p/>
+ * Usage in tests:
+ * <p/>
  * <pre><code>
  *  &#064;Rule
  *  public FluentExpectedException thrown = FluentExpectedException.none();
@@ -26,7 +26,7 @@ import static org.assertj.core.util.Preconditions.checkNotNull;
  * </code></pre>
  *
  * @see
- *  <a href="https://github.com/wjtk/fluent-exception-rule">Project site - more examples</a>
+ *  <a href="https://github.com/wjtk/fluent-exception-rule#readme" target="_blank">Project site - more examples</a>
  *
  *
  * @author Wojciech Krak
@@ -50,7 +50,7 @@ public class FluentExpectedException extends AbstractCheckExpectedException<Flue
 
 
     /**
-     * Creates and returns new instance of this class.
+     * Creates and returns new instance of {@code FluentExpectedException} rule.
      *
      * @return new instance
      */
@@ -80,6 +80,7 @@ public class FluentExpectedException extends AbstractCheckExpectedException<Flue
      * Starts expecting of any exception.
      *
      * @return {@link ThrowableAssert} to specify more expectations
+     *
      */
     public ThrowableAssert expect() {
         return newThrowableAssertProxy();
