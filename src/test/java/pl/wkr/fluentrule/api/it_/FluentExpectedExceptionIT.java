@@ -1,25 +1,23 @@
 package pl.wkr.fluentrule.api.it_;
 
-import org.assertj.core.api.ThrowableAssert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
-import pl.wkr.fluentrule.api.Check;
-import pl.wkr.fluentrule.api.CheckExpectedException;
 import pl.wkr.fluentrule.api.FluentExpectedException;
 import pl.wkr.fluentrule.api.exception_.ExpectedExc;
 import pl.wkr.fluentrule.api.exception_.OtherExc;
 import pl.wkr.fluentrule.api.exception_.UnexpectedExc;
 import pl.wkr.fluentrule.api.test_.SQLExceptionAssert;
+import pl.wkr.fluentrule.api.test_.TCheckExpectedException;
 
 import java.sql.SQLException;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static pl.wkr.fluentrule.api.test_.FluentExpectedExceptionHelper.WAS_NOT_THROWN_MESSAGE;
 
 public class FluentExpectedExceptionIT {
 
-    public CheckExpectedException thrownOuter = CheckExpectedException.none().handleAssertionErrors().handleAssumptionViolatedExceptions();
-    public FluentExpectedException thrown = FluentExpectedException.none();
+    protected TCheckExpectedException thrownOuter = TCheckExpectedException.handlingAll();
+    protected FluentExpectedException thrown = FluentExpectedException.none();
 
     @Rule
     public RuleChain chain = RuleChain.outerRule(thrownOuter).around(thrown);
@@ -84,65 +82,65 @@ public class FluentExpectedExceptionIT {
     @Test
     public void should_not_catch_exception_because_nothing_is_expected() throws Exception {
         Exception e = new UnexpectedExc();
-        outerExpectIsSame(e);
+        thrownOuter.expectIsSame(e);
 
         throw e;
     }
 
     @Test
     public void should_throw_assertion_that_exception_was_expected_but_not_thrown() {
-        outerExpectMessageContaining("Exception was expected but was not thrown");
+        thrownOuter.expectMessageContaining(WAS_NOT_THROWN_MESSAGE);
 
         thrown.expect();
     }
 
 
-    //----- extending/assertWith ------------------------------------------
+    //----- extending/expectWith ------------------------------------------
 
     @Test
     public void should_catch_sql_exception() throws SQLException {
-        thrown.assertWith(SQLExceptionAssert.class).hasMessageContaining("constraint").hasErrorCode(10).hasNoCause();
+        thrown.expectWith(SQLExceptionAssert.class).hasMessageContaining("constraint").hasErrorCode(10).hasNoCause();
         throw new SQLException("constraint violation", "open", 10);
     }
 
     @Test
-    public void should_throw_unexpected_type_for_assertWith_method() throws Exception {
-        outerExpect(AssertionError.class);
-        outerExpectMessageContaining(SQLException.class.getName(), UnexpectedExc.class.getName());
+    public void should_throw_unexpected_type_for_expectWith_method() throws Exception {
+        thrownOuter.expectAnotherClass(SQLException.class, UnexpectedExc.class);
 
-        thrown.assertWith(SQLExceptionAssert.class);
+        thrown.expectWith(SQLExceptionAssert.class);
         throw new UnexpectedExc();
+    }
+
+    @Test
+    public void should_catch_cause_sql_exception() throws Exception {
+        thrown.expectCauseWith(SQLExceptionAssert.class).hasCauseExactlyInstanceOf(Exception.class);
+        throw new Exception(new SQLException(new Exception()));
+    }
+
+    @Test
+    public void should_throw_unexpected_type_for_expectCauseWith_method() throws Exception {
+        thrownOuter.expectAnotherClass(SQLException.class, UnexpectedExc.class);
+
+        thrown.expectCauseWith(SQLExceptionAssert.class);
+        throw new ExpectedExc(new UnexpectedExc());
+    }
+
+
+    @Test
+    public void should_catch_root_cause_sql_exception() throws Exception {
+        thrown.expectRootCauseWith(SQLExceptionAssert.class).hasNoCause();
+        throw new Exception( new Exception(new SQLException()));
+    }
+
+    @Test
+    public void should_throw_unexpected_type_for_expectRootCauseWith_method() throws Exception {
+        thrownOuter.expectAnotherClass(SQLException.class, UnexpectedExc.class);
+
+        thrown.expectRootCauseWith(SQLExceptionAssert.class);
+        throw new ExpectedExc(new ExpectedExc(new UnexpectedExc()));
     }
 
     //----------------------------------------------------------------------------
 
-    private void outerExpect(final Class<?> type) {
-        thrownOuter.check(new Check() {
-            @Override
-            public void check(Throwable exception) {
-                assertThat(exception).isInstanceOf(type);
-            }
-        });
-    }
 
-    private  void outerExpectMessageContaining(final String ... messages) {
-        thrownOuter.check(new Check(){
-            @Override
-            public void check(Throwable exception) {
-                ThrowableAssert throwableAssert = assertThat(exception);
-                for(String message : messages) {
-                    throwableAssert.hasMessageContaining(message);
-                }
-            }
-        });
-    }
-
-    private void outerExpectIsSame(final Throwable expected) {
-        thrownOuter.check(new Check() {
-            @Override
-            public void check(Throwable exception) {
-                assertThat(exception).isSameAs(expected);
-            }
-        });
-    }
 }

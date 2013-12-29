@@ -4,6 +4,7 @@ import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.NoOp;
 import org.assertj.core.api.AbstractThrowableAssert;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.util.Preconditions.checkNotNull;
 
 /**
@@ -27,8 +28,11 @@ class ReflectionAssertFactory<A extends AbstractThrowableAssert<A,T>, T extends 
     }
 
     @Override
-    public A getAssert(T throwable) {
-        return proxy(assertClass, throwableClass, throwable);
+    public A getAssert(Throwable throwable) {
+        if( throwableClass != Throwable.class ){
+            assertThat(throwable).isInstanceOf(throwableClass);
+        }
+        return proxy(assertClass, throwableClass, throwableClass.cast(throwable));
     }
 
     @SuppressWarnings("unchecked")

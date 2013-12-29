@@ -16,5 +16,5 @@ public interface AssertFactory<A extends AbstractThrowableAssert<A,T>, T extends
      * @param throwable exception
      * @return  assertion for given exception
      */
-    A getAssert(T throwable);
+    A getAssert(Throwable throwable);
 }

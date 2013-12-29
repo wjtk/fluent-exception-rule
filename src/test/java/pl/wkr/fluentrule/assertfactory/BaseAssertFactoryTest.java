@@ -2,7 +2,6 @@ package pl.wkr.fluentrule.assertfactory;
 
 import org.assertj.core.api.AbstractThrowableAssert;
 import org.junit.Before;
-import pl.wkr.fluentrule.api.AssertFactory;
 import pl.wkr.fluentrule.api.test_.BaseWithFluentThrownTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -20,11 +19,11 @@ public abstract class BaseAssertFactoryTest<A extends AbstractThrowableAssert<A,
     abstract protected AssertFactory<A,T> getFactory();
 
 
-    protected final A assertThatCreatesNotNullAssertAndItHasGivenActual(T exception, T expectedActual) {
+    protected final A assertThatCreatesNotNullAssertAndItHasGivenActual(T exception) {
         A anAssert = factory.getAssert(exception);
 
         assertThat(anAssert).isNotNull();
-        anAssert.isSameAs(expectedActual);
+        anAssert.isSameAs(exception);
         return anAssert;
     }
 

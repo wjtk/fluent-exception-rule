@@ -1,32 +1,38 @@
 package pl.wkr.fluentrule.assertfactory;
 
-import org.assertj.core.api.ThrowableAssert;
 import org.junit.Test;
-import pl.wkr.fluentrule.api.assertfactory_.BaseCauseAssertFactoryTest;
 import pl.wkr.fluentrule.api.exception_.ExpectedExc;
 import pl.wkr.fluentrule.api.exception_.UnexpectedExc;
-import pl.wkr.fluentrule.assertfactory.AssertFactory;
+import pl.wkr.fluentrule.api.test_.BaseWithFluentThrownTest;
 
-public class CauseExtractor_Test extends BaseCauseAssertFactoryTest {
+import static org.assertj.core.api.Assertions.assertThat;
 
-    @Override
-    protected AssertFactory<ThrowableAssert,Throwable> getFactory() {
-        return new CauseAssertFactory();
-    }
+public class CauseExtractor_Test extends BaseWithFluentThrownTest {
+
+    private CauseExtractor extractor = new CauseExtractor();
 
     @Test
-    public void should_create_assert_for_cause() {
+    public void should_extract_cause() {
         Throwable expected;
         Throwable fromExc = new UnexpectedExc(expected = new ExpectedExc());
 
-        assertThatCreatesNotNullAssertAndItHasGivenActual(fromExc, expected);
+        assertThat(extractor.extract(fromExc)).isSameAs(expected);
     }
 
-        @Test
-    public void should_create_assert_for_cause_longer_chain() {
+    @Test
+    public void should_extract_cause_longer_chain() {
         Throwable expected;
         Throwable fromExc = new UnexpectedExc(expected = new ExpectedExc(new UnexpectedExc()));
 
-        assertThatCreatesNotNullAssertAndItHasGivenActual(fromExc, expected);
+        assertThat(extractor.extract(fromExc)).isSameAs(expected);
     }
+
+    @Test
+    public void should_throw_assertion_that_exception_has_no_cause() {
+        thrown.expect().hasMessageContaining("but current throwable has no cause");
+
+        extractor.extract(new UnexpectedExc());
+    }
+
+
 }

@@ -5,15 +5,15 @@ import net.sf.cglib.proxy.CallbackFilter;
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.NoOp;
 import org.assertj.core.api.AbstractThrowableAssert;
-import pl.wkr.fluentrule.api.AssertFactory;
-import pl.wkr.fluentrule.api.SafeCheck;
+import pl.wkr.fluentrule.api.Check;
+import pl.wkr.fluentrule.assertfactory.AssertFactory;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
-class CheckWithProxyImpl<A extends AbstractThrowableAssert<A,T> ,T extends Throwable> extends SafeCheck<T>
-    implements CheckWithProxy<A,T> {
+class CheckWithProxyImpl<A extends AbstractThrowableAssert<A,T> ,T extends Throwable>
+    implements CheckWithProxy<A,T>, Check {
 
     private static final CallbackFilter callbackFilter = new AssertCallbackFilter();
 
@@ -23,7 +23,6 @@ class CheckWithProxyImpl<A extends AbstractThrowableAssert<A,T> ,T extends Throw
 
 
     public CheckWithProxyImpl(Class<A> assertClass, Class<T> throwableClass, AssertFactory<A, T> factory) {
-        super(throwableClass);
         this.assertFactory = factory;
         this.assertProxy = proxy(assertClass, throwableClass);
     }
@@ -33,8 +32,8 @@ class CheckWithProxyImpl<A extends AbstractThrowableAssert<A,T> ,T extends Throw
     }
 
     @Override
-    protected void safeCheck(T exception) {
-        A anAssert = assertFactory.getAssert(exception);
+    public void check(Throwable throwable) {
+        A anAssert = assertFactory.getAssert(throwable);
         for( MethodCall call : runLaterList) {
             invoke(anAssert, call);
         }
@@ -75,6 +74,4 @@ class CheckWithProxyImpl<A extends AbstractThrowableAssert<A,T> ,T extends Throw
                 "Exception, not AssertionError when invoking method [%s].",
                 methodCall.getMethod()),cause);
     }
-
-
 }

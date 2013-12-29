@@ -6,14 +6,14 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.mockito.InOrder;
-import pl.wkr.fluentrule.api.AssertFactory;
+import pl.wkr.fluentrule.assertfactory.AssertFactory;
 import pl.wkr.fluentrule.proxy.throwableassert_.ThrowableAssertMock;
 import pl.wkr.fluentrule.proxy.throwableassert_.ThrowableAssertMockRegister;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.inOrder;
 
-public class CheckWithProxyImplTest {
+public class CheckWithProxyImpl_Test {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();

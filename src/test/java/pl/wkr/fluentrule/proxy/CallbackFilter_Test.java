@@ -8,7 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static pl.wkr.fluentrule.proxy.AssertCallbackFilter.RUN_LATER_RETURN_DEFAULT_VALUE;
 import static pl.wkr.fluentrule.proxy.AssertCallbackFilter.RUN_LATER_RETURN_PROXY;
 
-public class CallbackFilterTest {
+public class CallbackFilter_Test {
 
     private AssertCallbackFilter filter = new AssertCallbackFilter();
 

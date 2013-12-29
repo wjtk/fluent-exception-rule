@@ -1,18 +1,16 @@
 package pl.wkr.fluentrule.api;
 
-import org.assertj.core.api.ThrowableAssert;
-import pl.wkr.fluentrule.proxy.ProxyFactory;
-
 public class FluentExpectedExceptionBuilder {
 
-    private ProxyFactory proxyFactory = null;
+    /*
+    private CheckWithProxyFactory checkWithProxyFactory = null;
     private AssertFactory<ThrowableAssert,Throwable> throwableAssertFactory = null;
     private AssertFactory<ThrowableAssert,Throwable> causeAssertFactory  = null;
     private AssertFactory<ThrowableAssert,Throwable> rootCauseAssertFactory  = null;
     private ReflectionAssertFactoryFactory reflectionAssertFactoryFactory  = null;
 
-    public FluentExpectedExceptionBuilder withProxyFactory(ProxyFactory factory) {
-        proxyFactory = factory;
+    public FluentExpectedExceptionBuilder withProxyFactory(CheckWithProxyFactory factory) {
+        checkWithProxyFactory = factory;
         return this;
     }
 
@@ -38,7 +36,9 @@ public class FluentExpectedExceptionBuilder {
 
     public FluentExpectedException build() {
         return new FluentExpectedException(
-                proxyFactory, throwableAssertFactory,
+                checkWithProxyFactory, throwableAssertFactory,
                 causeAssertFactory, rootCauseAssertFactory, reflectionAssertFactoryFactory);
     }
+    */
 }
+

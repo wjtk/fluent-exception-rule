@@ -1,10 +1,8 @@
 package pl.wkr.fluentrule.assertfactory;
 
 import org.junit.Test;
-import pl.wkr.fluentrule.api.assertfactory_.BaseAssertFactoryTest;
+import pl.wkr.fluentrule.api.exception_.UnexpectedExc;
 import pl.wkr.fluentrule.api.test_.SQLExceptionAssert;
-import pl.wkr.fluentrule.assertfactory.AssertFactory;
-import pl.wkr.fluentrule.assertfactory.ReflectionAssertFactory;
 
 import java.sql.SQLException;
 
@@ -18,6 +16,16 @@ public class ReflectionAssertFactory_Test extends BaseAssertFactoryTest<SQLExcep
     @Test
     public void should_create_assert_for_exception() {
         SQLException expected = new SQLException();
-        assertThatCreatesNotNullAssertAndItHasGivenActual(expected, expected);
+        assertThatCreatesNotNullAssertAndItHasGivenActual(expected);
     }
+
+    @Test
+    public void should_throw_that_unexpected_type() {
+        UnexpectedExc exc = new UnexpectedExc();
+
+        thrown.expectAnotherClass(SQLException.class, UnexpectedExc.class);
+        factory.getAssert(exc);
+    }
+
+
 }

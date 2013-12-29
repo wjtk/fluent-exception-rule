@@ -6,7 +6,7 @@ import org.junit.rules.ExpectedException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ClassFinderTest {
+public class ClassFinder_Test {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();

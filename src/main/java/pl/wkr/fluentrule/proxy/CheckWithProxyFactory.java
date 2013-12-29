@@ -1,7 +1,7 @@
 package pl.wkr.fluentrule.proxy;
 
 import org.assertj.core.api.AbstractThrowableAssert;
-import pl.wkr.fluentrule.api.AssertFactory;
+import pl.wkr.fluentrule.assertfactory.AssertFactory;
 
 /**
  * Factory of {@link CheckWithProxy} implementations.

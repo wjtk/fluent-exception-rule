@@ -53,5 +53,5 @@ public class CheckExpectedException extends AbstractCheckExpectedException<Check
         return this;
     }
 
-    private CheckExpectedException() {}
+    protected CheckExpectedException() {}
 }
