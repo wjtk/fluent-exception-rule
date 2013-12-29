@@ -159,10 +159,7 @@
 
     <profiles>
         <profile>
-            <id>withPitest</id>
-            <activation>
-                <property><name>!skipTests</name></property>
-            </activation>
+            <id>ci</id>
             <build>
                 <plugins>
                     <plugin>
@@ -171,7 +168,7 @@
                         <version>${pitest.version}</version>
                         <executions>
                             <execution>
-                                <phase>verify</phase>
+                                <phase>test</phase>
                                 <goals><goal>mutationCoverage</goal></goals>
                             </execution>
                         </executions>

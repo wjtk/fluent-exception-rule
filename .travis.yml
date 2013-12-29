@@ -1,6 +1,6 @@
 language: java
 script:
-    - mvn verify
+    - mvn test -P ci
 
 # travis before "script" runs:    mvn install -DskipTests=true -B
 # and default runs:   mvn test
