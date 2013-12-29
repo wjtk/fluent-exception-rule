@@ -1,10 +1,23 @@
 fluent-exception-rule [![Build Status](https://travis-ci.org/wjtk/fluent-exception-rule.png?branch=master)](https://travis-ci.org/wjtk/fluent-exception-rule)
-=====================
+==============================================================================================================
 
 Expected exception rule for [Junit] with [AssertJ] assertions.
 
-Reason
-------
+- [QuickStart] (#reason)
+    - [Reason] (#reason)
+    - [Solution] (#solution)
+    - [Examples] (#examples)
+    - [Usage with custom assertions] (#custom assertions)
+    - [Usage with callbacks] (#CheckExpectedException)
+    - [Extending] (#extending)
+- [Javadoc]
+- [Getting started] (#getting started)
+- [Changelog] (#changelog) 
+- [License] (#license)
+- [Other resources] (#resources)
+
+<a name="reason"/> Reason
+-------------------------
 
 In Junit + Assertj test enviroment you can test thrown exceptions in two ways:
 
@@ -29,8 +42,8 @@ In Junit + Assertj test enviroment you can test thrown exceptions in two ways:
     This not very concise, and hard to read. We want our tests to be readable, don't we? Line with `failBecauseExceptionWasNotThrown` is easy to forget in this bloat code, and our test will pass, in that case, even if there is no exception. Not very good.
     
 
-Solution
---------
+<a name="solution"/> Solution
+-----------------------------
 Fluent-exception-rule is union of Junit `ExpectedException` rule and AssertJ's assertions convenience. To use it you have to declare rule in your test class:
 ```java
 import pl.wkr.fluentrule.api.FluentExpectedException;
@@ -52,8 +65,8 @@ public void fluent_rule_way() throws Exception {
 
 You can use all very convenient methods of 'ThrowableAssert' from AssertJ. Isn't it more readable?
 
-More examples
--------------
+<a name="examples"/> More examples
+----------------------------------
 
 Expecting exception without specifying its type:
 ```java
@@ -63,11 +76,6 @@ thrown.expect().hasMessage("exc").hasNoCause();
 Specify expected exception type:
 ```java
 thrown.expect(IllegalArgumentException.class);
-```
-
-Expecting exception to be any type of:
-```java
-thrown.expectAny(IllegalStateException.class, IllegalArgumentException.class);
 ```
 
 Expecting cause:
@@ -100,8 +108,8 @@ throw new RuntimeException("this throwable",
 
 And that's it, after expectXXX() methods you can use all methods from AssertJ's `ThrowableAssert`
 
-Custom ThrowableAssert
-------------------------
+<a name="custom assertions"/> Custom ThrowableAssert
+----------------------------------------------------
 Assume that we have written some custom AssertJ assertion for custom exception, for example:
 
 ```java
@@ -119,14 +127,23 @@ public class SQLExceptionAssert extends AbstractThrowableAssert<SQLExceptionAsse
     }
 }
 ```
+
 Usage of this assert with `FluentExpectedException` is very straightforward:
 
 ```java
-thrown.assertWith(SQLExceptionAssert.class).hasMessageContaining("constraint").hasErrorCode(10).hasNoCause();
+thrown.expectWith(SQLExceptionAssert.class).hasMessageContaining("constraint").hasErrorCode(10).hasNoCause();
 ```
 
-CheckExpectedException
-----------------------
+You can also apply custom assertion to exception cause and root cause:
+
+```java
+thrown.expectCauseWith(SQLExceptionAssert.class).hasMessageContaining("foreign key").hasErrorCode(11);
+thrown.expectRootCauseWith(SQLExceptionAssert.class).hasErrorCode(12).hasMessageContaining("primary key");
+```
+
+
+<a name="CheckExpectedException"/> CheckExpectedException
+---------------------------------------------------------
 For cases when: 
 - you don't want to write custom AssertJ assertion, but want to test custom exception property, etc.
 - you want to verify state of objects after exception
@@ -175,11 +192,38 @@ thrown.check(new SafeCheck<NotEnoughMoney>() {
 coffeeMachine.getCoffee();
 ```
 
-Getting started
----------------
+<a name="extending"/> Extending
+-------------------------------
+To follow DRY rule `FluentExpectedException` and `CheckExpectedException` can be easily overriden and new methods can be added. For example, assume that we regularly check if thrown exception is instance of `IllegalArgumentException` with `SQLException` root cause with message containing "connection lost". We can write method that will check this expectations(overriding FluentExpectedException):
+
+```java
+class MyFluentExpectedException extends FluentExpectedException {
+
+    public ThrowableAssert expectLostConnection() {
+        expect().as("expectLostConnection")
+                .isInstanceOf(IllegalStateException.class)
+                .hasRootCauseInstanceOf(SQLException.class);
+
+        return expectRootCause().as("expectLostConnection-cause").hasMessageContaining("connection lost");
+    }
+}
+```
+
+and use it in tests:
+
+```java
+thrown.expectLostConnection().hasMessageContaining("#144");
+
+//sample connection lost simulation
+throw new IllegalStateException(new IllegalStateException(new SQLException("connection lost, #144")));
+```
+
+
+<a name="getting started"/> Getting started
+-------------------------------------------
 
 Maven coordinates:
-```
+```xml
 <dependency>
     <groupId>pl.wkr.test</groupId>
     <artifactId>fluent-exception-rule</artifactId>
@@ -201,28 +245,31 @@ Alternatively you can [download source code as ZIP](https://github.com/wjtk/flue
 
 Catch-Exception
 ---------------
-From 2013-11 [Catch-Exception] has support for AssertJ, so there are already no reasons not to use it. It's small but great library, but also has some limitations. It can't catch exceptions from static methods and constructors, also final methods and final classes are pain. So proposition is: use catch-exception where it works, and for other cases use `FluentExpectedException`.
+From 1.2.0 version, [Catch-Exception] has support for AssertJ, so there are already no reasons not to use it. It's small but great library, but also has some limitations. It can't catch exceptions from static methods and constructors, also final methods and final classes are pain. So proposition is: use catch-exception where it works, and for other cases use `FluentExpectedException`.
 
-Changelog
----------
+<a name="changelog"/> Changelog
+-------------------------------
 
 #### 0.2.0
 
 - new methods: `expectCause(Class)`, `expectRootCause(Class)`
+- new methods `expectWith(assertClass)`, `expectCauseWith(assertClass)`, `expectRootCauseWith()`
 - project information improvements
+- javadoc
 
 #### 0.1.0 
 
 - initial version
 
-License
+<a name="license"/> License
 -------
 This project is released under version 2.0 of the [Apache License](http://www.apache.org/licenses/LICENSE-2.0).
 
-Other resources
+<a name="resources"/> Other resources
 ---------------
-- [Project](https://github.com/wjtk/fluent-exception-rule-examples) with more examples of fluent-expected-exception usage.
+- [Project](https://github.com/wjtk/fluent-exception-rule-examples) with examples of fluent-expected-exception usage.
 
 [Junit]: https://github.com/junit-team/junit "Junit"
 [AssertJ]: https://github.com/joel-costigliola/assertj-core "AssertJ"
 [Catch-Exception]: https://github.com/rwoo/catch-exception "Catch-Exception"
+[Javadoc]: https://wjtk.github.io/fluent-exception-rule/javadoc/latest
