@@ -11,7 +11,7 @@ abstract class AbstractCheckExpectedException<S extends AbstractCheckExpectedExc
     private List<Check> checks = new ArrayList<Check>();
 
     /**
-     * Internal: adds assert callback to list.
+     * Add assertion callback to callback list.
      *
      * @param check callback to assert thrown exception
      */

@@ -8,6 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * Type safe implementation of {@link Check} interface. Ensures that thrown exception has expected type
  * and pass it to {@link #safeCheck(Throwable)} method. Should be used for anonymous classes.
+ * Commonly used in conjunction with Assertj assertions in callback's body.
  * <p/>
  * Usage with {@link CheckExpectedException} rule:
  * </p>
