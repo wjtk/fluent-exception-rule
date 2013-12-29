@@ -1,0 +1,12 @@
+#eclipse
+.settings/
+.classpath
+.project
+
+#idea
+.idea/
+*.iml
+
+#maven
+target/
+dependency-reduced-pom.xml
