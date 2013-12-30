@@ -6,7 +6,7 @@
 	
     <groupId>pl.wkr.test</groupId>
     <artifactId>fluent-exception-rule</artifactId>
-    <version>0.2.0</version>
+    <version>0.3.0-SNAPSHOT</version>
     <name>Fluent exception rule for junit</name>
 
     <developers>
@@ -22,7 +22,7 @@
         <developerConnection>scm:git:git@github.com:wjtk/fluent-exception-rule.git</developerConnection>
         <connection>scm:git:git@github.com:wjtk/fluent-exception-rule.git</connection>
         <url>scm:git:git@github.com:wjtk/fluent-exception-rule.git</url>
-        <tag>0.2.0</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <licenses>
