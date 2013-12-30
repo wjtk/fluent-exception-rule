@@ -39,12 +39,12 @@ In Junit + Assertj test enviroment you can test thrown exceptions in two ways:
   }
   ```
     
-    This not very concise, and hard to read. We want our tests to be readable, don't we? Line with `failBecauseExceptionWasNotThrown` is easy to forget in this bloat code, and our test will pass, in that case, even if there is no exception. Not very good.
+    This is not very concise, and hard to read. We want our tests to be readable, don't we? Line with `failBecauseExceptionWasNotThrown` is easy to forget in this bloat code, and our test will pass, in that case, even if there is no exception. Not very good.
     
 
 <a name="solution"/> Solution
 -----------------------------
-Fluent-exception-rule is union of Junit `ExpectedException` rule and AssertJ's assertions convenience. To use it you have to declare rule in your test class:
+Fluent-exception-rule combines Junit `ExpectedException` rule and AssertJ's assertions convenience. In order to use it, you have to declare rule in your test class:
 ```java
 import pl.wkr.fluentrule.api.FluentExpectedException;
 
@@ -110,7 +110,7 @@ And that's it, after expectXXX() methods you can use all methods from AssertJ's 
 
 <a name="custom assertions"/> Custom ThrowableAssert
 ----------------------------------------------------
-Assume that we have written some custom AssertJ assertion for custom exception, for example:
+Let's assume that we have written some custom AssertJ assertion for custom exception, for example:
 
 ```java
 public class SQLExceptionAssert extends AbstractThrowableAssert<SQLExceptionAssert, SQLException> {
@@ -128,7 +128,7 @@ public class SQLExceptionAssert extends AbstractThrowableAssert<SQLExceptionAsse
 }
 ```
 
-Usage of this assert with `FluentExpectedException` is very straightforward:
+Usage of this assert with `FluentExpectedException` is very simple:
 
 ```java
 thrown.expectWith(SQLExceptionAssert.class).hasMessageContaining("constraint").hasErrorCode(10).hasNoCause();
@@ -144,11 +144,11 @@ thrown.expectRootCauseWith(SQLExceptionAssert.class).hasErrorCode(12).hasMessage
 
 <a name="CheckExpectedException"/> CheckExpectedException
 ---------------------------------------------------------
-For cases when: 
+In case if: 
 - you don't want to write custom AssertJ assertion, but want to test custom exception property, etc.
 - you want to verify state of objects after exception
 
-Library provides `CheckExpectedException` rule, which make possible to verify exceptions in callback style. Unfortunately, Java 7 is not very concise with anonymous classes, so there is some bloat code here.
+Library provides `CheckExpectedException` rule, which makes possible to verify exceptions in callback style. Unfortunately, Java 7 is not very concise with anonymous classes, so there is some bloat code here.
 Declaration:
 
 ```java
@@ -194,7 +194,7 @@ coffeeMachine.getCoffee();
 
 <a name="extending"/> Extending
 -------------------------------
-To follow DRY rule `FluentExpectedException` and `CheckExpectedException` can be easily overriden and new methods can be added. For example, assume that we regularly check if thrown exception is instance of `IllegalArgumentException` with `SQLException` root cause with message containing "connection lost". We can write method that will check this expectations(overriding FluentExpectedException):
+In order to follow DRY rule, `FluentExpectedException` and `CheckExpectedException` can be easily overriden and new methods can be added. For example, let's assume that we regularly check if a thrown exception is an instance of `IllegalArgumentException` with `SQLException` root cause with message containing "connection lost". We can write method that will check this expectations(overriding FluentExpectedException):
 
 ```java
 class MyFluentExpectedException extends FluentExpectedException {
@@ -232,7 +232,7 @@ Maven coordinates:
 </dependency>
 ```        
 
-The project is not in maven central repository, so you can grab it, by cloning this repo:
+The project is not in maven central repository, so you can grab it by cloning this repo:
 
 ```bash
 $ git clone https://github.com/wjtk/fluent-exception-rule.git
@@ -241,11 +241,11 @@ $ git checkout 0.1.0
 $ mvn javadoc:jar source:jar install
 ```
 
-Alternatively you can [download source code as ZIP](https://github.com/wjtk/fluent-exception-rule/releases).
+Alternatively, you can [download source code as ZIP](https://github.com/wjtk/fluent-exception-rule/releases).
 
 Catch-Exception
 ---------------
-From 1.2.0 version, [Catch-Exception] has support for AssertJ, so there are already no reasons not to use it. It's small but great library, but also has some limitations. It can't catch exceptions from static methods and constructors, also final methods and final classes are pain. So proposition is: use catch-exception where it works, and for other cases use `FluentExpectedException`.
+From 1.2.0 version on, [Catch-Exception] provides support for AssertJ that is really worth using. It's a small yet great library, however, there are some limitations to it. It can't catch exceptions from static methods and constructors, and final methods as well as final classes are a bit troublesome. Therefore, it is recommended to use catch-exception in areas where it works, and for other cases it is recommended to use `FluentExpectedException`.
 
 <a name="changelog"/> Changelog
 -------------------------------
