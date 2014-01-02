@@ -1,6 +1,8 @@
 language: java
 script:
     - mvn test -P ci
+after_success:
+    - mvn test jacoco:report coveralls:jacoco -P coveralls
 
 # travis before "script" runs:    mvn install -DskipTests=true -B
 # and default runs:   mvn test
