@@ -3,8 +3,3 @@ script:
     - mvn test -P ci
 after_success:
     - mvn test jacoco:report coveralls:jacoco -P coveralls
-
-# travis before "script" runs:    mvn install -DskipTests=true -B
-# and default runs:   mvn test
-# but we have pitest attached to 'verify' phase, and it is in profile activated when there is no 'skipTests'.
-# So everything works ok, pitest is executed after normal tests.
