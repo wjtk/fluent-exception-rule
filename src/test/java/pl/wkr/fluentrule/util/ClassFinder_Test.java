@@ -29,6 +29,13 @@ public class ClassFinder_Test {
         assertThat(cString).isEqualTo(String.class);
     }
 
+    @Test
+    public void should_discover_class_from_concrete_class_based_on_concrete() {
+        Class<?> cLong = c0.findConcreteClass(ConcreteOnConcrete.class);
+
+        assertThat(cLong).isEqualTo(Long.class);
+    }
+
 
     @Test
     public void will_not_discover_class_from_generic_class() {
@@ -39,7 +46,7 @@ public class ClassFinder_Test {
         c0.findConcreteClass(g.getClass());
     }
 
-    //helper classes
+    //helper classes -----------------------------------------
 
     @SuppressWarnings("unused")
     static abstract class Base<T,U> {}
@@ -48,4 +55,6 @@ public class ClassFinder_Test {
     static class Generic<T,U,V> extends Base<T,U>{}
 
     static class Concrete extends Generic<Long, String, Double>{}
+
+    static class ConcreteOnConcrete extends Concrete{}
 }

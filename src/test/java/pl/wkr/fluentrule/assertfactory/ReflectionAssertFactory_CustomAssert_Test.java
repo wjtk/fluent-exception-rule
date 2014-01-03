@@ -6,7 +6,7 @@ import pl.wkr.fluentrule.api.test_.SQLExceptionAssert;
 
 import java.sql.SQLException;
 
-public class ReflectionAssertFactory_Test extends BaseAssertFactoryTest<SQLExceptionAssert,SQLException>{
+public class ReflectionAssertFactory_CustomAssert_Test extends BaseAssertFactoryTest<SQLExceptionAssert,SQLException>{
 
     @Override
     protected AssertFactory<SQLExceptionAssert, SQLException> getFactory() {
