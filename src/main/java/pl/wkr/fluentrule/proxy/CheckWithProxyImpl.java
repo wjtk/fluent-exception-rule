@@ -3,7 +3,6 @@ package pl.wkr.fluentrule.proxy;
 import net.sf.cglib.proxy.Callback;
 import net.sf.cglib.proxy.CallbackFilter;
 import net.sf.cglib.proxy.Enhancer;
-import net.sf.cglib.proxy.NoOp;
 import org.assertj.core.api.AbstractThrowableAssert;
 import pl.wkr.fluentrule.api.Check;
 import pl.wkr.fluentrule.assertfactory.AssertFactory;
@@ -52,19 +51,20 @@ class CheckWithProxyImpl<A extends AbstractThrowableAssert<A,T> ,T extends Throw
         }
     }
 
-
     @SuppressWarnings("unchecked")
     private <T, V> V proxy(Class<V> assertClass, Class<T> actualClass) {
         Enhancer enhancer = new Enhancer();
         enhancer.setSuperclass(assertClass);
         enhancer.setCallbackFilter(callbackFilter);
-        enhancer.setCallbacks(new Callback[] {
-            NoOp.INSTANCE,
-            new RunLaterReturnProxy().withList(runLaterList),
-            new RunLaterReturnDefaultValue().withList(runLaterList)
-        });
-
+        enhancer.setCallbacks(newCallbackArrayForList(runLaterList));
         return (V) enhancer.create(new Class[] { actualClass }, new Object[] { null });
+    }
+
+    private Callback[] newCallbackArrayForList(List<MethodCall> list) {
+        Callback[] callbacks = new Callback[2];
+        callbacks[AssertCallbackFilter.RUN_LATER_RETURN_PROXY] = new RunLaterReturnProxy().withList(list);
+        callbacks[AssertCallbackFilter.RUN_LATER_RETURN_DEFAULT_VALUE] = new RunLaterReturnDefaultValue().withList(list);
+        return callbacks;
     }
 
     //--------------------------------------------------

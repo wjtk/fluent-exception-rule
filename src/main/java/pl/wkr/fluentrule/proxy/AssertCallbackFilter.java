@@ -7,8 +7,8 @@ import java.lang.reflect.Method;
 
 class AssertCallbackFilter implements CallbackFilter {
 
-    public static final int RUN_LATER_RETURN_PROXY = 1;  //hasMessage, isNull
-    public static final int RUN_LATER_RETURN_DEFAULT_VALUE = 2; //
+    public static final int RUN_LATER_RETURN_PROXY = 0;  //hasMessage, isNull
+    public static final int RUN_LATER_RETURN_DEFAULT_VALUE = 1; //other methods
 
     @Override
     public int accept(Method method) {
