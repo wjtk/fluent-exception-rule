@@ -86,25 +86,6 @@
                 </configuration>
             </plugin>
 
-            <!-- when jarjar sees original-xxx.jar it doesn't process new generated jar
-                    so we remove this jar enforcing jarjar to run
-                    because it may cause problem when running mvn install without clean -->
-            <plugin>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <phase>prepare-package</phase>
-                        <goals><goal>run</goal></goals>
-                        <configuration>
-                            <tasks>
-                                <delete file="target/original-${project.build.finalName}.jar"/>
-                                <delete file="target/${project.build.finalName}.jar"/>
-                            </tasks>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
             <plugin>
                 <groupId>org.sonatype.plugins</groupId>
                 <artifactId>jarjar-maven-plugin</artifactId>
@@ -129,6 +110,7 @@
                                 </keep>
 
                             </rules>
+                            <overwrite>true</overwrite>
                         </configuration>
                     </execution>
                 </executions>
