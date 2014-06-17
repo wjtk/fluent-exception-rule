@@ -7,11 +7,10 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.mockito.InOrder;
 import pl.wkr.fluentrule.assertfactory.AssertFactory;
-import pl.wkr.fluentrule.proxy.throwableassert_.ThrowableAssertMock;
-import pl.wkr.fluentrule.proxy.throwableassert_.ThrowableAssertMockRegister;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.inOrder;
+import static org.mockito.Mockito.mock;
 
 public class CheckWithProxyImpl_Test {
 
@@ -19,24 +18,23 @@ public class CheckWithProxyImpl_Test {
     public ExpectedException thrown = ExpectedException.none();
 
     private CheckWithProxyImpl<ThrowableAssert, Throwable> checkWithProxy;
-    private ThrowableAssertMock assertProxy;
-    private ThrowableAssertMockRegister register = null;
+    private ThrowableAssert throwableAssertMock;
+    private ThrowableAssert assertProxy;
 
 
     @Before
     public void before(){
-        //noinspection unchecked
-        checkWithProxy = new CheckWithProxyImpl(
-                ThrowableAssertMock.class, Throwable.class, new AssertFactory<ThrowableAssert, Throwable>() {
+        throwableAssertMock = mock(ThrowableAssert.class);
+        checkWithProxy = new CheckWithProxyImpl<ThrowableAssert, Throwable>(
+                ThrowableAssert.class, Throwable.class, new AssertFactory<ThrowableAssert, Throwable>() {
+
             @Override
-            public ThrowableAssertMock getAssert(Throwable throwable) {
-                ThrowableAssertMock tam = new ThrowableAssertMock(throwable);
-                register = tam.getMockRegister();
-                return tam;
+            public ThrowableAssert getAssert(Throwable throwable) {
+                return throwableAssertMock;
             }
         });
 
-        assertProxy = (ThrowableAssertMock) checkWithProxy.getAssertProxy();
+        assertProxy = checkWithProxy.getAssertProxy();
     }
 
     @Test
@@ -47,20 +45,19 @@ public class CheckWithProxyImpl_Test {
 
         checkWithProxy.check(new Exception());
 
-        InOrder io = inOrder(register);
-        io.verify(register).hasNoCause();
-        io.verify(register).hasMessage("x");
-        io.verify(register).as("xx");
-        io.verify(register).isInstanceOfAny(Exception.class);
-        io.verify(register).descriptionText();
-        io.verify(register).isNull();
+        InOrder io = inOrder(throwableAssertMock);
+        io.verify(throwableAssertMock).hasNoCause();
+        io.verify(throwableAssertMock).hasMessage("x");
+        io.verify(throwableAssertMock).as("xx");
+        io.verify(throwableAssertMock).isInstanceOfAny(Exception.class);
+        io.verify(throwableAssertMock).descriptionText();
+        io.verify(throwableAssertMock).isNull();
     }
 
     @Test
     public void should_return_default_values_from_methods_not_returning_self_before_exception_checking() {
         assertThat(assertProxy.descriptionText()).isEqualTo(null);
         assertThat(assertProxy.toString()).isEqualTo(null);
-
-        //hashCode, equals - are marked final in AbstractAssert.
+        assertThat(assertProxy.hashCode()).isEqualTo(0);
     }
 }

@@ -12,26 +12,26 @@ import pl.wkr.fluentrule.api.exception_.ExpectedExc;
 import pl.wkr.fluentrule.api.test_.SQLExceptionAssert;
 import pl.wkr.fluentrule.assertfactory.ProxiesFactory;
 import pl.wkr.fluentrule.proxy.CheckWithProxy;
-import pl.wkr.fluentrule.proxy.throwableassert_.ThrowableAssertMock;
-import pl.wkr.fluentrule.proxy.throwableassert_.ThrowableAssertMockRegister;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 import static pl.wkr.fluentrule.api.rule_.StatementHelper.evaluateGetException;
 
 public class FluentExpectedException_expectX_Test {
 
     private FluentExpectedException fluentRule;
 
-    private ThrowableAssertMock throwableAssertMock = new ThrowableAssertMock();
-    private ThrowableAssertMockRegister register = throwableAssertMock.getMockRegister();
+    private ThrowableAssert assertProxyMock;
     private AbstractThrowableAssert<?,?> returnedProxy = null;
 
     private CheckWithProxy<ThrowableAssert, Throwable> checkWithProxyMock;
     private ProxiesFactory proxiesFactoryMock;
 
     private ExpectedExc exceptionFromStatement = new ExpectedExc();
-    private Statement statement = new Statement() {
+    private Statement throwingStatement = new Statement() {
         @Override
         public void evaluate() throws Throwable {
             throw exceptionFromStatement;
@@ -42,7 +42,15 @@ public class FluentExpectedException_expectX_Test {
     @SuppressWarnings("unchecked")
     @Before
     public void before() {
+        assertProxyMock = mock(ThrowableAssert.class, new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
+                return invocationOnMock.getMock();
+            }
+        });
+
         checkWithProxyMock = mock(CheckWithProxy.class);
+
         proxiesFactoryMock = mock(ProxiesFactory.class, new Answer() {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
@@ -50,7 +58,7 @@ public class FluentExpectedException_expectX_Test {
             }
         });
 
-        when(checkWithProxyMock.getAssertProxy()).thenReturn(throwableAssertMock);
+        when(checkWithProxyMock.getAssertProxy()).thenReturn(assertProxyMock);
         fluentRule = new FluentExpectedException(proxiesFactoryMock);
     }
 
@@ -62,16 +70,16 @@ public class FluentExpectedException_expectX_Test {
     }
 
     private void after_assertNoMoreInteractionsWithProxiesFactoryAndReturnedProxy() {
-        verifyNoMoreInteractions(proxiesFactoryMock, register);
+        verifyNoMoreInteractions(proxiesFactoryMock, assertProxyMock);
     }
 
     private void after_assertThatReturnedThrowableAssertIsSameAsThrowableAssertMock() {
-        assertThat(returnedProxy).as("returnedProxy").isSameAs(throwableAssertMock);
+        assertThat(returnedProxy).as("returnedProxy").isSameAs(assertProxyMock);
     }
 
     private void after_assertThatStatementExecutionShoulCall_CheckWithProxy_Check() {
         //noinspection ThrowableResultOfMethodCallIgnored
-        evaluateGetException(fluentRule.apply(statement, null));
+        evaluateGetException(fluentRule.apply(throwingStatement, null));
 
         verify(checkWithProxyMock).check(exceptionFromStatement);
     }
@@ -89,7 +97,7 @@ public class FluentExpectedException_expectX_Test {
         returnedProxy = fluentRule.expect(ExpectedExc.class);
 
         verify(proxiesFactoryMock).newThrowableAssertProxy();
-        verify(register).isInstanceOf(ExpectedExc.class);
+        verify(assertProxyMock).isInstanceOf(ExpectedExc.class);
     }
 
     @Test
@@ -111,7 +119,7 @@ public class FluentExpectedException_expectX_Test {
         returnedProxy = fluentRule.expectCause(ExpectedExc.class);
 
         verify(proxiesFactoryMock).newThrowableCauseAssertProxy();
-        verify(register).isInstanceOf(ExpectedExc.class);
+        verify(assertProxyMock).isInstanceOf(ExpectedExc.class);
     }
 
     @Test
@@ -133,7 +141,7 @@ public class FluentExpectedException_expectX_Test {
         returnedProxy = fluentRule.expectRootCause(ExpectedExc.class);
 
         verify(proxiesFactoryMock).newThrowableRootCauseAssertProxy();
-        verify(register).isInstanceOf(ExpectedExc.class);
+        verify(assertProxyMock).isInstanceOf(ExpectedExc.class);
     }
 
     @Test

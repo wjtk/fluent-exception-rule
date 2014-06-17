@@ -10,7 +10,10 @@
     <name>Fluent exception rule for junit</name>
 
     <developers>
-        <developer><name>Wojciech Krak</name></developer>
+        <developer>
+            <name>Wojciech Krak</name>
+            <email>wojciech.krak@gmail.com</email>
+        </developer>
     </developers>
 
     <issueManagement>
@@ -208,7 +211,7 @@
 
     <properties>
         <junit.version>4.11</junit.version>
-        <assertj.version>1.5.0</assertj.version>
+        <assertj.version>1.6.0</assertj.version>
         <mockito.version>1.9.5</mockito.version>
 
         <jacoco.version>0.6.4.201312101107</jacoco.version>

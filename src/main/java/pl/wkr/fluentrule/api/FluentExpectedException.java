@@ -58,7 +58,7 @@ public class FluentExpectedException extends AbstractCheckExpectedException<Flue
      *
      */
     public ThrowableAssert expect() {
-        return add(proxiesFactory.newThrowableAssertProxy());
+        return addCheckAndReturnProxy(proxiesFactory.newThrowableAssertProxy());
     }
 
     /**
@@ -68,7 +68,7 @@ public class FluentExpectedException extends AbstractCheckExpectedException<Flue
      * @return {@link ThrowableAssert} to specify more expectations
      */
     public ThrowableAssert expect(Class<? extends Throwable> type) {
-        return add(proxiesFactory.newThrowableAssertProxy()).isInstanceOf(type);
+        return addCheckAndReturnProxy(proxiesFactory.newThrowableAssertProxy()).isInstanceOf(type);
     }
 
     /**
@@ -82,7 +82,7 @@ public class FluentExpectedException extends AbstractCheckExpectedException<Flue
      * @return instance of custom throwable assert to specify more expectations on exception
      */
     public <A extends AbstractThrowableAssert<A,T>,T extends Throwable> A expectWith(Class<A> assertClass) {
-        return add(proxiesFactory.newThrowableCustomAssertProxy(assertClass));
+        return addCheckAndReturnProxy(proxiesFactory.newThrowableCustomAssertProxy(assertClass));
     }
 
     /**
@@ -91,7 +91,7 @@ public class FluentExpectedException extends AbstractCheckExpectedException<Flue
      * @return {@link ThrowableAssert} to specify more expectations on exception's cause
      */
     public ThrowableAssert expectCause(){
-        return add(proxiesFactory.newThrowableCauseAssertProxy());
+        return addCheckAndReturnProxy(proxiesFactory.newThrowableCauseAssertProxy());
     }
 
     /**
@@ -101,11 +101,11 @@ public class FluentExpectedException extends AbstractCheckExpectedException<Flue
      * @return {@link ThrowableAssert} to specify more expectations on exception's cause
      */
     public ThrowableAssert expectCause(Class<? extends Throwable> type){
-        return add(proxiesFactory.newThrowableCauseAssertProxy()).isInstanceOf(type);
+        return addCheckAndReturnProxy(proxiesFactory.newThrowableCauseAssertProxy()).isInstanceOf(type);
     }
 
     public <A extends AbstractThrowableAssert<A,T>,T extends Throwable> A expectCauseWith(Class<A> assertClass) {
-        return add(proxiesFactory.newThrowableCauseCustomAssertProxy(assertClass));
+        return addCheckAndReturnProxy(proxiesFactory.newThrowableCauseCustomAssertProxy(assertClass));
     }
 
     /**
@@ -114,7 +114,7 @@ public class FluentExpectedException extends AbstractCheckExpectedException<Flue
      * @return {@link ThrowableAssert} to specify more expectations on exception's root cause
      */
     public ThrowableAssert expectRootCause() {
-        return add(proxiesFactory.newThrowableRootCauseAssertProxy());
+        return addCheckAndReturnProxy(proxiesFactory.newThrowableRootCauseAssertProxy());
     }
 
     /**
@@ -124,16 +124,16 @@ public class FluentExpectedException extends AbstractCheckExpectedException<Flue
      * @return {@link ThrowableAssert} to specify more expectations on exception's root cause
      */
     public ThrowableAssert expectRootCause(Class<? extends Throwable> type) {
-        return add(proxiesFactory.newThrowableRootCauseAssertProxy()).isInstanceOf(type);
+        return addCheckAndReturnProxy(proxiesFactory.newThrowableRootCauseAssertProxy()).isInstanceOf(type);
     }
 
     public <A extends AbstractThrowableAssert<A,T>,T extends Throwable> A expectRootCauseWith(Class<A> assertClass) {
-        return add(proxiesFactory.newThrowableRootCauseCustomAssertProxy(assertClass));
+        return addCheckAndReturnProxy(proxiesFactory.newThrowableRootCauseCustomAssertProxy(assertClass));
     }
 
     //--------------------------------------------------------------------------------
 
-    private <A extends AbstractThrowableAssert<A,T>, T extends Throwable> A add(CheckWithProxy<A,T> check ) {
+    private <A extends AbstractThrowableAssert<A,T>, T extends Throwable> A addCheckAndReturnProxy(CheckWithProxy<A, T> check) {
         addCheck(check);
         return check.getAssertProxy();
     }
