@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class TypeDefaults_Test {
 
-    TypeDefaults td = TypeDefaults.instance;
+    TypeDefaults td = TypeDefaults.INSTANCE;
 
     @Test
     public void should_return_type_defaults() {

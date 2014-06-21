@@ -24,7 +24,7 @@ public class ClassFinder {
             return castToClass(typeArg);
         }
         catch(Exception e) {
-            throw new RuntimeException("Cannot find concrete class. Class 'forClass' cannot be generic!", e);
+            throw new IllegalArgumentException("Cannot find concrete class. Class 'forClass' cannot be generic!", e);
         }
     }
 

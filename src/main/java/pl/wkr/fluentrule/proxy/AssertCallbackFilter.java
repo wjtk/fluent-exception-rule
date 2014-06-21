@@ -7,8 +7,11 @@ import java.lang.reflect.Method;
 
 class AssertCallbackFilter implements CallbackFilter {
 
-    public static final int RUN_LATER_RETURN_PROXY = 0;  //hasMessage, isNull
-    public static final int RUN_LATER_RETURN_DEFAULT_VALUE = 1; //other methods
+    //for: hasMessage(), isNull()
+    public static final int RUN_LATER_RETURN_PROXY = 0;
+
+    //for other methods
+    public static final int RUN_LATER_RETURN_DEFAULT_VALUE = 1;
 
     @Override
     public int accept(Method method) {
@@ -19,7 +22,8 @@ class AssertCallbackFilter implements CallbackFilter {
     }
 
     private boolean isReturningSelf(Method method) {
-        Class<?> returnType = method.getReturnType();  //TODO, maybe getGenericType() - study!
+        //maybe getGenericType()?
+        Class<?> returnType = method.getReturnType();
         return AbstractAssert.class.isAssignableFrom(returnType);
     }
 }

@@ -8,7 +8,7 @@ class MethodCall {
 
     MethodCall(Method method, Object[] args) {
         this.method = method;
-        this.args = args;
+        this.args = args.clone();
     }
 
     Object[] getArgs() {

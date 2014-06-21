@@ -44,7 +44,6 @@ abstract class AbstractHandleExceptionRule<S extends AbstractHandleExceptionRule
     @Override
     public final Statement apply(final Statement base, Description description) {
         return new Statement() {
-
             @Override
             public void evaluate() throws Throwable {
                 try {
@@ -59,27 +58,35 @@ abstract class AbstractHandleExceptionRule<S extends AbstractHandleExceptionRule
                     handleOrRethrow(e);
                     return;
                 }
-                if(isExceptionExpected()) failBecauseExceptionWasNotThrown();
+                if(isExceptionExpected()) {
+                    failBecauseExceptionWasNotThrown();
+                }
             }
         };
     }
 
 
     private void optionallyHandle(Throwable e, boolean handle) throws Throwable {
-        if( handle ) handleOrRethrow(e);
-        else throw e;
+        if( handle ) {
+            handleOrRethrow(e);
+        }
+        else {
+            throw e;
+        }
     }
 
     private void handleOrRethrow(Throwable e) throws Throwable {
-        if(!isExceptionExpected()) throw e;
+        if(!isExceptionExpected()) {
+            throw e;
+        }
         handleException(e);
     }
 
 
     // -- to override --------------------------------------------
-    abstract protected boolean isExceptionExpected();
+    protected abstract boolean isExceptionExpected();
 
-    abstract protected void failBecauseExceptionWasNotThrown();
+    protected abstract void failBecauseExceptionWasNotThrown();
 
-    abstract protected void handleException(Throwable e);
+    protected abstract void handleException(Throwable e);
 }

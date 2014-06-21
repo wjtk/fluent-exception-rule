@@ -14,7 +14,7 @@ import java.util.List;
 class CheckWithProxyImpl<A extends AbstractThrowableAssert<A,T> ,T extends Throwable>
     implements CheckWithProxy<A,T>, Check {
 
-    private static final CallbackFilter callbackFilter = new AssertCallbackFilter();
+    private static final CallbackFilter CALLBACK_FILTER = new AssertCallbackFilter();
 
     private AssertFactory<A,T> assertFactory;
     private A assertProxy;
@@ -44,7 +44,7 @@ class CheckWithProxyImpl<A extends AbstractThrowableAssert<A,T> ,T extends Throw
         } catch (IllegalAccessException e) {
             throw getInvokingException(e, methodCall);
         } catch (InvocationTargetException e) {
-            if( e.getCause() instanceof AssertionError) {
+            if(e.getCause() instanceof AssertionError) {
                 throw (AssertionError) e.getCause();
             }
             throw getInvokingException(e.getCause(), methodCall);
@@ -52,10 +52,10 @@ class CheckWithProxyImpl<A extends AbstractThrowableAssert<A,T> ,T extends Throw
     }
 
     @SuppressWarnings("unchecked")
-    private <T, V> V proxy(Class<V> assertClass, Class<T> actualClass) {
+    private <U, V> V proxy(Class<V> assertClass, Class<U> actualClass) {
         Enhancer enhancer = new Enhancer();
         enhancer.setSuperclass(assertClass);
-        enhancer.setCallbackFilter(callbackFilter);
+        enhancer.setCallbackFilter(CALLBACK_FILTER);
         enhancer.setCallbacks(newCallbackArrayForList(runLaterList));
         return (V) enhancer.create(new Class[] { actualClass }, new Object[] { null });
     }
@@ -70,8 +70,11 @@ class CheckWithProxyImpl<A extends AbstractThrowableAssert<A,T> ,T extends Throw
     //--------------------------------------------------
 
     private RuntimeException getInvokingException(Throwable cause, MethodCall methodCall) {
-        return new RuntimeException(String.format(
-                "Exception, not AssertionError when invoking method [%s].",
-                methodCall.getMethod()),cause);
+        return new IllegalStateException(String.format(
+                    "Exception, not AssertionError when invoking method [%s] on throwable assert. " +
+                    "This should not happen. Problem in throwable assert class.",
+                    methodCall.getMethod()
+                ),
+                cause);
     }
 }

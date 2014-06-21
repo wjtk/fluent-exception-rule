@@ -20,8 +20,8 @@ public class ProxiesFactory {
 
     private static final ExtractingAssertFactoryFactory EXTRACTING_ASSERT_FACTORY_FACTORY = new ExtractingAssertFactoryFactory();
 
-    private static final int THROWABLE_TYPE_INDEX_IN_AbstractThrowableAssert = 1;
-    private static final ClassFinder throwableClassFinder = new ClassFinder(THROWABLE_TYPE_INDEX_IN_AbstractThrowableAssert);
+    private static final int THROWABLE_TYPE_INDEX_IN_ABSTRACT_THROWABLE_ASSERT = 1;
+    private static final ClassFinder THROWABLE_CLASS_FINDER = new ClassFinder(THROWABLE_TYPE_INDEX_IN_ABSTRACT_THROWABLE_ASSERT);
 
     private final CheckWithProxyFactory checkWithProxyFactory;
     private final ThrowableExtractor noopExtractor;
@@ -98,7 +98,7 @@ public class ProxiesFactory {
         CheckWithProxy<A,T> innerNewCustomAssertProxy(Class<A> assertClass, ThrowableExtractor extractor) {
 
         checkNotNull(assertClass);
-        Class<T> throwableClass = throwableClassFinder.findConcreteClass(assertClass);
+        Class<T> throwableClass = THROWABLE_CLASS_FINDER.findConcreteClass(assertClass);
 
         return checkWithProxyFactory.newCheckWithProxy(assertClass, throwableClass,
                 extractingAssertFactoryFactory.newAssertFactory(

@@ -13,7 +13,6 @@ class RootCauseExtractor implements ThrowableExtractor {
                 rootCause = rootCause.getCause();
             }
         }
-        //TODO this should be here?
         if( rootCause == null){
             throw new AssertionError("Expecting a throwable with root cause, but current throwable has no cause");
         }

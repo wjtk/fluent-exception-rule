@@ -77,5 +77,5 @@ public abstract class SafeCheck<T extends Throwable> implements Check{
      *
      * @param exception thrown exception
      */
-    abstract protected void safeCheck(T exception);
+    protected abstract void safeCheck(T exception);
 }

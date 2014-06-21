@@ -16,7 +16,7 @@ abstract class AbstractCheckExpectedException<S extends AbstractCheckExpectedExc
      * @param check callback to assert thrown exception
      */
     protected void addCheck(Check check) {
-        checks.add(checkNotNull(check,"check"));
+        checks.add(checkNotNull(check, "check"));
     }
 
     /**

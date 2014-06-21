@@ -5,9 +5,9 @@ import java.util.Map;
 
 public class TypeDefaults {
 
-    public static final TypeDefaults instance = new TypeDefaults();
+    public static final TypeDefaults INSTANCE = new TypeDefaults();
 
-    private final Map<Class<?>, Object> MAP = new HashMap<Class<?>, Object>();
+    private final Map<Class<?>, Object> defaults = new HashMap<Class<?>, Object>();
 
     public <T> T getDefaultValue(Class<T> type) {
         return getDefaultInner(type);
@@ -15,17 +15,17 @@ public class TypeDefaults {
 
     @SuppressWarnings("unchecked")
     private <T> T getDefaultInner(Class<T> type) {
-        return (T) MAP.get(type);
+        return (T) defaults.get(type);
     }
 
     private TypeDefaults() {
-        MAP.put(boolean.class, false);
-        MAP.put(char.class, '\0');
-        MAP.put(byte.class, (byte) 0);
-        MAP.put(short.class, (short) 0);
-        MAP.put(int.class, 0);
-        MAP.put(long.class, 0L);
-        MAP.put(float.class, 0f);
-        MAP.put(double.class, 0d);
+        defaults.put(boolean.class, false);
+        defaults.put(char.class, '\0');
+        defaults.put(byte.class, (byte) 0);
+        defaults.put(short.class, (short) 0);
+        defaults.put(int.class, 0);
+        defaults.put(long.class, 0L);
+        defaults.put(float.class, 0f);
+        defaults.put(double.class, 0d);
     }
 }
