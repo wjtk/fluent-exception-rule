@@ -1,5 +1,7 @@
 package pl.wkr.fluentrule.api;
 
+import pl.wkr.fluentrule.api.check.Check;
+
 import java.util.ArrayList;
 import java.util.List;
 

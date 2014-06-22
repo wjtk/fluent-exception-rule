@@ -73,6 +73,12 @@
             <version>${pitest.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>pl.pragmatists</groupId>
+            <artifactId>JUnitParams</artifactId>
+            <version>${junitparams.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -163,10 +169,9 @@
                             <targetClasses>
                                 <param>pl.wkr.fluentrule.*</param>
                             </targetClasses>
-                            <excludedClasses>
-                                <!-- ITests are excluded from mutation coverage -->
-                                <param>*IT</param>
-                            </excludedClasses>
+                            <targetTests>
+                                <param>pl.wkr.fluentrule.*</param>
+                            </targetTests>
                             <outputFormats>
                                 <param>XML</param>
                                 <param>HTML</param>
@@ -213,10 +218,11 @@
         <junit.version>4.11</junit.version>
         <assertj.version>1.6.0</assertj.version>
         <mockito.version>1.9.5</mockito.version>
+        <junitparams.version>1.0.2</junitparams.version>
 
         <jacoco.version>0.6.4.201312101107</jacoco.version>
-        <coveralls-maven.version>2.1.0</coveralls-maven.version>
-        <pitest.version>0.31</pitest.version>
+        <coveralls-maven.version>2.2.0</coveralls-maven.version>
+        <pitest.version>1.0.0</pitest.version>
         <surefire-plugin.version>2.14.1</surefire-plugin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>

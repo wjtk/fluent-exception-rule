@@ -1,6 +1,6 @@
-package pl.wkr.fluentrule.assertfactory;
+package pl.wkr.fluentrule.extractor;
 
-class NoopExtractor implements ThrowableExtractor{
+public class NoopExtractor implements ThrowableExtractor {
 
     @Override
     public Throwable extract(Throwable throwable) {

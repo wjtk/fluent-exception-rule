@@ -1,6 +1,8 @@
 package pl.wkr.fluentrule.api;
 
 
+import pl.wkr.fluentrule.api.check.Check;
+
 /**
  * Implements junit's {@code TestRule} and allows to assert thrown exception in callback.
  *

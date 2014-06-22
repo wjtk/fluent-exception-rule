@@ -3,10 +3,10 @@ package pl.wkr.fluentrule.api.it_;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
-import pl.wkr.fluentrule.api.Check;
+import pl.wkr.fluentrule.api.check.Check;
 import pl.wkr.fluentrule.api.CheckExpectedException;
 import pl.wkr.fluentrule.api.FluentExpectedException;
-import pl.wkr.fluentrule.api.SafeCheck;
+import pl.wkr.fluentrule.api.check.SafeCheck;
 
 import java.sql.SQLException;
 

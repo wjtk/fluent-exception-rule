@@ -1,4 +1,4 @@
-package pl.wkr.fluentrule.api;
+package pl.wkr.fluentrule.api.check;
 
 /**
  * Interface of callback asserting thrown exception.
@@ -9,7 +9,7 @@ package pl.wkr.fluentrule.api;
  *
  *
  * @see
- *      CheckExpectedException
+ *      pl.wkr.fluentrule.api.CheckExpectedException
  *
  */
 public interface Check {

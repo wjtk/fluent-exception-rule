@@ -8,6 +8,9 @@ import pl.wkr.fluentrule.assertfactory.AssertFactory;
  */
 public class CheckWithProxyFactory {
 
+    private final RunLaterCallbackFactory runLaterCallbackFactory = new RunLaterCallbackFactory();
+
+
     /**
      * Constructs new proxy of expected exception's assertion.
      *
@@ -19,9 +22,10 @@ public class CheckWithProxyFactory {
      * @return new instance of proxy of exception's assertion
      */
     public <A extends AbstractThrowableAssert<A, T>, T extends Throwable>
-        CheckWithProxy<A, T> newCheckWithProxy(Class<A> assertClass, Class<T> throwableClass, AssertFactory<A, T> factory) {
+    CheckWithProxy<A, T> newCheckWithProxy(Class<A> assertClass, Class<T> throwableClass, AssertFactory<A, T> factory) {
 
-        return new CheckWithProxyImpl<A,T>(assertClass, throwableClass, factory);
+        return new CheckWithProxyImpl<A,T>(assertClass, throwableClass, factory, runLaterCallbackFactory);
     }
+
 
 }

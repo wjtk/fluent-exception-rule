@@ -5,8 +5,6 @@ import java.util.Map;
 
 public class TypeDefaults {
 
-    public static final TypeDefaults INSTANCE = new TypeDefaults();
-
     private final Map<Class<?>, Object> defaults = new HashMap<Class<?>, Object>();
 
     public <T> T getDefaultValue(Class<T> type) {
@@ -18,7 +16,7 @@ public class TypeDefaults {
         return (T) defaults.get(type);
     }
 
-    private TypeDefaults() {
+    public TypeDefaults() {
         defaults.put(boolean.class, false);
         defaults.put(char.class, '\0');
         defaults.put(byte.class, (byte) 0);

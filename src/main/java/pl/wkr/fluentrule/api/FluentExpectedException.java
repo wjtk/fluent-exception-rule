@@ -2,8 +2,11 @@ package pl.wkr.fluentrule.api;
 
 import org.assertj.core.api.AbstractThrowableAssert;
 import org.assertj.core.api.ThrowableAssert;
-import pl.wkr.fluentrule.assertfactory.ProxiesFactory;
+import pl.wkr.fluentrule.proxy.factory.ProxiesFactoryFactory;
+import pl.wkr.fluentrule.proxy.factory.ProxiesFactory;
 import pl.wkr.fluentrule.proxy.CheckWithProxy;
+
+import static org.assertj.core.util.Preconditions.checkNotNull;
 
 /**
  *
@@ -28,11 +31,11 @@ import pl.wkr.fluentrule.proxy.CheckWithProxy;
  *
  * @author Wojciech Krak
  */
-public class FluentExpectedException extends AbstractCheckExpectedException<FluentExpectedException>{
+public class FluentExpectedException extends AbstractCheckExpectedException<FluentExpectedException> {
 
-    private static final ProxiesFactory PROXIES_FACTORY = new ProxiesFactory();
+    private static final ProxiesFactory PROXIES_FACTORY = new ProxiesFactoryFactory().getProxiesFactory();
+
     private final ProxiesFactory proxiesFactory;
-
 
     /**
      * Creates and returns new instance of {@code FluentExpectedException} rule.
@@ -48,7 +51,7 @@ public class FluentExpectedException extends AbstractCheckExpectedException<Flue
     }
 
     FluentExpectedException(ProxiesFactory proxiesFactory) {
-        this.proxiesFactory = proxiesFactory;
+        this.proxiesFactory = checkNotNull(proxiesFactory, "proxiesFactory");
     }
 
     /**

@@ -1,16 +1,23 @@
-package pl.wkr.fluentrule.assertfactory;
+package pl.wkr.fluentrule.proxy.factory;
 
 import org.assertj.core.api.ThrowableAssert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+import pl.wkr.fluentrule.assertfactory.AssertFactory;
+import pl.wkr.fluentrule.assertfactory.ExtractingAssertFactoryFactory;
+import pl.wkr.fluentrule.assertfactory.ReflectionAssertFactoryFactory;
+import pl.wkr.fluentrule.assertfactory.ThrowableAssertFactory;
+import pl.wkr.fluentrule.extractor.ThrowableExtractor;
 import pl.wkr.fluentrule.proxy.CheckWithProxy;
 import pl.wkr.fluentrule.proxy.CheckWithProxyFactory;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 public class ProxiesFactory_Test {
@@ -25,8 +32,8 @@ public class ProxiesFactory_Test {
     @Mock private ReflectionAssertFactoryFactory reflectionAssertFactoryFactory;
     @Mock private ExtractingAssertFactoryFactory extractingAssertFactoryFactory;
 
-    @Mock private ExtractingAssertFactory<ThrowableAssert, Throwable> extractingAssertFactory;
-    @Mock private ReflectionAssertFactory<?,?> reflectionAssertFactory;
+    @Mock private AssertFactory<ThrowableAssert, Throwable> extractingAssertFactory;
+    @Mock private AssertFactory<?,?> reflectionAssertFactory;
     @Mock private CheckWithProxy<?,?> checkWithProxy;
 
     private CheckWithProxy<?,?> returned = null;
@@ -52,7 +59,7 @@ public class ProxiesFactory_Test {
 
     @After
     public void after() {
-        if( checkAfter) {
+        if(checkAfter) {
           checkAfter();
         }
     }

@@ -1,7 +1,11 @@
-package pl.wkr.fluentrule.assertfactory;
+package pl.wkr.fluentrule.proxy.factory;
 
 import org.assertj.core.api.AbstractThrowableAssert;
 import org.assertj.core.api.ThrowableAssert;
+import pl.wkr.fluentrule.assertfactory.ExtractingAssertFactoryFactory;
+import pl.wkr.fluentrule.assertfactory.ReflectionAssertFactoryFactory;
+import pl.wkr.fluentrule.assertfactory.ThrowableAssertFactory;
+import pl.wkr.fluentrule.extractor.ThrowableExtractor;
 import pl.wkr.fluentrule.proxy.CheckWithProxy;
 import pl.wkr.fluentrule.proxy.CheckWithProxyFactory;
 import pl.wkr.fluentrule.util.ClassFinder;
@@ -9,16 +13,6 @@ import pl.wkr.fluentrule.util.ClassFinder;
 import static org.assertj.core.util.Preconditions.checkNotNull;
 
 public class ProxiesFactory {
-
-    private static final CheckWithProxyFactory PROXY_FACTORY = new CheckWithProxyFactory();
-    private static final ThrowableExtractor NOOP_EXTRACTOR = new NoopExtractor();
-    private static final ThrowableExtractor CAUSE_EXTRACTOR = new CauseExtractor();
-    private static final ThrowableExtractor ROOT_CAUSE_EXTRACTOR = new RootCauseExtractor();
-
-    private static final ReflectionAssertFactoryFactory REFLECTION_ASSERT_FACTORY_FACTORY = new ReflectionAssertFactoryFactory();
-    private static final ThrowableAssertFactory THROWABLE_ASSERT_FACTORY = new ThrowableAssertFactory();
-
-    private static final ExtractingAssertFactoryFactory EXTRACTING_ASSERT_FACTORY_FACTORY = new ExtractingAssertFactoryFactory();
 
     private static final int THROWABLE_TYPE_INDEX_IN_ABSTRACT_THROWABLE_ASSERT = 1;
     private static final ClassFinder THROWABLE_CLASS_FINDER = new ClassFinder(THROWABLE_TYPE_INDEX_IN_ABSTRACT_THROWABLE_ASSERT);
@@ -33,15 +27,7 @@ public class ProxiesFactory {
 
     private final ExtractingAssertFactoryFactory extractingAssertFactoryFactory;
 
-
-    public ProxiesFactory(){
-        this(PROXY_FACTORY, NOOP_EXTRACTOR, CAUSE_EXTRACTOR, ROOT_CAUSE_EXTRACTOR,
-                THROWABLE_ASSERT_FACTORY,
-                REFLECTION_ASSERT_FACTORY_FACTORY,
-                EXTRACTING_ASSERT_FACTORY_FACTORY);
-    }
-
-    ProxiesFactory(CheckWithProxyFactory checkWithProxyFactory,
+    public ProxiesFactory(CheckWithProxyFactory checkWithProxyFactory,
                             ThrowableExtractor noopExtractor,
                             ThrowableExtractor causeExtractor,
                             ThrowableExtractor rootCauseExtractor,

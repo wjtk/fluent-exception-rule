@@ -94,6 +94,26 @@ public class FluentExpectedExceptionIT {
         thrown.expect();
     }
 
+    //------ cause and causeRoot messages
+
+    @Test
+    public void should_throw_that_exception_has_no_cause() throws UnexpectedExc {
+        thrownOuter.expect(AssertionError.class).expectMessageContaining(
+                "Expecting a throwable with cause, but current throwable has no cause");
+
+        thrown.expectCause();
+        throw new UnexpectedExc();
+    }
+
+    @Test
+    public void should_throw_that_exception_has_no_cause_when_checking_root_cause() throws UnexpectedExc {
+        thrownOuter.expect(AssertionError.class).expectMessageContaining(
+                "Expecting a throwable with root cause, but current throwable has no cause");
+
+        thrown.expectRootCause();
+        throw new UnexpectedExc();
+    }
+
 
     //----- extending/expectWith ------------------------------------------
 

@@ -26,13 +26,16 @@ public class CheckWithProxyImpl_Test {
     public void before(){
         throwableAssertMock = mock(ThrowableAssert.class);
         checkWithProxy = new CheckWithProxyImpl<ThrowableAssert, Throwable>(
-                ThrowableAssert.class, Throwable.class, new AssertFactory<ThrowableAssert, Throwable>() {
-
-            @Override
-            public ThrowableAssert getAssert(Throwable throwable) {
-                return throwableAssertMock;
-            }
-        });
+                ThrowableAssert.class,
+                Throwable.class,
+                new AssertFactory<ThrowableAssert, Throwable>() {
+                    @Override
+                    public ThrowableAssert getAssert(Throwable throwable) {
+                        return throwableAssertMock;
+                    }
+                },
+                new RunLaterCallbackFactory()
+        );
 
         assertProxy = checkWithProxy.getAssertProxy();
     }

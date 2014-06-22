@@ -1,6 +1,7 @@
-package pl.wkr.fluentrule.api;
+package pl.wkr.fluentrule.api.check;
 
 import org.junit.Test;
+import pl.wkr.fluentrule.api.check.SafeCheck;
 import pl.wkr.fluentrule.api.exception_.ExpectedExc;
 import pl.wkr.fluentrule.api.exception_.UnexpectedExc;
 import pl.wkr.fluentrule.api.test_.BaseWithFluentThrownTest;

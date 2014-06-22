@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class TypeDefaults_Test {
 
-    TypeDefaults td = TypeDefaults.INSTANCE;
+    TypeDefaults td = new TypeDefaults();
 
     @Test
     public void should_return_type_defaults() {
@@ -21,7 +21,5 @@ public class TypeDefaults_Test {
 
         assertThat(td.getDefaultValue(char.class)).isEqualTo('\0');
         assertThat(td.getDefaultValue(boolean.class)).isEqualTo(false);
-
-
     }
 }

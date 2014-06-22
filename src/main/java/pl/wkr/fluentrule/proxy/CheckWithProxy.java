@@ -1,7 +1,7 @@
 package pl.wkr.fluentrule.proxy;
 
 import org.assertj.core.api.AbstractThrowableAssert;
-import pl.wkr.fluentrule.api.Check;
+import pl.wkr.fluentrule.api.check.Check;
 
 /**
  * Interface for implementations of assertions proxies.

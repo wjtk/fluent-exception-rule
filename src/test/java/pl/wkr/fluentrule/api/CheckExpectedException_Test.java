@@ -3,6 +3,7 @@ package pl.wkr.fluentrule.api;
 import org.junit.Test;
 import org.junit.runners.model.Statement;
 import org.mockito.InOrder;
+import pl.wkr.fluentrule.api.check.Check;
 import pl.wkr.fluentrule.api.exception_.ExpectedExc;
 
 import static org.assertj.core.api.Assertions.assertThat;

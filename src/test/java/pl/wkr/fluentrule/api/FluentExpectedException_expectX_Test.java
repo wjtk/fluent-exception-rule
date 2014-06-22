@@ -10,7 +10,7 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import pl.wkr.fluentrule.api.exception_.ExpectedExc;
 import pl.wkr.fluentrule.api.test_.SQLExceptionAssert;
-import pl.wkr.fluentrule.assertfactory.ProxiesFactory;
+import pl.wkr.fluentrule.proxy.factory.ProxiesFactory;
 import pl.wkr.fluentrule.proxy.CheckWithProxy;
 
 import static org.assertj.core.api.Assertions.assertThat;

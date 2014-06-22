@@ -1,16 +1,17 @@
-package pl.wkr.fluentrule.api;
+package pl.wkr.fluentrule.api.check;
 
+import pl.wkr.fluentrule.api.check.Check;
 import pl.wkr.fluentrule.util.ClassFinder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 
 /**
- * Type safe implementation of {@link Check} interface. Ensures that thrown exception has expected type
+ * Type safe implementation of {@link pl.wkr.fluentrule.api.check.Check} interface. Ensures that thrown exception has expected type
  * and pass it to {@link #safeCheck(Throwable)} method. Should be used for anonymous classes.
  * Commonly used in conjunction with Assertj assertions in callback's body.
  * <p/>
- * Usage with {@link CheckExpectedException} rule:
+ * Usage with {@link pl.wkr.fluentrule.api.CheckExpectedException} rule:
  * </p>
  *
  * <pre><code>
@@ -29,7 +30,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  *
  * @param <T> expected type of thrown exception
  */
-public abstract class SafeCheck<T extends Throwable> implements Check{
+public abstract class SafeCheck<T extends Throwable> implements Check {
 
     private static final int T_PARAM_INDEX = 0;
     private static final ClassFinder CLASS_FINDER = new ClassFinder(T_PARAM_INDEX);

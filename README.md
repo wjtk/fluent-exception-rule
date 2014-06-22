@@ -166,7 +166,7 @@ public CheckExpectedException thrown = CheckExpectedException.none();
 Usage:
 
 ```java
-import pl.wkr.fluentrule.api.Check;
+import pl.wkr.fluentrule.api.check.Check;
 
 
 coffeeMachine.insertCoin(2);
@@ -184,7 +184,7 @@ coffeeMachine.getCoffee();
 You can also use type-safe version with `SafeCheck` class to avoid potential exception casting to desired type:
 
 ```java
-import pl.wkr.fluentrule.api.SafeCheck;
+import pl.wkr.fluentrule.api.check.SafeCheck;
 
 
 coffeeMachine.insertCoin(1);
