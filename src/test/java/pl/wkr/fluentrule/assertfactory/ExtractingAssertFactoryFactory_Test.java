@@ -19,5 +19,4 @@ public class ExtractingAssertFactoryFactory_Test extends BaseAssertFactoryTest<T
         ExpectedExc expected = new ExpectedExc();
         assertThatCreatesNotNullAssertAndItHasGivenActual(expected);
     }
-
 }

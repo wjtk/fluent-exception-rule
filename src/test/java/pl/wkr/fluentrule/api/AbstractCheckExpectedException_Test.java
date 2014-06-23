@@ -30,6 +30,13 @@ public class AbstractCheckExpectedException_Test extends BaseWithFluentThrownTes
 
     }
 
+    @Test
+    public void should_throw_when_check_argument_is_null() {
+        thrown.expect(NullPointerException.class).hasMessage("check");
+        testCEE.addCheck(null);
+    }
+
+
     static class TestConcreteCheckExpectedException extends AbstractCheckExpectedException {
     }
 }

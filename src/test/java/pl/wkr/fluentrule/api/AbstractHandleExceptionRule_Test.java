@@ -9,7 +9,12 @@ import org.junit.runners.model.Statement;
 import org.mockito.Matchers;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static pl.wkr.fluentrule.api.rule_.StatementHelper.evaluateGetException;
 
 @SuppressWarnings("ThrowableResultOfMethodCallIgnored")
