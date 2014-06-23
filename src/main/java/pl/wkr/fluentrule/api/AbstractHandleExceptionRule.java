@@ -11,11 +11,15 @@ abstract class AbstractHandleExceptionRule<S extends AbstractHandleExceptionRule
     private boolean handleAssumptionViolatedExceptions = false;
     private boolean handleAssertionErrors = false;
 
-    protected final S myself;
+    private final S myself;
 
     @SuppressWarnings("unchecked")
     public AbstractHandleExceptionRule() {
         myself = (S) this;
+    }
+
+    protected S myself() {
+        return myself;
     }
 
     /**
@@ -25,7 +29,7 @@ abstract class AbstractHandleExceptionRule<S extends AbstractHandleExceptionRule
      */
     public final S handleAssertionErrors() {
         handleAssertionErrors = true;
-        return myself;
+        return myself();
     }
 
     /**
@@ -35,7 +39,7 @@ abstract class AbstractHandleExceptionRule<S extends AbstractHandleExceptionRule
      */
     public final S handleAssumptionViolatedExceptions() {
         handleAssumptionViolatedExceptions = true;
-        return myself;
+        return myself();
     }
 
     /**
