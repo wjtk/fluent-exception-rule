@@ -4,13 +4,13 @@ import org.junit.Test;
 import org.junit.runners.model.Statement;
 import org.mockito.InOrder;
 import pl.wkr.fluentrule.api.check.Check;
-import pl.wkr.fluentrule.api.exception_.ExpectedExc;
+import pl.wkr.fluentrule.test_.exception.ExpectedExc;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
-import static pl.wkr.fluentrule.api.rule_.StatementHelper.evaluateGetException;
+import static pl.wkr.fluentrule.test_.StatementHelper.evaluateGetException;
 
 public class CheckExpectedException_Test {
 

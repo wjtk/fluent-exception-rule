@@ -1,6 +1,5 @@
 package pl.wkr.fluentrule.api.check;
 
-import pl.wkr.fluentrule.api.check.Check;
 import pl.wkr.fluentrule.util.ClassFinder;
 
 import static org.assertj.core.api.Assertions.assertThat;

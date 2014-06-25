@@ -8,8 +8,8 @@ import org.junit.Test;
 import org.junit.runners.model.Statement;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
-import pl.wkr.fluentrule.api.exception_.ExpectedExc;
-import pl.wkr.fluentrule.api.test_.SQLExceptionAssert;
+import pl.wkr.fluentrule.test_.exception.ExpectedExc;
+import pl.wkr.fluentrule.test_.SQLExceptionAssert;
 import pl.wkr.fluentrule.proxy.factory.ProxiesFactory;
 import pl.wkr.fluentrule.proxy.CheckWithProxy;
 
@@ -18,7 +18,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
-import static pl.wkr.fluentrule.api.rule_.StatementHelper.evaluateGetException;
+import static pl.wkr.fluentrule.test_.StatementHelper.evaluateGetException;
 
 public class FluentExpectedException_expectX_Test {
 

@@ -2,20 +2,22 @@ package pl.wkr.fluentrule.proxy;
 
 import java.lang.reflect.Method;
 
+import static org.assertj.core.util.Preconditions.checkNotNull;
+
 class MethodCall {
     private Method method;
     private Object[] args;
 
-    MethodCall(Method method, Object[] args) {
-        this.method = method;
+    public MethodCall(Method method, Object ... args) {
+        this.method = checkNotNull(method, "method");
         this.args = args.clone();
     }
 
-    Object[] getArgs() {
+    public Object[] getArgs() {
         return args;
     }
 
-    Method getMethod() {
+    public Method getMethod() {
         return method;
     }
 }

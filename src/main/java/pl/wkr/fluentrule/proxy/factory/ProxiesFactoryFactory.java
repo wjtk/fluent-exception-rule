@@ -8,20 +8,30 @@ import pl.wkr.fluentrule.extractor.CheckNotNullExtractor;
 import pl.wkr.fluentrule.extractor.NoopExtractor;
 import pl.wkr.fluentrule.extractor.RootCauseExtractor;
 import pl.wkr.fluentrule.proxy.CheckWithProxyFactory;
+import pl.wkr.fluentrule.proxy.RegisteringProxyFactoryFactory;
+import pl.wkr.fluentrule.util.TypeDefaults;
 
 public class ProxiesFactoryFactory {
 
     private final ProxiesFactory proxiesFactory;
 
+
     public ProxiesFactoryFactory() {
         String causeMessage = "Expecting a throwable with cause, but current throwable has no cause";
         String rootCauseMessage = "Expecting a throwable with root cause, but current throwable has no cause";
 
+        RegisteringProxyFactoryFactory registeringProxyFactoryFactory =
+                new pl.wkr.fluentrule.proxy.cglib.Factory(new TypeDefaults()).getRegisteringProxyFactoryFactory();
+
         proxiesFactory =  new ProxiesFactory(
-                new CheckWithProxyFactory(),
+                new CheckWithProxyFactory(registeringProxyFactoryFactory),
                 new NoopExtractor(),
-                new CheckNotNullExtractor(new CauseExtractor(), causeMessage),
-                new CheckNotNullExtractor(new RootCauseExtractor(), rootCauseMessage),
+                new CheckNotNullExtractor(
+                        new CauseExtractor(), causeMessage
+                ),
+                new CheckNotNullExtractor(
+                        new RootCauseExtractor(), rootCauseMessage
+                ),
                 new ThrowableAssertFactory(),
                 new ReflectionAssertFactoryFactory(),
                 new ExtractingAssertFactoryFactory()

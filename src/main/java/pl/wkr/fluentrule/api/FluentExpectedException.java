@@ -2,9 +2,9 @@ package pl.wkr.fluentrule.api;
 
 import org.assertj.core.api.AbstractThrowableAssert;
 import org.assertj.core.api.ThrowableAssert;
-import pl.wkr.fluentrule.proxy.factory.ProxiesFactoryFactory;
-import pl.wkr.fluentrule.proxy.factory.ProxiesFactory;
 import pl.wkr.fluentrule.proxy.CheckWithProxy;
+import pl.wkr.fluentrule.proxy.factory.ProxiesFactory;
+import pl.wkr.fluentrule.proxy.factory.ProxiesFactoryFactory;
 
 import static org.assertj.core.util.Preconditions.checkNotNull;
 

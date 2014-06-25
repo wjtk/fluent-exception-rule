@@ -2,7 +2,7 @@ package pl.wkr.fluentrule.api;
 
 import org.junit.Test;
 import pl.wkr.fluentrule.api.check.Check;
-import pl.wkr.fluentrule.api.test_.BaseWithFluentThrownTest;
+import pl.wkr.fluentrule.test_.BaseWithFluentThrownTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
@@ -24,7 +24,7 @@ public class AbstractCheckExpectedException_Test extends BaseWithFluentThrownTes
     }
 
     @Test
-    public void should_throw_asserrtionerror() {
+    public void should_throw_assertion_error() {
         thrown.expect(AssertionError.class).hasMessage("Exception was expected but was not thrown");
         testCEE.failBecauseExceptionWasNotThrown();
 

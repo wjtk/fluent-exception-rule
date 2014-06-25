@@ -1,10 +1,9 @@
 package pl.wkr.fluentrule.api.check;
 
 import org.junit.Test;
-import pl.wkr.fluentrule.api.check.SafeCheck;
-import pl.wkr.fluentrule.api.exception_.ExpectedExc;
-import pl.wkr.fluentrule.api.exception_.UnexpectedExc;
-import pl.wkr.fluentrule.api.test_.BaseWithFluentThrownTest;
+import pl.wkr.fluentrule.test_.exception.ExpectedExc;
+import pl.wkr.fluentrule.test_.exception.UnexpectedExc;
+import pl.wkr.fluentrule.test_.BaseWithFluentThrownTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -40,9 +39,6 @@ public class SafeCheck_Test extends BaseWithFluentThrownTest{
         assertThat(typeInCstrArgSafeCheck.exception).isSameAs(expected);
     }
 
-
-
-    //------------------------------------------
 
     static  abstract class TestSafeCheck<T extends Throwable> extends SafeCheck<T> {
         public T exception = null;

@@ -45,6 +45,7 @@ abstract class AbstractHandleExceptionRule<S extends AbstractHandleExceptionRule
     /**
      * Method required by junit from <b>rules</b> implementations.
      */
+    @SuppressWarnings("PMD.AvoidCatchingThrowable")
     @Override
     public final Statement apply(final Statement base, Description description) {
         return new Statement() {

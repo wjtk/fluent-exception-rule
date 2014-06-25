@@ -7,8 +7,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import pl.wkr.fluentrule.api.CheckExpectedException;
-import pl.wkr.fluentrule.api.exception_.ExpectedExc;
-import pl.wkr.fluentrule.api.test_.BaseWithFluentThrownTest;
+import pl.wkr.fluentrule.test_.exception.ExpectedExc;
+import pl.wkr.fluentrule.test_.BaseWithFluentThrownTest;
 
 import static junitparams.JUnitParamsRunner.$;
 import static org.assertj.core.api.Assertions.assertThat;

@@ -15,7 +15,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static pl.wkr.fluentrule.api.rule_.StatementHelper.evaluateGetException;
+import static pl.wkr.fluentrule.test_.StatementHelper.evaluateGetException;
 
 @SuppressWarnings("ThrowableResultOfMethodCallIgnored")
 public class AbstractHandleExceptionRule_Test {

@@ -1,7 +1,7 @@
 package pl.wkr.fluentrule.api;
 
 import org.junit.Test;
-import pl.wkr.fluentrule.api.test_.BaseWithFluentThrownTest;
+import pl.wkr.fluentrule.test_.BaseWithFluentThrownTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

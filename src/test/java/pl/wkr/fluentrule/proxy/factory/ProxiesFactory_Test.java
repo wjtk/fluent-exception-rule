@@ -20,6 +20,7 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+
 public class ProxiesFactory_Test {
 
     ProxiesFactory proxiesFactory;
@@ -75,10 +76,6 @@ public class ProxiesFactory_Test {
         );
     }
 
-    /*
-    return checkWithProxyFactory.newCheckWithProxy(ThrowableAssert.class, Throwable.class,
-            extractingAssertFactoryFactory.newAssertFactory(throwableAssertFactory, extractor));
-     */
 
     @Test
     public void should_call_dependencies_newThrowableAssertProxy() {
@@ -130,7 +127,4 @@ public class ProxiesFactory_Test {
         verify(extractingAssertFactoryFactory).newAssertFactory(reflectionAssertFactory, rootCauseExtractor);
         verify(reflectionAssertFactoryFactory).newAssertFactory(ThrowableAssert.class, Throwable.class);
     }
-
-
-
 }

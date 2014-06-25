@@ -1,7 +1,7 @@
 package pl.wkr.fluentrule.extractor;
 
-import pl.wkr.fluentrule.api.exception_.ExpectedExc;
-import pl.wkr.fluentrule.api.exception_.UnexpectedExc;
+import pl.wkr.fluentrule.test_.exception.ExpectedExc;
+import pl.wkr.fluentrule.test_.exception.UnexpectedExc;
 
 import static junitparams.JUnitParamsRunner.$;
 

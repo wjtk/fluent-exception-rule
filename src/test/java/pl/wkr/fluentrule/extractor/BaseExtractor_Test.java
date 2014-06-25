@@ -4,7 +4,7 @@ import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import pl.wkr.fluentrule.api.test_.BaseWithFluentThrownTest;
+import pl.wkr.fluentrule.test_.BaseWithFluentThrownTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

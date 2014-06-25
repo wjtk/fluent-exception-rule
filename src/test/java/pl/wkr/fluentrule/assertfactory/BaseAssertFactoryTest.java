@@ -2,7 +2,7 @@ package pl.wkr.fluentrule.assertfactory;
 
 import org.assertj.core.api.AbstractThrowableAssert;
 import org.junit.Before;
-import pl.wkr.fluentrule.api.test_.BaseWithFluentThrownTest;
+import pl.wkr.fluentrule.test_.BaseWithFluentThrownTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
