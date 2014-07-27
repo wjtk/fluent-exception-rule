@@ -46,11 +46,19 @@ public class FluentExpectedException extends AbstractCheckExpectedException<Flue
         return new FluentExpectedException();
     }
 
+    /**
+     * Create new instance of {@code FluentExpectedException} rule.
+     * Standard constructor for extending.
+     */
     protected FluentExpectedException() {
         this(PROXIES_FACTORY);
     }
 
-    FluentExpectedException(ProxiesFactory proxiesFactory) {
+    /**
+     * Create new instance of {@code FluentExpectedException} rule.
+     * @param proxiesFactory
+     */
+    protected FluentExpectedException(ProxiesFactory proxiesFactory) {
         this.proxiesFactory = checkNotNull(proxiesFactory, "proxiesFactory");
     }
 

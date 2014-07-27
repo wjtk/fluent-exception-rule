@@ -12,6 +12,10 @@ import pl.wkr.fluentrule.util.ClassFinder;
 
 import static org.assertj.core.util.Preconditions.checkNotNull;
 
+
+/**
+ * Class for creating proxies.
+ */
 public class ProxiesFactory {
 
     private static final int THROWABLE_TYPE_INDEX_IN_ABSTRACT_THROWABLE_ASSERT = 1;
