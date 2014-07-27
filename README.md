@@ -165,7 +165,7 @@ public CheckExpectedException thrown = CheckExpectedException.none();
 
 Usage:
 
-```java
+```java  
 import pl.wkr.fluentrule.api.check.Check;
 
 
@@ -180,6 +180,13 @@ thrown.check(new Check() {
 
 coffeeMachine.getCoffee();
 ```
+
+In Java 8 you can use benefits of lambdas and their shorter syntax:
+
+```java  
+thrown.check(exc -> assertThat(exc).isInstanceOf(NotEnoughMoney.class));
+```
+
 
 You can also use type-safe version with `SafeCheck` class to avoid potential exception casting to desired type:
 
