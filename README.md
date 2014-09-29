@@ -237,7 +237,7 @@ Maven coordinates:
 
 ```xml
 <dependency>
-    <groupId>pl.wkr.test</groupId>
+    <groupId>pl.wkr</groupId>
     <artifactId>fluent-exception-rule</artifactId>
     <version>0.2.0</version>
     <scope>test</scope>
@@ -254,7 +254,8 @@ From 1.2.0 version on, [Catch-Exception] provides support for AssertJ that is re
 
 ### 1.0.0
 
-- refactoring and release to maven central 
+- refactoring and release to maven central
+- project groupId change
 
 #### 0.2.0
 

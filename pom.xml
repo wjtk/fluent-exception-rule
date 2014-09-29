@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 	
-    <groupId>pl.wkr.test</groupId>
+    <groupId>pl.wkr</groupId>
     <artifactId>fluent-exception-rule</artifactId>
     <version>0.3.0-SNAPSHOT</version>
     <name>fluent exception rule for junit</name>
