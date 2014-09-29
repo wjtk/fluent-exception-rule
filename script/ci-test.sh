@@ -1,4 +1,4 @@
 #!/bin/bash
 
-#like travis 'script' - good build condition
+# run on ci
 mvn test -P ci

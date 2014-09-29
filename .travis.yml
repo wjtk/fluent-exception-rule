@@ -1,5 +1,7 @@
 language: java
+before_install:
+    - chmod -R 777 script/*.sh
 script:
-    - mvn test -P ci
+    - ./script/ci-test.sh
 after_success:
-    - mvn test jacoco:report coveralls:jacoco -P coveralls
+    - ./script/ci-coverage.sh
