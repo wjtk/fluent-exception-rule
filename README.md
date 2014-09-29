@@ -244,22 +244,17 @@ Maven coordinates:
 </dependency>
 ```        
 
-The project is not in maven central repository, so you can grab it by cloning this repo:
-
-```bash
-$ git clone https://github.com/wjtk/fluent-exception-rule.git
-$ cd fluent-exception-rule
-$ git checkout 0.2.0
-$ mvn javadoc:jar source:jar install
-```
-
 Alternatively, you can [download source code as ZIP](https://github.com/wjtk/fluent-exception-rule/releases).
 
 ## Catch-Exception
 
-From 1.2.0 version on, [Catch-Exception] provides support for AssertJ that is really worth using. It's a small yet great library, however, there are some limitations to it. It can't catch exceptions from static methods and constructors, and final methods as well as final classes are a bit troublesome. Therefore, it is recommended to use catch-exception in areas where it works, and for other cases it is recommended to use `FluentExpectedException`.
+From 1.2.0 version on, [Catch-Exception] provides support for AssertJ that is really worth using. It's a small yet great library, however, there are some limitations to it. It can't catch exceptions from static methods and constructors, and final methods as well as final classes are a bit troublesome. In such cases `FluentExpectedException` shines.
 
 ## <a name="changelog"/> Changelog
+
+### 1.0.0
+
+- refactoring and release to maven central 
 
 #### 0.2.0
 
