@@ -11,6 +11,7 @@ Expected exception rule for [Junit] with [AssertJ] assertions.
     - [Extending] (#extending)
 - [Javadoc]
 - [Getting started] (#getting started)
+- [Code templates] (#code templates)
 - [Changelog] (#changelog) 
 - [License] (#license)
 - [Other resources] (#resources)
@@ -233,8 +234,9 @@ throw new IllegalStateException(new IllegalStateException(new SQLException("conn
 
 ## <a name="getting started"/> Getting started
 
-Maven coordinates:
+Library is present on maven central, coordinates:
 
+pom in maven:  
 ```xml
 <dependency>
     <groupId>pl.wkr</groupId>
@@ -242,9 +244,32 @@ Maven coordinates:
     <version>1.0.0</version>
     <scope>test</scope>
 </dependency>
-```        
+```      
+
+in gradle:   
+```groovy  
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+	testCompile "pl.wkr:fluent-exception-rule:1.0.0"
+}
+```
 
 Alternatively, you can [download source code as ZIP](https://github.com/wjtk/fluent-exception-rule/releases).
+
+## <a name="code templates"/> Code Templates
+
+You can create code template in your IDE to ease using of fluent exception rule.
+
+For example in Intellij Idea (Settings->IDE Settings->Live Templates) by pasting this template text:
+ ```
+ @org.junit.Rule    
+ public pl.wkr.fluentrule.api.FluentExpectedException thrown = pl.wkr.fluentrule.api.FluentExpectedException.none(); $END$ 
+ ```
+(don't forget to select "Shorten FQ names" option)
+ 
 
 ## Catch-Exception
 
