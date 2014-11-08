@@ -277,6 +277,9 @@ From 1.2.0 version on, [Catch-Exception] provides support for AssertJ that is re
 
 ## <a name="changelog"/> Changelog
 
+### 1.0.1
+- support for assertj 1.7.0 (this version also supports 1.6.0)
+
 ### 1.0.0
 
 - refactoring and release to maven central
