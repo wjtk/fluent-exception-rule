@@ -6,7 +6,7 @@
 	
     <groupId>pl.wkr</groupId>
     <artifactId>fluent-exception-rule</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2-SNAPSHOT</version>
     <name>${project.groupId}:${project.artifactId}</name>
     <description>fluent exception rule on assertj assertions for junit</description>
     <url>https://github.com/wjtk/fluent-exception-rule</url>
@@ -27,7 +27,7 @@
         <developerConnection>scm:git:git@github.com:wjtk/fluent-exception-rule.git</developerConnection>
         <connection>scm:git:git@github.com:wjtk/fluent-exception-rule.git</connection>
         <url>scm:git:git@github.com:wjtk/fluent-exception-rule.git</url>
-        <tag>1.0.1</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <licenses>
