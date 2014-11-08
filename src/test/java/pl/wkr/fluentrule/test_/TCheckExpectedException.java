@@ -1,5 +1,6 @@
 package pl.wkr.fluentrule.test_;
 
+import org.assertj.core.api.AbstractThrowableAssert;
 import org.assertj.core.api.ThrowableAssert;
 import pl.wkr.fluentrule.api.check.Check;
 import pl.wkr.fluentrule.api.CheckExpectedException;
@@ -31,7 +32,7 @@ public class TCheckExpectedException extends CheckExpectedException {
         check(new Check() {
             @Override
             public void check(Throwable exception) {
-                ThrowableAssert throwableAssert = assertThat(exception);
+                AbstractThrowableAssert<?, ? extends Throwable> throwableAssert = assertThat(exception);
                 for (String message : messages) {
                     throwableAssert.hasMessageContaining(message);
                 }

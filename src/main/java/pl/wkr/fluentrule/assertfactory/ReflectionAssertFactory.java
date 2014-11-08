@@ -4,7 +4,7 @@ import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.NoOp;
 import org.assertj.core.api.AbstractThrowableAssert;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static pl.wkr.fluentrule.util.InternalAssertions.assertThat;
 import static org.assertj.core.util.Preconditions.checkNotNull;
 
 /**
