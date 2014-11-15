@@ -253,7 +253,7 @@ repositories {
 }
 
 dependencies {
-	testCompile "pl.wkr:fluent-exception-rule:1.0.0"
+	testCompile "pl.wkr:fluent-exception-rule:1.0.1"
 }
 ```
 
