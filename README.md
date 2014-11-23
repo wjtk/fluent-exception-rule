@@ -1,4 +1,4 @@
-# fluent-exception-rule [![Build Status](https://travis-ci.org/wjtk/fluent-exception-rule.png?branch=master)](https://travis-ci.org/wjtk/fluent-exception-rule) [![Coverage Status](https://coveralls.io/repos/wjtk/fluent-exception-rule/badge.png?branch=master)](https://coveralls.io/r/wjtk/fluent-exception-rule?branch=master)
+# fluent-exception-rule [![Build Status](https://travis-ci.org/wjtk/fluent-exception-rule.png?branch=master)](https://travis-ci.org/wjtk/fluent-exception-rule) [![Coverage Status](https://coveralls.io/repos/wjtk/fluent-exception-rule/badge.png?branch=master)](https://coveralls.io/r/wjtk/fluent-exception-rule?branch=master) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/pl.wkr/fluent-exception-rule/badge.svg)](https://maven-badges.herokuapp.com/maven-central/pl.wkr/fluent-exception-rule)
 
 Expected exception rule for [Junit] with [AssertJ] assertions.
 
