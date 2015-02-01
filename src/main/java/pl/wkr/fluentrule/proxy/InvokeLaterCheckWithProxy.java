@@ -26,14 +26,13 @@ class InvokeLaterCheckWithProxy<A extends AbstractThrowableAssert<A,T> ,T extend
         this.registeringProxyFactory = registeringProxyFactory;
     }
 
-
+    @Override
     public A getAssertProxy() {
         if( assertProxy == null) {
             assertProxy = createProxy();
         }
         return assertProxy;
     }
-
 
     @Override
     public void check(Throwable throwable) {
@@ -42,7 +41,6 @@ class InvokeLaterCheckWithProxy<A extends AbstractThrowableAssert<A,T> ,T extend
             invoke(anAssert, call);
         }
     }
-
 
     private A createProxy() {
         return registeringProxyFactory.createProxy(
@@ -56,7 +54,6 @@ class InvokeLaterCheckWithProxy<A extends AbstractThrowableAssert<A,T> ,T extend
                 }
         );
     }
-
 
     private void invoke(A anAssert, MethodCall methodCall) {
         try {
