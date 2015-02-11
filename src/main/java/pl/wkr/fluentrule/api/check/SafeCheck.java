@@ -67,6 +67,7 @@ public abstract class SafeCheck<T extends Throwable> implements Check {
      *
      * @param exception thrown exception
      */
+    @Override
     public final void check(Throwable exception) {
         assertThat(exception).isInstanceOf(expectedType);
         safeCheck(expectedType.cast(exception));

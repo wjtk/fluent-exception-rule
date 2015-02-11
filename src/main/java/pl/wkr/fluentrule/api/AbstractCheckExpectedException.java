@@ -26,6 +26,7 @@ abstract class AbstractCheckExpectedException<S extends AbstractCheckExpectedExc
      *
      * @return {@code true} if any exception is expected
      */
+    @Override
     public boolean isExceptionExpected() {
         return checks.size() > 0;
     }
@@ -35,6 +36,7 @@ abstract class AbstractCheckExpectedException<S extends AbstractCheckExpectedExc
      *
      * @param e thrown exception
      */
+    @Override
     protected void handleException(Throwable e) {
         for(Check c : checks) {
             c.check(e);
@@ -44,6 +46,7 @@ abstract class AbstractCheckExpectedException<S extends AbstractCheckExpectedExc
     /**
      * Throws AssertionError with info that exception was expected but not thrown.
      */
+    @Override
     protected void failBecauseExceptionWasNotThrown() {
         throw new AssertionError("Exception was expected but was not thrown");
     }
