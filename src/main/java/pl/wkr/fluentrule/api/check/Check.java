@@ -2,7 +2,7 @@ package pl.wkr.fluentrule.api.check;
 
 /**
  * Interface of callback asserting thrown exception.
- * Fallback should check if thrown exception was expected,
+ * Callback should check if thrown exception was expected,
  * and fulfils expectations. If this is not true, AssertionError
  * should be thrown. Commonly used in conjunction with Assertj assertions in callback's body.
  * <p/>
