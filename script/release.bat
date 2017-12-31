@@ -2,7 +2,7 @@
 
 
 
-mvn clean deploy -P ci,release
+./mvnw clean deploy -P ci,release
 
 
 

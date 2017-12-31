@@ -1,4 +1,4 @@
 #!/bin/bash
 
 # run on ci
-mvn test -P ci
+./mvnw test -P ci
