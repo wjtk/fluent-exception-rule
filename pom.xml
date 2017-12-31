@@ -282,7 +282,7 @@
         <junit.version>4.12.2</junit.version>
         <assertj.version>1.7.1</assertj.version>
         <mockito.version>2.11.0</mockito.version>
-        <junitparams.version>1.0.4</junitparams.version>
+        <junitparams.version>1.1.1</junitparams.version>
 
         <jacoco.version>0.7.9</jacoco.version>
         <coveralls-maven.version>4.3.0</coveralls-maven.version>
